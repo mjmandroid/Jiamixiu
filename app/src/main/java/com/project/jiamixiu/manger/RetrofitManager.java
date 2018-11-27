@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.project.jiamixiu.BaseApplication;
 import com.project.jiamixiu.utils.HttpsUtils;
+import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.UrlConst;
 
 import java.io.IOException;
@@ -27,18 +28,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class RetrofitManager {
-    public static final String BASE_URL = "https://api-dev.lewaimai.com/";//平时后端开发使用的环境，如果客户端需要最新的接口则连接该环境。
-//    public static final String BASE_URL = "https://api-test.lewaimai.com/";//平时后端开发使用的环境，如果客户端需要最新的接口则连接该环境。
-//    public static final String BASE_URL = "https://api.lewaimai.com/";// 线上正式环境。
-//    public static final String BASE_URL_H5 = "https://wap-test.lewaimai.com/";//分享链接 test环境。
-//    public static final String BASE_URL_H5 = "https://wap.lewaimai.com/";//分享链接 线上正式环境。
-    public static final String BASE_URL_H5 = "https://wap-dev.lewaimai.com/";//分享链接 dev环境。
-    public static final String BASE_URL_SHARE_RED_PACKAGE = "https://activity.lewaimai.com/";//分享红包 线上正式环境。
-    public static final String BASE_IMG_URL = "http://img.lewaimai.com";
-    public static final String BASE_IMG_URL_LUNBO = "http://img.lewaimai.com/abc.jpg!width600";
-    public static final String BASE_IMG_URL_BIG = "http://img.lewaimai.com/abc.jpg!max400";
-    public static final String BASE_IMG_URL_MEDIUM = "http://img.lewaimai.com/abc.jpg!max200";
-    public static final String BASE_IMG_URL_SMALL = "http://img.lewaimai.com/abc.jpg!max80";
     public static final int TIME_OUT = 10;
     private Retrofit retrofit;
     private static RetrofitManager manager;
@@ -46,8 +35,7 @@ public class RetrofitManager {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
-                SharedPreferences sp = BaseApplication.getPreferences();
-                String token = sp.getString("token","");
+                String token = SharedPreferencesUtil.getToken();
                 Request newRequest = chain.request()
                                     .newBuilder()
                                     .addHeader("Content-type", "application/json")
