@@ -7,6 +7,7 @@ import android.widget.RadioGroup;
 
 import com.project.jiamixiu.base.BaseFragment;
 import com.project.jiamixiu.function.home.HomeFragment;
+import com.project.jiamixiu.function.person.PersonFragment;
 import com.project.jiamixiu.manger.FragmentChangeManager;
 import com.project.jiamixiu.utils.ToastUtil;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radioGroup = findViewById(R.id.rg);
         ArrayList fragmentList = new ArrayList<BaseFragment>();
         fragmentList.add(new HomeFragment());
+        fragmentList.add(new PersonFragment());
         manager = new FragmentChangeManager(getSupportFragmentManager(),R.id.fl_content,fragmentList);
         initEvent();
     }
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         break;
                     case R.id.rb_mine:
-
+                        manager.setFragments(1);
                         break;
                 }
             }
