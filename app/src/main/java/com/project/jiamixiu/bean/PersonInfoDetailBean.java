@@ -73,6 +73,6 @@ public class PersonInfoDetailBean {
         public String amt;
         public String cashamt;
         public String level;
-
+        public String birthday;
     }
 }

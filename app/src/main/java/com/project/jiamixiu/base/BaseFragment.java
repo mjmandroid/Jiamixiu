@@ -54,6 +54,8 @@ public abstract class BaseFragment extends Fragment {
 	 * 初始化布局
 	 */
 	public abstract View initView();
+
+	public void updateList(String fid){}
 	
 	/**
 	 * 初始化数据

@@ -1,5 +1,7 @@
 package com.project.jiamixiu.function.person.activity;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,6 +120,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
             public void onBack() {
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -133,17 +138,25 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 showPhotoWindow();
                 break;
             case R.id.ll_nickname:
+                Intent ni = new Intent(this,SetInfoValueActivity.class);
+                ni.putExtra("type","1");
+                startActivityForResult(ni,22);
                 break;
             case R.id.ll_gender:
                 showGender();
                 break;
             case R.id.ll_birthday:
+                final Calendar ca = Calendar.getInstance();
+                showDatePickerDialog(this,ca);
                 break;
             case R.id.ll_address:
                 break;
             case R.id.ll_address_2:
                 break;
             case R.id.ll_sign:
+                Intent si = new Intent(this,SetInfoValueActivity.class);
+                si.putExtra("type","2");
+                startActivityForResult(si,22);
                 break;
             case R.id.ll_confirm_name:
                 break;
@@ -354,8 +367,18 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
             }else {
                 tvGender.setText("未设置");
             }
-
-
+            if (!TextUtils.isEmpty(bean.data.birthday)){
+                tvBirthday.setText(bean.data.birthday);
+            }
+            if (!TextUtils.isEmpty(bean.data.sign)){
+                tvSign.setText(bean.data.sign);
+            }
+            if (!TextUtils.isEmpty(bean.data.region)){
+                tvAddress.setText(bean.data.region);
+            }
+            if (!TextUtils.isEmpty(bean.data.address)){
+                tvAddress2.setText(bean.data.address);
+            }
 
         }
     }
@@ -420,6 +443,16 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                     path = outUri.getPath();
                     upLoadingPicture(path);
                     break;
+
+                case 22:
+                    String s = data.getStringExtra("type");
+                    String v = data.getStringExtra("value");
+                    if (s.equals("1")){
+                        personInfoPresenter.updateInfo(v,3);
+                    }else {
+                        personInfoPresenter.updateInfo(v,4);
+                    }
+                    break;
             }
         }
     }
@@ -456,5 +489,31 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
             });
         }
         genderDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
+
+    }
+
+    public  void showDatePickerDialog(Activity activity,Calendar calendar) {
+        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
+        new DatePickerDialog(activity,DatePickerDialog.THEME_HOLO_LIGHT
+                // 绑定监听器(How the parent is notified that the date is set.)
+                ,new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year,
+                                  int monthOfYear, int dayOfMonth) {
+                 String v = year + "-" + monthOfYear + "-" + dayOfMonth  ;
+                 personInfoPresenter.updateInfo(v,5);
+//                tvBirthday.setText(v);
+            }
+        }
+                // 设置初始日期
+                , calendar.get(Calendar.YEAR)
+                ,calendar.get(Calendar.MONTH)
+                ,calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 }

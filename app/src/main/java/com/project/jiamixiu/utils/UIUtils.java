@@ -1,6 +1,10 @@
 package com.project.jiamixiu.utils;
 
 import android.content.Context;
+
+
+import com.project.jiamixiu.BaseApplication;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class UIUtils {
+    public static Context getContext() {
+        return BaseApplication.getApplication();
+    }
 
     public static void showToast(Context context,String s) {
       Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
@@ -36,6 +43,10 @@ public class UIUtils {
     /**
      * px转换dip
      */
+    public static int px2dip(int px) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (px / scale + 0.5f);
+    }
     public static int px2dip(Context context,int px) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
