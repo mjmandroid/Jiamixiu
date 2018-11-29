@@ -62,6 +62,7 @@
         <activity android:name=".function.login.RegisterActivity" />
         <activity android:name=".function.login.LoginActivity" />
         <activity android:name=".function.person.activity.PersonInfoActivity"></activity>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
 </manifest>

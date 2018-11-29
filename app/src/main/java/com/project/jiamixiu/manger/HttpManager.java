@@ -11,6 +11,7 @@ import com.project.jiamixiu.utils.NetWorkUtil;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.ToastUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -19,8 +20,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.HttpException;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -52,6 +59,99 @@ public class HttpManager {
         MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", params.toString());
         MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", url);
         api.getStringData(url, params).subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+            }
+
+            @Override
+            public void onNext(@NonNull String s) {
+                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onNext == "+s.toString());
+                Gson gson = new Gson();
+                BaseBean baseBean = gson.fromJson(s, BaseBean.class);
+                switch (baseBean.error_code) {
+                    case CODE_SUCCESS:
+                        listener.onRequestSuccess(s);
+                        break;
+                    case CODE_DEFAULT_ERROR:
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                    case CODE_DEFAULT:
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                    case CODE_API_UNAUTHORIZED:
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                    case CODE_USER_NO_LOGIN:
+                        SharedPreferencesUtil.saveToken("");
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                    case CODE_USER_UNAUTHORIZED:
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                    default:
+                        listener.onRequestFail(baseBean.error_msg, baseBean.error_code);
+                        break;
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                if (e instanceof HttpException){
+                    ResponseBody body = ((HttpException) e).response().errorBody();
+                    try {
+                        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onError500 == "+body.string());
+                        listener.onRequestFail("网络请求失败", "0");
+                    } catch (IOException e1) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onError == "+e.toString());
+                    listener.onRequestFail("网络请求失败", "0");
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                listener.onCompleted();
+                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onCompleted");
+            }
+        });
+
+    }
+    /**
+     * 发送请求
+     *
+     * @param url      地址
+     * @param listener 监听器
+     */
+    public static void sendRequestFile(final String url,String imgPath, final HttpRequestListener listener) {
+        if (!NetWorkUtil.isNetworkConnected()){
+            ToastUtil.showTosat(BaseApplication.getContext(),"网络异常，请检查是否连接！");
+            listener.onRequestFail("网络异常，请检查是否连接！","-1");
+            return;
+        }
+        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", url);
+
+        //funName
+        RequestBody funName = RequestBody.create(null, "ict_upload_picture");
+          //path
+        RequestBody path = RequestBody.create(null, "/uploadNews");
+          //appfile
+        RequestBody appfile = RequestBody.create(null, System.currentTimeMillis()+ "jiamixiu_pic");
+
+          //上传图片的名字
+        String fileName =  System.currentTimeMillis()+ "user_avator.jpg";
+
+        //图片文件
+        File file = new File(imgPath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("app_user_header", fileName, requestFile);
+
+        BaseApi api = RetrofitManager.getInstance().getRetrofit().create(BaseApi.class);
+        api.upImg(url, funName,path,appfile,body).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
 
             @Override

@@ -36,11 +36,50 @@
         <item name="android:textColor">@android:color/white</item>
 
     </style>
-
+    <style name="BottomCenterDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 无边框 -->
+        <item name="android:windowNoTitle">false</item>
+        <!-- 没有标题 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 背景是否半透明 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 背景是否模糊 -->
+    </style>
+    <style name="DialogAnimation">
+        <item name="android:windowExitAnimation">@anim/window_exit_bottom</item>
+        <item name="android:windowEnterAnimation">@anim/window_entry_bottom</item>
+    </style>
     <style name="ActivityAnimation">
         <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
         <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>
         <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
+    </style>
+    <style name="CenterDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 无边框 -->
+        <item name="android:windowNoTitle">false</item>
+        <!-- 没有标题 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮在activity之上 -->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!-- 背景是否半透明 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 背景是否模糊 -->
+
+        <item name="android:fullBright">@color/transparent</item>
+        <item name="android:fullDark">@color/transparent</item>
+        <item name="android:topBright">@color/transparent</item>
+        <item name="android:topDark">@color/transparent</item>
+        <item name="android:borderlessButtonStyle">@color/transparent</item>
     </style>
 </resources>
