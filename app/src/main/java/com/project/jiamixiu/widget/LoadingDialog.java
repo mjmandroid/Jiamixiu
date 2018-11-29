@@ -2,8 +2,10 @@ package com.project.jiamixiu.widget;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,35 +18,74 @@ import com.project.jiamixiu.R;
  */
 
 public class LoadingDialog extends AlertDialog {
-    ProgressBar pb;
-    TextView tvLoad;
-    String tips;
-
+    private TextView tips_loading_msg;
+    private ImageView iv_route;
+    private String message = null;
+    private AnimationDrawable mAnimation;
+    private boolean isAnimationStop;
     public LoadingDialog(Context context) {
-        super(context, R.style.loadingDialog);
+        this(context,"加载中...");
     }
+
+    public LoadingDialog(Context context, String message) {
+        this(context,R.style.loadingDialog,message);
+    }
+
+    public LoadingDialog(Context context, int theme, String message) {
+        super(context, theme);
+        this.message = message;
+        this.setCancelable(false);
+        this.setCanceledOnTouchOutside(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_loading);
-        tvLoad = (TextView)findViewById(R.id.tv_load);
-    }
-    public void setTitle(String s){
-        if (tvLoad != null){
-            tvLoad.setText(s);
-            Log.i("LoadingDialog","11111111111");
-        }
+        this.setContentView(R.layout.view_tips_loading);
+        tips_loading_msg = (TextView) findViewById(R.id.tips_loading_msg);
+        tips_loading_msg.setText(this.message);
+
+        iv_route = (ImageView) findViewById(R.id.iv_route);
+        mAnimation = (AnimationDrawable) iv_route.getBackground();
+        initAnim();
+
     }
 
-    public void showWithTitle(String s){
-        ((TextView)findViewById(R.id.tv_load)).setText(s);
-        Log.i("LoadingDialog","11111111111");
-        show();
+    private void initAnim() {
+        iv_route.post(new Runnable() {
+            @Override
+            public void run() {
+                isAnimationStop = false;
+                mAnimation.start();
+            }
+        });
+    }
+
+    @Override
+    public void dismiss() {
+        try {
+            isAnimationStop = true;
+            mAnimation.stop();
+            super.dismiss();
+        }catch (Exception e){
+
+        }
     }
 
     @Override
     public void show() {
-        Log.i("LoadingDialog","22222");
+        if (isAnimationStop){
+            initAnim();
+        }
         super.show();
+    }
+
+    public void setText(String message) {
+        this.message = message;
+        tips_loading_msg.setText(this.message);
+    }
+
+    public void setText(int resId) {
+        setText(getContext().getResources().getString(resId));
     }
 }

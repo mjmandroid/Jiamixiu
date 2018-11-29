@@ -15,4 +15,5 @@ public interface UrlConst {
     String fan_url = "api/video/MyFans";
     String collect_url = "api/video/myFavorite";
     String del_collect_url = "api/video/FavoriteRemove";
+    String video_detail = "api/video/detail";
 }

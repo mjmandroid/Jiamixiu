@@ -1,4 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
     </style>
     <style name="AppTheme" parent="noActionBar">
@@ -7,10 +8,10 @@
         <item name="colorPrimaryDark">@color/theme_color</item>
         <item name="colorAccent">@color/theme_color</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
-
+        <item name="android:background">@color/transparent</item>
     </style>
     <!-- Base application theme. -->
-    <style name="Theme.picker" parent="android:Theme.Holo.Light">
+    <style name="Theme.picker" parent="AppTheme">
         <item name="android:editTextStyle">@style/Widget.EditText.White</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>

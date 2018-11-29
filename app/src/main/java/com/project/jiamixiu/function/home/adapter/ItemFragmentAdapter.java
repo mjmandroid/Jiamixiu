@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.VideoResponse;
+import com.project.jiamixiu.interfaces.RvOncliclListener;
 
 import java.io.File;
 import java.util.List;
@@ -28,6 +30,12 @@ import butterknife.ButterKnife;
 public class ItemFragmentAdapter extends RecyclerView.Adapter<ItemFragmentAdapter.RViewHolder> {
 
     private Context mContext;
+    private RvOncliclListener listener;
+
+    public void setListener(RvOncliclListener listener) {
+        this.listener = listener;
+    }
+
     public ItemFragmentAdapter(Context mContext) {
         this.mContext = mContext;
     }
@@ -52,8 +60,8 @@ public class ItemFragmentAdapter extends RecyclerView.Adapter<ItemFragmentAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RViewHolder holder, int position) {
-        VideoResponse.VideoInfo info = datas.get(position);
+    public void onBindViewHolder(@NonNull final RViewHolder holder, final int position) {
+        final VideoResponse.VideoInfo info = datas.get(position);
         holder.tv_name.setText(info.name);
 //        Glide.with(mContext).load(info.coverimg).thumbnail(Glide.with(mContext).load(info.thumbnail))
 //                .listener(new RequestListener<Drawable>() {
@@ -69,7 +77,14 @@ public class ItemFragmentAdapter extends RecyclerView.Adapter<ItemFragmentAdapte
 //                    }
 //                }).into(holder.iv_video);
         Glide.with(mContext).load(info.coverimg).into(holder.iv_video);
-
+        holder.ll_parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null){
+                    listener.onCick(holder,info,position);
+                }
+            }
+        });
     }
 
     @Override
@@ -82,6 +97,8 @@ public class ItemFragmentAdapter extends RecyclerView.Adapter<ItemFragmentAdapte
         ImageView iv_video;
         @BindView(R.id.tv_name)
         TextView tv_name;
+        @BindView(R.id.ll_parent)
+        LinearLayout ll_parent;
         public RViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
