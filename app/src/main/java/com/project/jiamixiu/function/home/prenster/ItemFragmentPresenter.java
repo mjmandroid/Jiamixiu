@@ -87,7 +87,7 @@ public class ItemFragmentPresenter {
 
             @Override
             public void onRequestFail(String result, String code) {
-                itemView.loadFail(result);
+                itemView.getItemBanner(null);
             }
 
             @Override

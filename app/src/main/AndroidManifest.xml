@@ -61,9 +61,16 @@
         </activity>
         <activity android:name=".function.login.RegisterActivity" />
         <activity android:name=".function.login.LoginActivity" />
+<<<<<<< HEAD
         <activity android:name=".function.person.activity.PersonInfoActivity" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
         <activity android:name=".function.person.activity.SetInfoValueActivity"></activity>
+=======
+        <activity android:name=".function.person.activity.PersonInfoActivity"></activity>
+        <activity android:name=".function.home.VideoDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"/>
+>>>>>>> 9f547aa25f5fd3f20deaa92c83df89465344f7b1
     </application>
 
 </manifest>

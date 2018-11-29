@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.project.jiamixiu"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -46,5 +50,9 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation files('libs/picasso-2.5.2.jar')
+<<<<<<< HEAD
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+=======
+    implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
+>>>>>>> 9f547aa25f5fd3f20deaa92c83df89465344f7b1
 }

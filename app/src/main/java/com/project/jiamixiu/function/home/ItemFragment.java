@@ -1,5 +1,6 @@
 package com.project.jiamixiu.function.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import com.project.jiamixiu.function.home.adapter.ItemFragmentAdapter;
 import com.project.jiamixiu.function.home.prenster.HomePrenster;
 import com.project.jiamixiu.function.home.prenster.ItemFragmentPresenter;
 import com.project.jiamixiu.function.home.view.IitemFragmentView;
+import com.project.jiamixiu.interfaces.RvOncliclListener;
 import com.project.jiamixiu.utils.ToastUtil;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.GlideImageLoader;
@@ -59,6 +61,7 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         initBanner();
         initRefresh();
         recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+<<<<<<< HEAD
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, UIUtils.dip2px(getContext(),12),false));
 //        SinaRefreshView headerView = new SinaRefreshView(mContext);
 //        headerView.setArrowResource(R.mipmap.arrow);
@@ -66,31 +69,30 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
 //        refreshLayout.setHeaderView(headerView);
 //        refreshLayout.setBottomView(new LoadingView(mContext));
 //        refreshLayout.setTargetView(recyclerView);
+=======
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, UIUtils.dip2px(mContext,12),false));
+>>>>>>> 9f547aa25f5fd3f20deaa92c83df89465344f7b1
         adapter = new ItemFragmentAdapter(mContext);
         recyclerView.setAdapter(adapter);
-
         presenter = new ItemFragmentPresenter(this);
         presenter.preloadData("","",page+"","20");
+        initEvent();
         return view;
     }
 
+    private void initEvent() {
+        adapter.setListener(new RvOncliclListener<VideoResponse.VideoInfo>() {
+            @Override
+            public void onCick(RecyclerView.ViewHolder viewHolder, VideoResponse.VideoInfo item, int position) {
+                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                intent.putExtra("id",item.f_id);
+                intent.putExtra("videoThumbUrl",item.coverimg);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void initRefresh() {
-//        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
-//            @Override
-//            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-//                super.onRefresh(refreshLayout);
-//                page = 0;
-//                LoadState = STATE_REFRESH;
-//                presenter.preloadData("","",page+"","20");
-//            }
-//
-//            @Override
-//            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-//                super.onLoadMore(refreshLayout);
-//                LoadState = STATE_LOADMORE;
-//                presenter.preloadData("","",page+"","20");
-//            }
-//        });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -123,6 +125,8 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         if (LoadState == STATE_REFRESH){
             adapter.setDatas(infos);
             refreshLayout.finishRefresh();
+            if (infos.size() > 0)
+                page++;
         } else {
             if (infos.size() > 0){
                 adapter.addDatas(infos);
@@ -152,11 +156,19 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
 
     @Override
     public void getItemBanner(List<ItemBannerResponse.BannerInfo> infos) {
+        banner.setImageLoader(new GlideImageLoader());
+        if (infos == null){
+            //没有获取到图片显示默认图片
+            ArrayList<Integer> img = new ArrayList<>();
+            img.add(R.mipmap.icon_banner_default);
+            banner.setImages(img);
+            banner.start();
+            return;
+        }
         List<String> imageUrl = new ArrayList<>();
         for (ItemBannerResponse.BannerInfo info : infos) {
             imageUrl.add(info.imgurl);
         }
-        banner.setImageLoader(new GlideImageLoader());
         banner.setImages(imageUrl);
         banner.start();
     }

@@ -26,4 +26,5 @@ public interface UrlConst {
     String sign_update_url = "api/user/UpdateSign";
     String card_update_url = "api/user/UpdateCard";
     String gender_update_url = "api/user/UpdateGender";
+    String video_detail = "api/video/detail";
 }

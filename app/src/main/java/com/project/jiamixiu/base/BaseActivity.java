@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -35,11 +36,21 @@ public class BaseActivity extends AppCompatActivity {
     private String[][] mTechLists;
     // 是否支持NFC功能的标签
     private boolean should_cancel = true;
+    protected int activityCloseEnterAnimation;
+
+    protected int activityCloseExitAnimation;
     public void SetCancel(boolean istrue){
         should_cancel = istrue;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[] {android.R.attr.windowAnimationStyle});
+        int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
+        activityStyle.recycle();
+        activityStyle = getTheme().obtainStyledAttributes(windowAnimationStyleResId, new int[] {android.R.attr.activityCloseEnterAnimation, android.R.attr.activityCloseExitAnimation});
+        activityCloseEnterAnimation = activityStyle.getResourceId(0, 0);
+        activityCloseExitAnimation = activityStyle.getResourceId(1, 0);
+        activityStyle.recycle();
         super.onCreate(savedInstanceState);
         activityList.add(0, this); // 在activity创建时加入到管理集合中去；
         initNavigation();
@@ -56,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void initView() {
 
     }
+
 
     /**
      * 初始化一些页面上最基本的数据
@@ -74,12 +86,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        if(should_cancel) {
-            //OkhttpUtils.getInstance().cancelTag(this);
-            // 当activity销毁时，时其从集合中移除；
-            activityList.remove(this);
-//        }
-
+        activityList.remove(this);
     }
 
     @Override
@@ -90,8 +97,12 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    public void finish() {
+        super.finish();
+        //退出动画会失效
+        overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);
+    }
 
     @Override
     protected void onPause() {
@@ -142,23 +153,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public static void finishOther() {
-        List<BaseActivity> copy;
-        synchronized (BaseActivity.class) {
-            copy = new ArrayList<BaseActivity>(activityList);
-        }
-        for (BaseActivity activity : copy) {
-            if ((!activity.getLocalClassName().contains("HomeActivity")) &&
-                    (!activity.getLocalClassName().contains("NewOrderActivity")) &&
-                    (!activity.getLocalClassName().contains("NewPhoneActivity")) &&
-                    (!activity.getLocalClassName().contains("NewTakeInActivity"))) {
-//                System.out.println("测试包名：：："+ activity.getLocalClassName());
-                activity.finish();
-            }
-
-        }
-
-    }
 
     /**
      * 退出应用
