@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.jiamixiu">
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 安卓8.0安装权限 -->
@@ -39,6 +40,7 @@
     <!-- 友盟统计所用到的权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -47,7 +49,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/noActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -56,6 +59,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".function.login.RegisterActivity" />
+        <activity android:name=".function.login.LoginActivity" />
+        <activity android:name=".function.person.activity.PersonInfoActivity"></activity>
     </application>
 
 </manifest>
