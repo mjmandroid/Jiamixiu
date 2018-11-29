@@ -1,7 +1,7 @@
 package com.project.jiamixiu;
 
 import android.os.Bundle;
-<<<<<<< HEAD
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -17,11 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private RadioGroup radioGroup;
     FragmentChangeManager manager;
-=======
-//11
-public class MainActivity extends AppCompatActivity {
->>>>>>> 2c00c59fd7b4d5aaab3d3646996b521f433f62bc
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

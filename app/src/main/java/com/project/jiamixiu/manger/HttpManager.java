@@ -49,7 +49,7 @@ public class HttpManager {
             return;
         }
         BaseApi api = RetrofitManager.getInstance().getRetrofit().create(BaseApi.class);
-        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", params.toString());
+        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer-url", params.toString()+url);
         MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", url);
         api.getStringData(url, params).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
