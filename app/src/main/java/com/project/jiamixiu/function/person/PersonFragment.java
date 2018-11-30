@@ -161,6 +161,16 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_OK){
             if (requestCode == LOGIN_SUCCESS_CODE){
+                if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
+                    llNoLogin.setVisibility(View.VISIBLE);
+                    llLogin.setVisibility(View.GONE);
+                }else {
+                    llNoLogin.setVisibility(View.GONE);
+                    llLogin.setVisibility(View.VISIBLE);
+                    personPresenter.loadPersonInfo();
+                }
+            }
+            if (requestCode == 11){
                 personPresenter.loadPersonInfo();
             }
         }
