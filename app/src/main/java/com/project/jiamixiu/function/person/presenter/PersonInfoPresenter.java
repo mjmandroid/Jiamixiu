@@ -69,6 +69,12 @@ public class PersonInfoPresenter {
             case 5:
                 url = UrlConst.birth_update_url;
                 break;
+            case 6:
+                url = UrlConst.address_update_url;
+                break;
+            case 7:
+                url = UrlConst.region_update_url;
+                break;
         }
         HttpManager.sendRequest(url, map, new HttpRequestListener() {
             @Override

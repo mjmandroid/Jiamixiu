@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/text_color_99"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="确定"
+            android:textColor="#ff4caf50"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wl_province"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="150dp" />
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wl_city"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="150dp" />
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wl_district"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+</LinearLayout>

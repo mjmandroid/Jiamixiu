@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +24,11 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.PersonInfoDetailBean;
+import com.project.jiamixiu.bean.ProvinceCityBean;
 import com.project.jiamixiu.function.login.RegisterActivity;
 import com.project.jiamixiu.function.person.inter.IPersonInfoView;
 import com.project.jiamixiu.function.person.presenter.PersonInfoPresenter;
@@ -34,9 +38,15 @@ import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
+import com.wx.wheelview.adapter.ArrayWheelAdapter;
+import com.wx.wheelview.widget.WheelView;
+
+import org.apache.http.util.EncodingUtils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +58,7 @@ import butterknife.OnClick;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static javax.xml.transform.OutputKeys.ENCODING;
 
 public class PersonInfoActivity extends AppCompatActivity implements View.OnClickListener,IPersonInfoView {
     private static final int REQUST_CAMER = 4434;
@@ -111,6 +122,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.btn_exit)
     Button btnExit;
     PersonInfoPresenter personInfoPresenter;
+    ProvinceCityBean provinceCityBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,11 +138,12 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         });
          personInfoPresenter = new PersonInfoPresenter(this);
          personInfoPresenter.getPersonInfo();
+        provinceCityBean = new Gson().fromJson(getFromAssets("province_city.txt"),ProvinceCityBean.class);
 
     }
 
     @OnClick({R.id.ll_headimage,R.id.ll_nickname,R.id.ll_gender,R.id.ll_birthday,R.id.ll_address,R.id.ll_address_2,R.id.ll_sign,
-            R.id.ll_confirm_name,R.id.ll_pwd,R.id.ll_email,R.id.ll_phone,R.id.ll_tier,R.id.ll_bill})
+            R.id.ll_confirm_name,R.id.ll_pwd,R.id.ll_email,R.id.ll_phone,R.id.ll_tier,R.id.ll_bill,R.id.btn_exit})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -150,8 +163,10 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 showDatePickerDialog(this,ca);
                 break;
             case R.id.ll_address:
+                showAddressDialog(provinceCityBean);
                 break;
             case R.id.ll_address_2:
+                showRegionDialog(provinceCityBean);
                 break;
             case R.id.ll_sign:
                 Intent si = new Intent(this,SetInfoValueActivity.class);
@@ -380,6 +395,21 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 tvAddress2.setText(bean.data.address);
             }
 
+            if (!TextUtils.isEmpty(bean.data.mobile)){
+                tvPhone.setText(UIUtils.getHidePhoneNumber(bean.data.mobile));
+            }
+            if (!TextUtils.isEmpty(bean.data.email)){
+                tvEmail.setText(UIUtils.getHideEmail(bean.data.mobile));
+            }else {
+                tvEmail.setText("立即绑定");
+                tvEmail.setTextColor(Color.parseColor("#F40000"));
+            }
+            if (!TextUtils.isEmpty(bean.data.f_creatoruserid)){
+                tvConfirmName.setText("已认证");
+            }else {
+                tvConfirmName.setText("未认证");
+                tvConfirmName.setTextColor(Color.parseColor("#F40000"));
+            }
         }
     }
 
@@ -515,5 +545,176 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 , calendar.get(Calendar.YEAR)
                 ,calendar.get(Calendar.MONTH)
                 ,calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+    Dialog addressDialog,regionDialog;
+    private void showAddressDialog(ProvinceCityBean bean){
+        if (bean == null){
+            return;
+        }
+        if (addressDialog == null){
+            final ArrayList<String> provinces = new ArrayList<>();
+            ArrayList<String> cities = new ArrayList<>();
+            cities.add("");
+
+            ArrayList<String> dis = new ArrayList<>();
+            dis.add("");
+            final HashMap<String,ArrayList<String>> map = new HashMap<>();
+            final HashMap<String,ArrayList<String>> map1 = new HashMap<>();
+            if (bean != null && bean.data != null && bean.data.size() > 0){
+                for (ProvinceCityBean.ProvinceData provinceData:bean.data){
+                    provinces.add(provinceData.areaName);
+                    ArrayList<String> c = new ArrayList<>();
+                    for (ProvinceCityBean.CityData cityData: provinceData.cities){
+                        c.add(cityData.areaName);
+                        ArrayList<String> d = new ArrayList<>();
+                        for (ProvinceCityBean.CountyData countyData : cityData.counties){
+                            d.add(countyData.areaName);
+                        }
+                        map1.put(cityData.areaName,d);
+                    }
+                    map.put(provinceData.areaName,c);
+                }
+            }
+
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_province_city,null);
+            final WheelView wlProvince = (WheelView)view.findViewById(R.id.wl_province);
+            final WheelView wlCity = (WheelView)view.findViewById(R.id.wl_city);
+            final WheelView wlDistrict = (WheelView)view.findViewById(R.id.wl_district);
+            wlProvince.setSelection(0);
+            wlProvince.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+            wlProvince.setSkin(WheelView.Skin.Holo); // common皮肤
+            wlProvince.setWheelData(provinces);  // 数据集合
+
+            wlCity.setSelection(0);
+            wlCity.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+            wlCity.setSkin(WheelView.Skin.Holo); // common皮肤
+            wlCity.setWheelData(cities);  // 数据集合
+
+            wlProvince.join(wlCity);
+            wlProvince.joinDatas(map);
+
+
+            wlDistrict.setSelection(0);
+            wlDistrict.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+            wlDistrict.setSkin(WheelView.Skin.Holo); // common皮肤
+            wlDistrict.setWheelData(dis);  // 数据集合
+
+           /* wlCity.join(wlDistrict);
+            wlCity.joinDatas(map1);*/
+           wlCity.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+               @Override
+               public void onItemSelected(int i, Object o) {
+                   if (!TextUtils.isEmpty((String)o)){
+                       Log.i("onItemSelected", "  key  " + (String)o);
+                       ArrayList<String> list = map1.get((String) wlCity.getSelectionItem());
+                       if (list != null && list.size() > 0){
+                           wlDistrict.setWheelData(list);
+                       }else {
+                           list.add("");
+                           wlDistrict.setWheelData(list);
+                       }
+                   }
+               }
+           });
+
+            (view.findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addressDialog.dismiss();
+                }
+            });
+            (view.findViewById(R.id.tv_ok)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addressDialog.dismiss();
+                    String province = (String)wlProvince.getSelectionItem();
+                    String  city =  (String)wlCity.getSelectionItem();
+                    String  d =  (String)wlDistrict.getSelectionItem();
+                    String value = province + " " + city +" " + d;
+                    personInfoPresenter.updateInfo(value,7);
+                }
+            });
+            addressDialog = DialogUtils.BottonDialog(this,view);
+        }
+        addressDialog.show();
+
+    }
+    private void showRegionDialog(ProvinceCityBean bean){
+        if (bean == null){
+            return;
+        }
+        if (regionDialog == null){
+            final ArrayList<String> provinces = new ArrayList<>();
+            ArrayList<String> cities = new ArrayList<>();
+            cities.add("");
+
+            ArrayList<String> dis = new ArrayList<>();
+            dis.add("");
+            final HashMap<String,ArrayList<String>> map = new HashMap<>();
+            if (bean != null && bean.data != null && bean.data.size() > 0){
+                for (ProvinceCityBean.ProvinceData provinceData:bean.data){
+                    provinces.add(provinceData.areaName);
+                    ArrayList<String> c = new ArrayList<>();
+                    for (ProvinceCityBean.CityData cityData: provinceData.cities){
+                        c.add(cityData.areaName);
+                    }
+                    map.put(provinceData.areaName,c);
+                }
+            }
+
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_province_city,null);
+            final WheelView wlProvince = (WheelView)view.findViewById(R.id.wl_province);
+            final WheelView wlCity = (WheelView)view.findViewById(R.id.wl_city);
+            final WheelView wlDistrict = (WheelView)view.findViewById(R.id.wl_district);
+            wlCity.setVisibility(View.GONE);
+            wlProvince.setSelection(0);
+            wlProvince.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+            wlProvince.setSkin(WheelView.Skin.Holo); // common皮肤
+            wlProvince.setWheelData(provinces);  // 数据集合
+
+            wlCity.setSelection(0);
+            wlCity.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+            wlCity.setSkin(WheelView.Skin.Holo); // common皮肤
+            wlCity.setWheelData(cities);  // 数据集合
+
+            wlProvince.join(wlCity);
+            wlProvince.joinDatas(map);
+
+            (view.findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    regionDialog.dismiss();
+                }
+            });
+            (view.findViewById(R.id.tv_ok)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    regionDialog.dismiss();
+                    String  city =  (String)wlCity.getSelectionItem();
+//                    tvAddress2.setText(city);
+                    personInfoPresenter.updateInfo(city,6);
+                }
+            });
+            regionDialog = DialogUtils.BottonDialog(this,view);
+        }
+        regionDialog.show();
+
+    }
+    //从assets 文件夹中获取文件并读取数据
+    public String getFromAssets(String fileName){
+        String result = "";
+        try {
+            InputStream in = getResources().getAssets().open(fileName);
+            //获取文件的字节数
+            int lenght = in.available();
+            //创建byte数组
+            byte[] buffer = new byte[lenght];
+            //将文件中的数据读到byte数组中
+            in.read(buffer);
+            result = EncodingUtils.getString(buffer, ENCODING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "{\"data\":" + result + "}";
     }
 }

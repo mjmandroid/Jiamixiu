@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         UIUtils.showToast(this, "确认密码错误");
                         return;
                     }
-                    presenter.register(phone, pwd, code);
+                    presenter.register(phone, pwd, code,type);
                 }
                 break;
             case R.id.ll_go_login:

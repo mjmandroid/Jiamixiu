@@ -72,4 +72,11 @@ public class UIUtils {
         }
         return c;
     }
+
+    public static String getHidePhoneNumber(String s){
+        return s.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+    }
+    public static String getHideEmail(String s){
+        return s.replaceAll("(\\w?)(\\w+)(\\w)(@\\w+\\.[a-z]+(\\.[a-z]+)?)", "$1****$3$4");
+    }
 }

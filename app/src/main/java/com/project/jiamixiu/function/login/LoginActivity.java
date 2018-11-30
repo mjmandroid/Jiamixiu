@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onSuccess(LoginBean bean) {
         SharedPreferencesUtil.saveToken(bean.data.token);
-        setResult(LOGIN_SUCCESS_CODE);
+        setResult(RESULT_OK);
         finish();
 
     }

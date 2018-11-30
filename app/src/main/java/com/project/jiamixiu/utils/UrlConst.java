@@ -14,6 +14,7 @@ public interface UrlConst {
     String avator_update_url = "api/user/UpdateAvator";
     String uploadFile = "api/common/AsyncUpload";
     String forget_pwd__url = "api/user/ForgetPwd";
+    String update_pwd__url = "";
     String follow_url = "api/video/MyFollows";
     String fan_url = "api/video/MyFans";
     String collect_url = "api/video/myFavorite";

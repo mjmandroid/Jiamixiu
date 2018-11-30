@@ -15,12 +15,20 @@ public class RegisterPresenter {
         this.registerView = registerView;
     }
 
-    public void register(String phone,String pwd,String code){
+    public void register(String phone,String pwd,String code,String type){
         HashMap<String ,String> map = new HashMap<>();
         map.put("mobile",phone);
         map.put("password",pwd);
         map.put("code",code);
-        HttpManager.sendRequest(UrlConst.register_url, map, new HttpRequestListener() {
+        String url  = "";
+        if (type.equals("0")) {
+           url = UrlConst.register_url;
+        } else if (type.equals("1")) {
+            url = UrlConst.update_pwd__url;
+        } else if (type.equals("2")) {
+            url = UrlConst.forget_pwd__url;
+        }
+        HttpManager.sendRequest(url, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {
                 LoginBean bean = new Gson().fromJson(response,LoginBean.class);

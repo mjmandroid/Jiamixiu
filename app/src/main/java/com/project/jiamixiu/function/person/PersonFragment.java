@@ -15,7 +15,11 @@ import com.project.jiamixiu.base.BaseFragment;
 import com.project.jiamixiu.bean.MyInfoBean;
 import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.function.login.RegisterActivity;
+import com.project.jiamixiu.function.person.activity.MyFanActivity;
+import com.project.jiamixiu.function.person.activity.MyFollowActivity;
+import com.project.jiamixiu.function.person.activity.MyWorksActivity;
 import com.project.jiamixiu.function.person.activity.PersonInfoActivity;
+import com.project.jiamixiu.function.person.activity.VideoCollectActivity;
 import com.project.jiamixiu.function.person.inter.IPersonView;
 import com.project.jiamixiu.function.person.presenter.PersonPresenter;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
@@ -134,24 +138,28 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
                     return;
                 }
+                startActivity(new Intent(getContext(),VideoCollectActivity.class));
                 break;
             case R.id.ll_my_work:
                 if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
                     return;
                 }
+                startActivity(new Intent(getContext(),MyWorksActivity.class));
                 break;
             case R.id.ll_my_fan:
                 if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
                     return;
                 }
+                startActivity(new Intent(getContext(),MyFanActivity.class));
                 break;
             case R.id.ll_my_concern:
                 if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
                     return;
                 }
+                startActivity(new Intent(getContext(),MyFollowActivity.class));
                 break;
         }
     }
@@ -171,13 +179,21 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 }
             }
             if (requestCode == 11){
-                personPresenter.loadPersonInfo();
+                if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
+                    llNoLogin.setVisibility(View.VISIBLE);
+                    llLogin.setVisibility(View.GONE);
+                }else {
+                    personPresenter.loadPersonInfo();
+                }
+
             }
         }
     }
 
     @Override
     public void getPersonInfoSuccessed(MyInfoBean bean) {
+        llLogin.setVisibility(View.VISIBLE);
+        llNoLogin.setVisibility(View.GONE);
         if (bean.data != null){
             if (!TextUtils.isEmpty(bean.data.nick)){
                 tvUserName.setText(bean.data.nick);

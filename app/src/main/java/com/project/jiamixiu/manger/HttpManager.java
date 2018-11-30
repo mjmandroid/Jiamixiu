@@ -39,7 +39,7 @@ public class HttpManager {
     public final static String CODE_DEFAULT_ERROR = "-1";// 默认码错误
     public final static String CODE_DEFAULT = "-100";//未授权（默认）
     public final static String CODE_API_UNAUTHORIZED = "-200";//api未授权
-    public final static String CODE_USER_NO_LOGIN = "-300";//用户未登录(或session token过期)
+    public final static String CODE_USER_NO_LOGIN = "401";//用户未登录(或session token过期)
     public final static String CODE_USER_UNAUTHORIZED = "-301";//用户未授权
 
     /**
