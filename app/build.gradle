@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation files('libs/picasso-2.5.2.jar')
     implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 }

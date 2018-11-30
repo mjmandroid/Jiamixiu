@@ -16,4 +16,6 @@ public interface UrlConst {
     String collect_url = "api/video/myFavorite";
     String del_collect_url = "api/video/FavoriteRemove";
     String video_detail = "api/video/detail";
+    String os_token = "api/video/AliOss";
+    String video_about = "api/video/Follow";
 }

@@ -23,5 +23,6 @@ public class VideoDetailResponse extends BaseBean{
         public String isfav;
         public String f_creatoruserid;
         public String f_creatortime;
+        public String url;
     }
 }

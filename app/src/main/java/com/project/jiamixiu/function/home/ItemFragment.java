@@ -31,6 +31,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,6 +54,7 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
     private ItemFragmentPresenter presenter;
     private String fid;//分类id
     private int page = 0;
+    static int count = 0;
 
     @Override
     public View initView() {
@@ -67,6 +69,8 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         presenter = new ItemFragmentPresenter(this);
         presenter.preloadData("","",page+"","20");
         initEvent();
+        count ++;
+        System.out.println("SendRequstToServer==="+count);
         return view;
     }
 

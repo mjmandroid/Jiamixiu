@@ -30,6 +30,9 @@ public class SharedPreferencesUtil {
     private static final String PING_LOGO = "ping_tai_logo";
     private static final String HOT_ONLINE = "hot_online";
     private static final String IS_SHOW_COUPON = "is_show_coupon";
+    private static final String OS_TOKEN = "os_token";
+    private static final String OS_SECRET = "os_secret";
+    private static final String OS_KEY = "os_key";
     /*
     * 插入
     * mContext　上下文
@@ -107,6 +110,39 @@ public class SharedPreferencesUtil {
     public static String getToken() {
         SharedPreferences sp = BaseApplication.getPreferences();
         String s = sp.getString(LOGIN_TOKEN, "");
+        return s;
+    }
+    public static String getOsToken() {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        String s = sp.getString(OS_TOKEN, "");
+        return s;
+    }
+    public static void saveOsToken(String value) {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(OS_TOKEN, value);
+        editor.commit();
+    }
+    public static void saveOsKey(String value) {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(OS_KEY, value);
+        editor.commit();
+    }
+    public static String getOsKey() {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        String s = sp.getString(OS_KEY, "");
+        return s;
+    }
+    public static void saveOsSecret(String value) {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(OS_SECRET, value);
+        editor.commit();
+    }
+    public static String getOsSecret() {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        String s = sp.getString(OS_SECRET, "");
         return s;
     }
 
