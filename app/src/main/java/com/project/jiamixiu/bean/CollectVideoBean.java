@@ -1,9 +1,12 @@
 package com.project.jiamixiu.bean;
 
-public class CollectVideoBean extends BaseBean{
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    public CollectVideoData data;
-    public static class CollectVideoData{
+public class CollectVideoBean extends BaseBean implements Serializable{
+
+    public ArrayList<VideoData> data;
+    public static class VideoData implements Serializable{
 
     /**
      * f_id : a5f30f46d09146b99d437b7b35d26a5d

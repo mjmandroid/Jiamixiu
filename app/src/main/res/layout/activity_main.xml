@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="12dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icon_add"
             android:layout_weight="1"/>
         <RadioButton
             android:id="@+id/rb_msg"

@@ -1,7 +1,9 @@
 package com.project.jiamixiu.bean;
 
+import java.util.ArrayList;
+
 public class MyWorkBean extends BaseBean {
-    public MyWorkData data;
+    public ArrayList<MyWorkData> data;
     public static class MyWorkData{
         /**
          * f_id : a5f30f46d09146b99d437b7b35d26a5d

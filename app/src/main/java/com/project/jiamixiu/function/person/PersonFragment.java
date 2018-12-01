@@ -62,6 +62,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     LinearLayout llMyConcern;
     Unbinder unbinder;
     PersonPresenter personPresenter;
+    MyInfoBean infoBean;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         personPresenter = new PersonPresenter(this);
@@ -145,7 +146,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
                     return;
                 }
-                startActivity(new Intent(getContext(),MyWorksActivity.class));
+                Intent wi = new Intent(getContext(),MyWorksActivity.class);
+              /*  Bundle bundle = new Bundle();
+                bundle.putSerializable("info",infoBean);*/
+                wi.putExtra("info",infoBean);
+                startActivity(wi);
                 break;
             case R.id.ll_my_fan:
                 if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
@@ -192,6 +197,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void getPersonInfoSuccessed(MyInfoBean bean) {
+        this.infoBean = bean;
         llLogin.setVisibility(View.VISIBLE);
         llNoLogin.setVisibility(View.GONE);
         if (bean.data != null){
