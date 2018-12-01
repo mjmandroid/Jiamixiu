@@ -9,9 +9,18 @@ import com.project.jiamixiu.base.BaseFragment;
 import com.project.jiamixiu.function.home.HomeFragment;
 import com.project.jiamixiu.function.person.PersonFragment;
 import com.project.jiamixiu.manger.FragmentChangeManager;
+import com.project.jiamixiu.manger.HttpManager;
+import com.project.jiamixiu.manger.listener.HttpRequestListener;
+import com.project.jiamixiu.utils.OssUtils;
+import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.ToastUtil;
+import com.project.jiamixiu.utils.UrlConst;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private RadioGroup radioGroup;
@@ -26,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentList.add(new PersonFragment());
         manager = new FragmentChangeManager(getSupportFragmentManager(),R.id.fl_content,fragmentList);
         initEvent();
+        getOsToken();
     }
 
     private void initEvent() {
@@ -51,6 +61,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void getOsToken(){
+        HttpManager.sendRequest(UrlConst.os_token, new HashMap<>(), new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    JSONObject data = object.optJSONObject("data");
+                    String securitytoken = data.optString("securitytoken");
+                    SharedPreferencesUtil.saveOsToken(securitytoken);
+                    String accesskeysecret = data.optString("accesskeysecret");
+                    SharedPreferencesUtil.saveOsSecret(accesskeysecret);
+                    String accesskeyid = data.optString("accesskeyid");
+                    SharedPreferencesUtil.saveOsKey(accesskeyid);
+                    data.optString("expiration");
+                    OssUtils.getInstance().initOss(accesskeyid,accesskeysecret,securitytoken);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {

@@ -73,7 +73,9 @@
         <activity android:name=".function.person.activity.MyFanActivity" />
         <activity
             android:name=".function.person.activity.MyFollowActivity"
-            android:label="@string/title_activity_my_follow"></activity>
+            android:label="@string/title_activity_my_follow">
+        </activity>
+        <activity android:name=".function.home.MoreUsersActivity"/>
     </application>
 
 </manifest>

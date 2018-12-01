@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.base.BaseFragment;
@@ -40,9 +41,6 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
         prenster = new HomePrenster(this);
         loadingDialog.show();
         prenster.acquireTabs();
-        pagerAdapter = new MyPagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-
         initEvent();
         return view;
     }
@@ -100,7 +98,8 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
         for (int i = 0; i < listTab.size() + 1; i++) {
             mFragments.add(new ItemFragment());
         }
-        pagerAdapter.notifyDataSetChanged();
+        pagerAdapter = new MyPagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
         tabList = listTab;
         tabLayout.addTab(tabLayout.newTab().setText("全部"));
         for (TabBeanResponse.TabBean bean : listTab) {
@@ -133,6 +132,11 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
         @Override
         public Fragment getItem(int position) {
             return mFragments.get(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            //super.destroyItem(container, position, object);
         }
     }
 }

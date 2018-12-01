@@ -7,4 +7,6 @@ public interface IvideoDetailView {
     void loadDetailSuccess(VideoDetailResponse.Data data);
     void laodDetailFail(String errmsg);
     void loadFinish();
+
+    void aboutSuccess();
 }
