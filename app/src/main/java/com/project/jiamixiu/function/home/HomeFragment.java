@@ -106,7 +106,7 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
             tabLayout.addTab(tabLayout.newTab().setText(bean.name));
         }
         prenster.setTabWidth(tabLayout,20);
-        tabLayout.getTabAt(0).select();
+        //tabLayout.getTabAt(0).select();
     }
 
     @Override

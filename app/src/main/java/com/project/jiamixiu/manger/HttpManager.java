@@ -67,7 +67,7 @@ public class HttpManager {
 
             @Override
             public void onNext(@NonNull String s) {
-                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onNext == "+s.toString());
+                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "url="+url+"onNext == "+s.toString());
                 Gson gson = new Gson();
                 BaseBean baseBean = gson.fromJson(s, BaseBean.class);
                 switch (baseBean.error_code) {

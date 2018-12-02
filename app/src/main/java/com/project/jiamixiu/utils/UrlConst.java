@@ -29,4 +29,10 @@ public interface UrlConst {
     String video_detail = "api/video/detail";
     String os_token = "api/video/AliOss";
     String video_about = "api/video/Follow";
+    String video_comment = "api/video/Comment";
+    String vido_praise = "api/video/Like";
+    String video_favorite = "api/video/Favorite";
+    String video_share = "api/video/Share";
+    String video_recommend = "api/video/Recommend";
+    String video_comment_list = "api/video/VideoComment";
 }

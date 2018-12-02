@@ -54,7 +54,6 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
     private ItemFragmentPresenter presenter;
     private String fid;//分类id
     private int page = 0;
-    static int count = 0;
 
     @Override
     public View initView() {
@@ -63,24 +62,12 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         initBanner();
         initRefresh();
         recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
-<<<<<<< HEAD
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, UIUtils.dip2px(getContext(),12),false));
-//        SinaRefreshView headerView = new SinaRefreshView(mContext);
-//        headerView.setArrowResource(R.mipmap.arrow);
-//        headerView.setTextColor(0xff745D5C);
-//        refreshLayout.setHeaderView(headerView);
-//        refreshLayout.setBottomView(new LoadingView(mContext));
-//        refreshLayout.setTargetView(recyclerView);
-=======
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, UIUtils.dip2px(mContext,12),false));
->>>>>>> 9f547aa25f5fd3f20deaa92c83df89465344f7b1
         adapter = new ItemFragmentAdapter(mContext);
         recyclerView.setAdapter(adapter);
         presenter = new ItemFragmentPresenter(this);
         presenter.preloadData("","",page+"","20");
         initEvent();
-        count ++;
-        System.out.println("SendRequstToServer==="+count);
         return view;
     }
 
