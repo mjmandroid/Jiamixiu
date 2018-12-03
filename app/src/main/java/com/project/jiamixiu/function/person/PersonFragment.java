@@ -209,6 +209,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             if (!TextUtils.isEmpty(bean.data.avator)){
                 Picasso.with(getContext()).load(bean.data.avator).error(R.mipmap.icon_default_head).into(ivUserImg);
             }
+            SharedPreferencesUtil.saveUserId(bean.data.f_id);
         }
     }
 

@@ -14,7 +14,12 @@ import com.project.jiamixiu.R;
 
 public class CustomerToolbar extends LinearLayout {
     TextView tv_title;
-    ImageView iv_back;
+    ImageView iv_back,iv_menu;
+
+    public ImageView getIv_menu() {
+        return iv_menu;
+    }
+
     public CustomerToolbar(Context context) {
         super(context);
     }
@@ -42,6 +47,7 @@ public class CustomerToolbar extends LinearLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_toolbar,null);
         tv_title = (TextView)view.findViewById(R.id.tv_title);
         iv_back = (ImageView)view.findViewById(R.id.iv_back);
+        iv_menu = view.findViewById(R.id.iv_menu);
         iv_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

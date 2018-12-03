@@ -69,7 +69,7 @@ public class VideoCommentAdapter extends AbsBaseAdapter<VideoCommentResponse.Dat
                 });
                 rl_recommend.setOnClickListener(view->{
                     if (listener != null)
-                        listener.headviewClick(videoInfo.f_id);
+                        listener.headviewClick(videoInfo.f_id,videoInfo.coverimg);
                 });
             }
         }
@@ -77,7 +77,7 @@ public class VideoCommentAdapter extends AbsBaseAdapter<VideoCommentResponse.Dat
 
     public interface IitemOnClickListener{
         void getMoreVideos();
-        void headviewClick(String f_id);
+        void headviewClick(String f_id,String coverimg);
         void reply(String sourthId);
     }
 }

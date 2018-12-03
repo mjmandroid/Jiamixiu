@@ -7,13 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#f2f2f2"
+        android:background="#ffffff"
         android:paddingTop="20dp"
-        android:paddingBottom="100dp">
+        android:paddingBottom="20dp">
         <EditText
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:paddingLeft="15dp"
+            android:hint="评论一下"
             android:gravity="left|top"
             android:background="@drawable/shape_comment_bg"
             android:layout_marginLeft="15sp"
@@ -21,14 +23,15 @@
         <com.project.jiamixiu.widget.RoundButton
             android:id="@+id/btn_commit"
             android:layout_width="65dp"
-            android:layout_height="35dp"
+            android:layout_height="36dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textColor="@color/white"
             android:text="发布"
-            app:btn_normalSolidColor="#FF524E4E"
+            android:gravity="center"
+            app:btn_normalSolidColor="#FFB3B3B3"
             app:btnCornerRadius="stadium"/>
     </LinearLayout>
 

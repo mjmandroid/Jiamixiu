@@ -200,10 +200,12 @@ public class VideoDetailPrenster {
                 VideoCommentResponse response = new Gson().fromJson(result, VideoCommentResponse.class);
                 List<VideoCommentResponse.Data> dataList = new ArrayList<>();
                 if (response.data != null && response.data.size() > 0){
-                    VideoCommentResponse.Data head = response.new Data();
-                    head.type = 1;
-                    head.recInfo = videoInfo;
-                    dataList.add(head);
+                    if (videoInfo != null){
+                        VideoCommentResponse.Data head = response.new Data();
+                        head.type = 1;
+                        head.recInfo = videoInfo;
+                        dataList.add(head);
+                    }
                     dataList.addAll(response.data);
                     ivideoDetailView.getVideoCommentList(dataList);
                 } else {
