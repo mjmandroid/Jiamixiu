@@ -20,15 +20,80 @@ public class RegisterPresenter {
         map.put("mobile",phone);
         map.put("password",pwd);
         map.put("code",code);
-        String url  = "";
-        if (type.equals("0")) {
-           url = UrlConst.register_url;
-        } else if (type.equals("1")) {
-            url = UrlConst.update_pwd__url;
-        } else if (type.equals("2")) {
-            url = UrlConst.forget_pwd__url;
-        }
-        HttpManager.sendRequest(url, map, new HttpRequestListener() {
+        HttpManager.sendRequest(UrlConst.register_url, map, new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String response) {
+                LoginBean bean = new Gson().fromJson(response,LoginBean.class);
+                registerView.onSuccess(bean);
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+                registerView.onFail();
+                registerView.onShowToast(result);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+    }
+    public void updatePhone(String phone,String pwd,String code,String type){
+        HashMap<String ,String> map = new HashMap<>();
+        map.put("mobile",phone);
+        map.put("pwd",pwd);
+        map.put("code",code);
+        HttpManager.sendRequest(UrlConst.update_phone, map, new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String response) {
+                LoginBean bean = new Gson().fromJson(response,LoginBean.class);
+                registerView.onSuccess(bean);
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+                registerView.onFail();
+                registerView.onShowToast(result);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+    }
+    public void forgetPwd(String phone,String pwd,String code,String type){
+        HashMap<String ,String> map = new HashMap<>();
+        map.put("mobile",phone);
+        map.put("newpwd",pwd);
+        map.put("code",code);
+        HttpManager.sendRequest(UrlConst.forget_pwd__url, map, new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String response) {
+                LoginBean bean = new Gson().fromJson(response,LoginBean.class);
+                registerView.onSuccess(bean);
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+                registerView.onFail();
+                registerView.onShowToast(result);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+    }
+    public void updatePwd(String newpwd,String pwd,String code,String type){
+        HashMap<String ,String> map = new HashMap<>();
+        map.put("newpwd",newpwd);
+        map.put("pwd",pwd);
+        map.put("code",code);
+
+        HttpManager.sendRequest( UrlConst.update_pwd__url, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {
                 LoginBean bean = new Gson().fromJson(response,LoginBean.class);

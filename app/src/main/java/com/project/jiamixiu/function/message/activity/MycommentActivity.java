@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.MyCommentBean;
+import com.project.jiamixiu.function.message.inter.ICommentView;
+import com.project.jiamixiu.function.message.presenter.CommentPresenter;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MycommentActivity extends AppCompatActivity {
+public class MycommentActivity extends AppCompatActivity implements ICommentView {
 
     @BindView(R.id.toolbar)
     CustomerToolbar toolbar;
@@ -31,7 +33,8 @@ public class MycommentActivity extends AppCompatActivity {
     TextView tvNothing;
     private ArrayList<MyCommentBean.MyCommentData> list = new ArrayList<>();
     private CommentAdapter adapter;
-
+    private CommentPresenter presenter;
+    private int page;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,28 @@ public class MycommentActivity extends AppCompatActivity {
 
         adapter = new CommentAdapter();
         lvComment.setAdapter(adapter);
+        presenter = new CommentPresenter(this);
+        presenter.getData(page);
+    }
+
+    @Override
+    public void onLoadCommentData(MyCommentBean bean) {
+
+    }
+
+    @Override
+    public void onShowToast(String s) {
+
+    }
+
+    @Override
+    public void onLoadFail() {
+
+    }
+
+    @Override
+    public void onCompleted() {
+
     }
 
 
@@ -80,7 +105,7 @@ public class MycommentActivity extends AppCompatActivity {
             MyCommentBean.MyCommentData commentData = list.get(position);
             holder.tvName.setText(commentData.nick);
             holder.tvContent.setText(commentData.message);
-            holder.tvMe.setText("评论了" + commentData.nick + "的作品");
+            holder.tvMe.setText("评论了" + commentData.videousername + "的作品");
             holder.tvTime.setText(commentData.f_creatortime);
             Picasso.with(MycommentActivity.this).load(commentData.avator).into(holder.ivUserImg);
             Picasso.with(MycommentActivity.this).load(commentData.coverimg).into(holder.tvCover);

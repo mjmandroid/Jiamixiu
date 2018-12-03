@@ -77,6 +77,9 @@
         <activity android:name=".function.home.MoreUsersActivity" />
         <activity android:name=".function.message.activity.AtMeActivity" />
         <activity android:name=".function.message.activity.MycommentActivity"></activity>
+        <activity android:name=".function.person.activity.ConfirmCardActivity" />
+        <activity android:name=".function.person.activity.BindEmailActivity" />
+        <activity android:name=".function.message.activity.ZanMeActivity"></activity>
     </application>
 
 </manifest>

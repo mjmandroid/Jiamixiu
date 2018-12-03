@@ -81,6 +81,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:textSize="14sp"
+                android:inputType="textPassword"
                 android:textColor="@color/text_color_33"
                 android:paddingLeft="12dp"
                 android:hint="请输入密码"

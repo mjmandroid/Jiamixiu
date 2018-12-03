@@ -150,7 +150,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
             case R.id.ll_headimage:
                 showPhotoWindow();
                 break;
-            case R.id.ll_nickname:
+            case R.id.rl_pic1:
                 Intent ni = new Intent(this,SetInfoValueActivity.class);
                 ni.putExtra("type","1");
                 startActivityForResult(ni,22);
@@ -174,6 +174,8 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 startActivityForResult(si,22);
                 break;
             case R.id.ll_confirm_name:
+                Intent scci = new Intent(this,ConfirmCardActivity.class);
+                startActivityForResult(scci,22);
                 break;
             case R.id.ll_pwd:
                 Intent pi = new Intent(this, RegisterActivity.class);
@@ -181,8 +183,14 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 startActivity(pi);
                 break;
             case R.id.ll_email:
+                Intent ei = new Intent(this,BindEmailActivity.class);
+                startActivityForResult(ei,22);
+
                 break;
             case R.id.ll_phone:
+                Intent ppi = new Intent(this,RegisterActivity.class);
+                ppi.putExtra("type","3");
+                startActivityForResult(ppi,22);
                 break;
             case R.id.ll_tier:
                 break;

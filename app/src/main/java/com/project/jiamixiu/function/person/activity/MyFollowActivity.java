@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.FanBean;
+import com.project.jiamixiu.function.person.adapter.FanAdapter;
 import com.project.jiamixiu.function.person.inter.IFanView;
 import com.project.jiamixiu.function.person.presenter.FanPresenter;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.utils.UrlConst;
 import com.project.jiamixiu.widget.CustomerToolbar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +30,9 @@ public class MyFollowActivity extends AppCompatActivity implements IFanView {
     TextView tvNothing;
     @BindView(R.id.container)
     RelativeLayout container;
+    ArrayList<FanBean.FanData> fanData = new ArrayList<>();
     FanPresenter presenter;
+    FanAdapter fanAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,9 @@ public class MyFollowActivity extends AppCompatActivity implements IFanView {
                 finish();
             }
         });
+        fanAdapter = new FanAdapter(this,fanData);
+        fanAdapter.setType("1");
+        lvFollow.setAdapter(fanAdapter);
         lvFollow.setVisibility(View.GONE);
         tvNothing.setVisibility(View.VISIBLE);
         presenter = new FanPresenter(this);
@@ -51,9 +59,17 @@ public class MyFollowActivity extends AppCompatActivity implements IFanView {
         if (bean.data != null && bean.data.size() > 0){
             lvFollow.setVisibility(View.VISIBLE);
             tvNothing.setVisibility(View.GONE);
+            fanData.addAll(bean.data);
+            fanAdapter.notifyDataSetChanged();
+        }else {
+            lvFollow.setVisibility(View.GONE);
+            tvNothing.setVisibility(View.VISIBLE);
         }
     }
-
+    @Override
+    public void onFollowSuccess() {
+        presenter.loadData(UrlConst.fan_url);
+    }
     @Override
     public void onShowToast(String s) {
         UIUtils.showToast(this,s);

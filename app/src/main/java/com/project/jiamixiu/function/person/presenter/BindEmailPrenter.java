@@ -1,35 +1,34 @@
 package com.project.jiamixiu.function.person.presenter;
 
 import com.google.gson.Gson;
-import com.project.jiamixiu.bean.FanBean;
-import com.project.jiamixiu.bean.MyWorkBean;
-import com.project.jiamixiu.function.person.inter.IFanView;
+import com.project.jiamixiu.bean.LoginBean;
+import com.project.jiamixiu.function.person.inter.IBindEmailView;
 import com.project.jiamixiu.manger.HttpManager;
 import com.project.jiamixiu.manger.listener.HttpRequestListener;
 import com.project.jiamixiu.utils.UrlConst;
 
 import java.util.HashMap;
 
-import static com.project.jiamixiu.utils.UrlConst.follow_user_url;
-
-public class FanPresenter {
-    IFanView fanView;
-    public FanPresenter(IFanView fanView){
-        this.fanView = fanView;
+public class BindEmailPrenter {
+    IBindEmailView bindEmailView;
+    public BindEmailPrenter(IBindEmailView bindEmailView){
+        this.bindEmailView = bindEmailView;
     }
-    public void loadData(String url){
+
+    public void bind(String email,String code){
         HashMap<String ,String> map = new HashMap<>();
-        HttpManager.sendRequest(url, map, new HttpRequestListener() {
+        map.put("email",email);
+        map.put("code",code);
+        HttpManager.sendRequest(UrlConst.update_email, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {
-                FanBean bean = new Gson().fromJson(response,FanBean.class);
-                fanView.loadData(bean);
+               bindEmailView.onBindSuccess();
             }
 
             @Override
             public void onRequestFail(String result, String code) {
-                fanView.onShowToast(result);
-                fanView.onLoadFail();
+                bindEmailView.onFail();
+                bindEmailView.onShowToast(result);
             }
 
             @Override
@@ -38,20 +37,20 @@ public class FanPresenter {
             }
         });
     }
-    public void follow(String id){
+    public void getEmailCode(String phone){
         HashMap<String ,String> map = new HashMap<>();
-        map.put("id",id);
-        map.put("note","");
-        HttpManager.sendRequest(follow_user_url, map, new HttpRequestListener() {
+        map.put("mobile",phone);
+        map.put("provider","SMS_Change_Email");
+        HttpManager.sendRequest(UrlConst.sms_uurl, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {
-                fanView.onFollowSuccess();
+                bindEmailView.onGetCode();
             }
 
             @Override
             public void onRequestFail(String result, String code) {
-                fanView.onShowToast(result);
-                fanView.onLoadFail();
+                bindEmailView.onFail();
+                bindEmailView.onShowToast(result);
             }
 
             @Override

@@ -579,7 +579,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/white"
-                android:background="@color/theme_color"
+                android:background="@drawable/shape_btn_ok"
                 android:text="退出登录"/>
         </LinearLayout>
 
