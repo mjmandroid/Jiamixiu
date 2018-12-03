@@ -18,7 +18,30 @@ public class CommentPresenter {
         HashMap<String ,String> map = new HashMap<>();
         map.put("pageIndex",page+"");
         map.put("pageSize","20");
-        HttpManager.sendRequest(UrlConst.update_email, map, new HttpRequestListener() {
+        HttpManager.sendRequest(UrlConst.my_comment_url, map, new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String response) {
+                MyCommentBean bean = new Gson().fromJson(response,MyCommentBean.class);
+                commentView.onLoadCommentData(bean);
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+                commentView.onLoadFail();
+                commentView.onShowToast(result);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+    }
+    public void getData2(int page ){
+        HashMap<String ,String> map = new HashMap<>();
+        map.put("pageIndex",page+"");
+        map.put("pageSize","20");
+        HttpManager.sendRequest(UrlConst.comment_me_about, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {
                 MyCommentBean bean = new Gson().fromJson(response,MyCommentBean.class);

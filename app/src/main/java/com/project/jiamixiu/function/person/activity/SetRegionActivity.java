@@ -16,32 +16,23 @@ import com.project.jiamixiu.widget.CustomerToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SetInfoValueActivity extends AppCompatActivity {
+public class SetRegionActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     CustomerToolbar toolbar;
-    @BindView(R.id.edt_value)
-    EditText edtValue;
-    @BindView(R.id.edt_value_2)
-    EditText edtValue2;
+    @BindView(R.id.edt_region)
+    EditText edtRegion;
+    @BindView(R.id.ll_sign)
+    LinearLayout llSign;
     @BindView(R.id.btn_ok)
     Button btnOk;
-    @BindView(R.id.ll_sign)
-    LinearLayout ll_sign;
-    String type = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_info_value);
+        setContentView(R.layout.activity_set_region);
         ButterKnife.bind(this);
-        type = getIntent().getStringExtra("type");
-        if ("1".equals(type)){
-            toolbar.setTitle("设置昵称");
-            edtValue.setVisibility(View.VISIBLE);
-        }else {
-            toolbar.setTitle("设置个性签名");
-            ll_sign.setVisibility(View.VISIBLE);
-        }
+        toolbar.setTitle("设置常出没地");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
             public void onBack() {
@@ -51,18 +42,12 @@ public class SetInfoValueActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String vv = "";
-                if ("1".equals(type)){
-                    vv = edtValue.getText().toString();
-                }else {
-                    vv = edtValue2.getText().toString();
-                }
+                String vv = edtRegion.getText().toString();
                 if (TextUtils.isEmpty(vv)){
-                    UIUtils.showToast(SetInfoValueActivity.this,"值不能为空");
+                    UIUtils.showToast(SetRegionActivity.this,"值不能为空");
                     return;
                 }
                 Intent intent = new Intent();
-                intent.putExtra("type",type);
                 intent.putExtra("value",vv);
                 setResult(RESULT_OK,intent);
                 finish();

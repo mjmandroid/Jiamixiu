@@ -14,6 +14,7 @@ import com.project.jiamixiu.function.person.presenter.FanPresenter;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.utils.UrlConst;
 import com.project.jiamixiu.widget.CustomerToolbar;
+import com.project.jiamixiu.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,13 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
     ArrayList<FanBean.FanData> fanData = new ArrayList<>();
     FanPresenter presenter;
     FanAdapter fanAdapter;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_fan);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
         toolbar.setTitle("粉丝");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
@@ -49,6 +52,7 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
             @Override
             public void onClick(View v) {
                 String id = v.getTag().toString();
+                loadingDialog.show();
                 presenter.follow(id);
             }
         });
@@ -56,11 +60,13 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
         lvFollow.setVisibility(View.GONE);
         tvNothing.setVisibility(View.VISIBLE);
         presenter = new FanPresenter(this);
+        loadingDialog.show();
         presenter.loadData(UrlConst.fan_url);
     }
 
     @Override
     public void loadData(FanBean bean) {
+        loadingDialog.dismiss();
         if (bean.data != null && bean.data.size() > 0){
             lvFollow.setVisibility(View.VISIBLE);
             tvNothing.setVisibility(View.GONE);
@@ -74,17 +80,19 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
 
     @Override
     public void onFollowSuccess() {
+        loadingDialog.dismiss();
         presenter.loadData(UrlConst.fan_url);
     }
 
     @Override
     public void onShowToast(String s) {
+        loadingDialog.dismiss();
         UIUtils.showToast(this,s);
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override

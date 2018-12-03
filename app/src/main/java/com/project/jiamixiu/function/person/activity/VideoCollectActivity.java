@@ -18,6 +18,7 @@ import com.project.jiamixiu.function.person.inter.ICollectVideoView;
 import com.project.jiamixiu.function.person.presenter.CollectVideoPresenter;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
+import com.project.jiamixiu.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -35,12 +36,14 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
     CollectVideoAdapter videoAdapter;
     CollectVideoPresenter videoPresenter;
     ArrayList<CollectVideoBean.VideoData> list = new ArrayList<>();
+    LoadingDialog loadingDialog;
     int page = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_collect);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
         toolbar.setTitle("我的收藏");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
@@ -65,11 +68,13 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
         });
         lvVideo.setAdapter(videoAdapter);
         videoPresenter = new CollectVideoPresenter(this);
+        loadingDialog.show();
         videoPresenter.loadData(page);
     }
 
     @Override
     public void onLoadData(CollectVideoBean b) {
+        loadingDialog.dismiss();
         list.clear();
         if (b.data != null && b.data.size() > 0){
             tvNothing.setVisibility(View.GONE);
@@ -104,12 +109,12 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
 
     @Override
     public void onShowToast(String s) {
-
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override

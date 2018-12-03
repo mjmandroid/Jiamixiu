@@ -56,7 +56,7 @@ public class FanAdapter extends BaseAdapter {
             holder = (FanViewHolder)convertView.getTag();
         }
         FanBean.FanData f = fanData.get(position);
-        holder.tv_name.setText(f.username);
+        holder.tv_name.setText(f.nick);
         holder.tv_time.setText(f.laston);
         if (f.isfollow){
             holder.tv_follow.setText("相互关注");

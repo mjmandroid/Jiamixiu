@@ -16,6 +16,7 @@ import com.project.jiamixiu.bean.MyCommentBean;
 import com.project.jiamixiu.function.message.inter.ICommentView;
 import com.project.jiamixiu.function.message.presenter.CommentPresenter;
 import com.project.jiamixiu.widget.CustomerToolbar;
+import com.project.jiamixiu.widget.LoadingDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,10 +36,12 @@ public class MycommentActivity extends AppCompatActivity implements ICommentView
     private CommentAdapter adapter;
     private CommentPresenter presenter;
     private int page;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycomment);
+        loadingDialog = new LoadingDialog(this);
         ButterKnife.bind(this);
         toolbar.setTitle("评论");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
@@ -51,22 +54,30 @@ public class MycommentActivity extends AppCompatActivity implements ICommentView
         adapter = new CommentAdapter();
         lvComment.setAdapter(adapter);
         presenter = new CommentPresenter(this);
+        loadingDialog.show();
         presenter.getData(page);
     }
 
     @Override
     public void onLoadCommentData(MyCommentBean bean) {
-
+        loadingDialog.dismiss();
+        if (bean.data != null && bean.data.size() > 0){
+            list.addAll(bean.data);
+            adapter.notifyDataSetChanged();
+        }else {
+            lvComment.setVisibility(View.GONE);
+            tvNothing.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onShowToast(String s) {
-
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
@@ -105,7 +116,7 @@ public class MycommentActivity extends AppCompatActivity implements ICommentView
             MyCommentBean.MyCommentData commentData = list.get(position);
             holder.tvName.setText(commentData.nick);
             holder.tvContent.setText(commentData.message);
-            holder.tvMe.setText("评论了" + commentData.videousername + "的作品");
+            holder.tvMe.setText("你评论了" + commentData.videousername + "的作品");
             holder.tvTime.setText(commentData.f_creatortime);
             Picasso.with(MycommentActivity.this).load(commentData.avator).into(holder.ivUserImg);
             Picasso.with(MycommentActivity.this).load(commentData.coverimg).into(holder.tvCover);
