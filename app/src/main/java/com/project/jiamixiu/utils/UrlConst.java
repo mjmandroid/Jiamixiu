@@ -45,10 +45,6 @@ public interface UrlConst {
     String video_share = "api/video/Share";
     String video_recommend = "api/video/Recommend";
     String video_comment_list = "api/video/VideoComment";
-<<<<<<< HEAD
     String video_userinfo = "api/video/UserInfo";
     String about_user_video = "api/video/Subscribes";
-=======
-
->>>>>>> 4a2d91d48414d41ec5191f3e1af6330ca85e98f0
 }
