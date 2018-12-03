@@ -17,6 +17,7 @@ import com.project.jiamixiu.function.login.inter.IRegisterView;
 import com.project.jiamixiu.function.login.presenter.RegisterPresenter;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.UIUtils;
+import com.project.jiamixiu.widget.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +38,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.btn_ok)
     Button btnOk;
     RegisterPresenter presenter;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         presenter = new RegisterPresenter(this);
+        loadingDialog = new LoadingDialog(this);
     }
 
     @OnClick({R.id.tv_register,R.id.tv_pwd,R.id.btn_ok})
@@ -70,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     UIUtils.showToast(this,"请输入密码");
                     return;
                 }
+                loadingDialog.show();
                 presenter.login(phone,pwd);
                 break;
         }
@@ -77,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onSuccess(LoginBean bean) {
+        loadingDialog.dismiss();
         SharedPreferencesUtil.saveToken(bean.data.token);
         setResult(RESULT_OK);
         finish();
@@ -85,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
@@ -95,12 +100,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onShowToast(String s) {
+        loadingDialog.dismiss();
         UIUtils.showToast(this,s);
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override

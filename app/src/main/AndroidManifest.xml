@@ -76,8 +76,16 @@
             android:label="@string/title_activity_my_follow" />
         <activity android:name=".function.home.MoreUsersActivity" />
         <activity android:name=".function.message.activity.AtMeActivity" />
+<<<<<<< HEAD
         <activity android:name=".function.message.activity.MycommentActivity"></activity>
         <activity android:name=".function.home.RecommentVideoActivity"/>
+=======
+        <activity android:name=".function.message.activity.MycommentActivity" />
+        <activity android:name=".function.person.activity.ConfirmCardActivity" />
+        <activity android:name=".function.person.activity.BindEmailActivity" />
+        <activity android:name=".function.message.activity.ZanMeActivity" />
+        <activity android:name=".function.person.activity.SetRegionActivity"></activity>
+>>>>>>> 4a2d91d48414d41ec5191f3e1af6330ca85e98f0
     </application>
 
 </manifest>

@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.function.login.LoginActivity;
+import com.project.jiamixiu.function.message.activity.AtMeActivity;
+import com.project.jiamixiu.function.message.activity.MycommentActivity;
+import com.project.jiamixiu.function.message.activity.ZanMeActivity;
 import com.project.jiamixiu.function.person.activity.MyFanActivity;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
 
@@ -57,14 +60,16 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         }
         switch (v.getId()) {
             case R.id.ll_zan:
+                startActivity(new Intent(getContext(), ZanMeActivity.class));
                 break;
             case R.id.ll_fan:
                 startActivity(new Intent(getContext(), MyFanActivity.class));
                 break;
             case R.id.ll_at:
-
+                startActivity(new Intent(getContext(), AtMeActivity.class));
                 break;
             case R.id.ll_comment:
+                startActivity(new Intent(getContext(), MycommentActivity.class));
                 break;
         }
     }

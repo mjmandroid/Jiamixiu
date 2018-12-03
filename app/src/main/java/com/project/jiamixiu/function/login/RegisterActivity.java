@@ -17,6 +17,7 @@ import com.project.jiamixiu.bean.LoginBean;
 import com.project.jiamixiu.function.login.inter.IRegisterView;
 import com.project.jiamixiu.function.login.presenter.RegisterPresenter;
 import com.project.jiamixiu.utils.UIUtils;
+import com.project.jiamixiu.widget.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,12 +70,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String type;
     @BindView(R.id.ll_go_login)
     LinearLayout llGoLogin;
-
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
         presenter = new RegisterPresenter(this);
         type = getIntent().getStringExtra("type");
         if (type.equals("0")) {
@@ -83,8 +85,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else if (type.equals("1")) {
             tvTitle.setText("修改密码");
             llGoLogin.setVisibility(View.INVISIBLE);
+            edtPwd.setHint("当前密码");
+            edtPwd2.setHint("新密码");
         } else if (type.equals("2")) {
             tvTitle.setText("找回密码");
+            edtPwd.setHint("设置密码");
+            edtPwd2.setVisibility(View.GONE);
+            llGoLogin.setVisibility(View.INVISIBLE);
+        }else if (type.equals("3")) {
+            tvTitle.setText("更换手机");
+            edtPwd.setHint("当前密码");
+            edtPwd2.setVisibility(View.GONE);
             llGoLogin.setVisibility(View.INVISIBLE);
         }
     }
@@ -128,6 +139,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         s = "SMS_Register_Normal";
                     } else if (type.equals("2")) {
                         s = "SMS_Forget_Password";
+                    }else if (type.equals("3")) {
+                        s = "SMS_Change_Mobile";
                     }
                     String phone = edtPhone.getText().toString();
                     presenter.getSMSCode(phone,s);
@@ -168,7 +181,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         UIUtils.showToast(this, "确认密码错误");
                         return;
                     }
-                    presenter.register(phone, pwd, code,type);
+                    loadingDialog.show();
+                    if (type.equals("0")) {
+                        presenter.register(phone, pwd, code,type);
+                    } else if (type.equals("1")) {
+                        presenter.updatePwd(pwd2, pwd, code,type);
+                    } else if (type.equals("2")) {
+                        presenter.forgetPwd(phone, pwd, code,type);
+                    }else if (type.equals("3")) {
+                        presenter.updatePhone(phone, pwd, code,type);
+                    }
+
                 }
                 break;
             case R.id.ll_go_login:
@@ -179,12 +202,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onSuccess(LoginBean bean) {
+        loadingDialog.dismiss();
         finish();
     }
 
     @Override
     public void onFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
@@ -195,16 +219,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onShowToast(String s) {
+        loadingDialog.dismiss();
         UIUtils.showToast(this, s);
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onCompleted() {
-
+        loadingDialog.dismiss();
     }
 }

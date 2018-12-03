@@ -18,6 +18,7 @@ import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.MyInfoBean;
 import com.project.jiamixiu.function.person.VideoFragment;
 import com.project.jiamixiu.widget.CustomerToolbar;
+import com.project.jiamixiu.widget.LoadingDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -54,10 +55,12 @@ public class MyWorksActivity extends AppCompatActivity implements View.OnClickLi
     ViewPager viewPager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private VideoPageAdapter pageAdapter;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_works);
+        loadingDialog = new LoadingDialog(this);
         ButterKnife.bind(this);
         toolbar.setTitle("我的作品");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {

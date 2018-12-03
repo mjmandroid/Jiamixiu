@@ -79,4 +79,10 @@ public class UIUtils {
     public static String getHideEmail(String s){
         return s.replaceAll("(\\w?)(\\w+)(\\w)(@\\w+\\.[a-z]+(\\.[a-z]+)?)", "$1****$3$4");
     }
+    public static String getImageUrl(String url){
+        if (!url.startsWith("http")){
+            url = "http://jiamixiu.uniondevice.com" + url;
+        }
+        return url;
+    }
 }

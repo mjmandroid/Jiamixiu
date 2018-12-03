@@ -34,9 +34,21 @@ public interface UrlConst {
     String video_comment = "api/video/Comment";
     String vido_praise = "api/video/Like";
     String video_favorite = "api/video/Favorite";
+
+
+    String update_phone = "api/user/UpdateMobile";
+    String update_email = "api/user/UpdateEmail";
+    String follow_user_url = "api/video/Follow";
+
+    String my_comment_url = "api/video/MyComments";
+    String comment_me_about = "api/video/CommentsToMe";
     String video_share = "api/video/Share";
     String video_recommend = "api/video/Recommend";
     String video_comment_list = "api/video/VideoComment";
+<<<<<<< HEAD
     String video_userinfo = "api/video/UserInfo";
     String about_user_video = "api/video/Subscribes";
+=======
+
+>>>>>>> 4a2d91d48414d41ec5191f3e1af6330ca85e98f0
 }

@@ -1,4 +1,4 @@
-package com.project.jiamixiu.function.person.activity;
+package com.project.jiamixiu.function.message.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,6 @@ import com.project.jiamixiu.bean.FanBean;
 import com.project.jiamixiu.function.person.adapter.FanAdapter;
 import com.project.jiamixiu.function.person.inter.IFanView;
 import com.project.jiamixiu.function.person.presenter.FanPresenter;
-import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.utils.UrlConst;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.project.jiamixiu.widget.LoadingDialog;
@@ -21,12 +20,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyFanActivity extends AppCompatActivity implements IFanView{
+public class ZanMeActivity extends AppCompatActivity implements IFanView {
 
     @BindView(R.id.toolbar)
     CustomerToolbar toolbar;
-    @BindView(R.id.lv_follow)
-    ListView lvFollow;
+    @BindView(R.id.lv_zan)
+    ListView lvZan;
     @BindView(R.id.tv_nothing)
     TextView tvNothing;
     ArrayList<FanBean.FanData> fanData = new ArrayList<>();
@@ -36,10 +35,10 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_fan);
+        setContentView(R.layout.activity_zan_me);
         ButterKnife.bind(this);
         loadingDialog = new LoadingDialog(this);
-        toolbar.setTitle("粉丝");
+        toolbar.setTitle("赞");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
             public void onBack() {
@@ -56,8 +55,8 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
                 presenter.follow(id);
             }
         });
-        lvFollow.setAdapter(fanAdapter);
-        lvFollow.setVisibility(View.GONE);
+        lvZan.setAdapter(fanAdapter);
+        lvZan.setVisibility(View.GONE);
         tvNothing.setVisibility(View.VISIBLE);
         presenter = new FanPresenter(this);
         loadingDialog.show();
@@ -66,14 +65,13 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
 
     @Override
     public void loadData(FanBean bean) {
-        loadingDialog.dismiss();
         if (bean.data != null && bean.data.size() > 0){
-            lvFollow.setVisibility(View.VISIBLE);
+            lvZan.setVisibility(View.VISIBLE);
             tvNothing.setVisibility(View.GONE);
             fanData.addAll(bean.data);
             fanAdapter.notifyDataSetChanged();
         }else {
-            lvFollow.setVisibility(View.GONE);
+            lvZan.setVisibility(View.GONE);
             tvNothing.setVisibility(View.VISIBLE);
         }
     }
@@ -87,7 +85,6 @@ public class MyFanActivity extends AppCompatActivity implements IFanView{
     @Override
     public void onShowToast(String s) {
         loadingDialog.dismiss();
-        UIUtils.showToast(this,s);
     }
 
     @Override

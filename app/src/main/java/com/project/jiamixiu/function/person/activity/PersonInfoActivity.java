@@ -36,6 +36,7 @@ import com.project.jiamixiu.utils.DialogUtils;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
+import com.project.jiamixiu.widget.LoadingDialog;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -123,11 +124,13 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
     Button btnExit;
     PersonInfoPresenter personInfoPresenter;
     ProvinceCityBean provinceCityBean;
+    LoadingDialog loadingDialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
         toolbar.setTitle("个人资料");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
@@ -137,8 +140,9 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
             }
         });
          personInfoPresenter = new PersonInfoPresenter(this);
+         loadingDialog.show();
          personInfoPresenter.getPersonInfo();
-        provinceCityBean = new Gson().fromJson(getFromAssets("province_city.txt"),ProvinceCityBean.class);
+         provinceCityBean = new Gson().fromJson(getFromAssets("province_city.txt"),ProvinceCityBean.class);
 
     }
 
@@ -147,10 +151,20 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.ll_nickname:
+                Intent si = new Intent(this,SetInfoValueActivity.class);
+                si.putExtra("type","1");
+                startActivityForResult(si,22);
+                break;
+            case R.id.ll_sign:
+                Intent sis = new Intent(this,SetInfoValueActivity.class);
+                sis.putExtra("type","2");
+                startActivityForResult(sis,22);
+                break;
             case R.id.ll_headimage:
                 showPhotoWindow();
                 break;
-            case R.id.ll_nickname:
+            case R.id.rl_pic1:
                 Intent ni = new Intent(this,SetInfoValueActivity.class);
                 ni.putExtra("type","1");
                 startActivityForResult(ni,22);
@@ -166,14 +180,14 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 showAddressDialog(provinceCityBean);
                 break;
             case R.id.ll_address_2:
-                showRegionDialog(provinceCityBean);
+//                showRegionDialog(provinceCityBean);
+                Intent ccc = new Intent(this,SetRegionActivity.class);
+                startActivityForResult(ccc,2211);
                 break;
-            case R.id.ll_sign:
-                Intent si = new Intent(this,SetInfoValueActivity.class);
-                si.putExtra("type","2");
-                startActivityForResult(si,22);
-                break;
+
             case R.id.ll_confirm_name:
+                Intent scci = new Intent(this,ConfirmCardActivity.class);
+                startActivityForResult(scci,22);
                 break;
             case R.id.ll_pwd:
                 Intent pi = new Intent(this, RegisterActivity.class);
@@ -181,8 +195,14 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 startActivity(pi);
                 break;
             case R.id.ll_email:
+                Intent ei = new Intent(this,BindEmailActivity.class);
+                startActivityForResult(ei,22);
+
                 break;
             case R.id.ll_phone:
+                Intent ppi = new Intent(this,RegisterActivity.class);
+                ppi.putExtra("type","3");
+                startActivityForResult(ppi,22);
                 break;
             case R.id.ll_tier:
                 break;
@@ -359,6 +379,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void getPersonInfo(PersonInfoDetailBean bean) {
+        loadingDialog.dismiss();
         if (bean.data != null){
             if (!TextUtils.isEmpty(bean.data.avator)){
                 Picasso.with(this).load(bean.data.avator).into(ivUserImg);
@@ -420,17 +441,17 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void updateFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onShowToast(String s) {
-
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onLoadFail() {
-
+        loadingDialog.dismiss();
     }
 
     @Override
@@ -444,6 +465,10 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
 
         if (resultCode == RESULT_OK){
             switch (requestCode) {
+                case 2211:
+                    String city = data.getStringExtra("value");
+                    personInfoPresenter.updateInfo(city,6);
+                    break;
                 case PUT_NAME:
                     String modify_name = data.getStringExtra("modify_name");
                     tvNickname.setText(modify_name);

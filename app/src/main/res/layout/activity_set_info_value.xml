@@ -12,6 +12,41 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/white"/>
+    <LinearLayout
+        android:id="@+id/ll_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <EditText
+            android:id="@+id/edt_value_2"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:padding="10dp"
+            android:gravity="left"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_33"
+            android:hint="请输入个性签名"
+            android:textColorHint="@color/text_color_99"
+            android:background="@color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_66"
+            android:text="还可以输入60个字符"
+            android:padding="10dp"
+            android:gravity="right"
+            android:background="@color/white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_66"
+            android:textSize="13sp"
+            android:text="禁止输入色情、广告、虚假信息、政治敏感信息等"
+            android:padding="10dp"
+            android:gravity="left"/>
+    </LinearLayout>
     <EditText
         android:id="@+id/edt_value"
         android:layout_width="match_parent"
@@ -25,6 +60,7 @@
         android:textColor="@color/text_color_33"
         android:hint="请输入-~20个的字符"
         android:textColorHint="@color/text_color_99"
+        android:visibility="gone"
         />
     <Button
         android:id="@+id/btn_ok"
@@ -33,7 +69,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@color/theme_color"
+        android:background="@drawable/shape_btn_ok"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:text="完成"/>

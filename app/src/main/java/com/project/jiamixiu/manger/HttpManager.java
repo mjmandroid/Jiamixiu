@@ -56,7 +56,7 @@ public class HttpManager {
             return;
         }
         BaseApi api = RetrofitManager.getInstance().getRetrofit().create(BaseApi.class);
-        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer-url", params.toString()+url);
+        MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer-url", params.toString());
         MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", url);
         api.getStringData(url, params).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
@@ -67,7 +67,7 @@ public class HttpManager {
 
             @Override
             public void onNext(@NonNull String s) {
-                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "url="+url+"onNext == "+s.toString());
+                MyLogUtils.printf(MyLogUtils.DEBUG, "SendRequstToServer", "onNext == "+s.toString());
                 Gson gson = new Gson();
                 BaseBean baseBean = gson.fromJson(s, BaseBean.class);
                 switch (baseBean.error_code) {

@@ -5,4 +5,5 @@ import com.project.jiamixiu.bean.IBaseView;
 
 public interface IFanView extends IBaseView{
     void loadData(FanBean bean);
+    void onFollowSuccess();
 }
