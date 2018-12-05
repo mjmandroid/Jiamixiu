@@ -1,5 +1,6 @@
 package com.project.jiamixiu.function.home;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.base.BaseFragment;
@@ -27,6 +30,10 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager viewPager;
+    @BindView(R.id.et_search)
+    EditText et_search;
+    @BindView(R.id.iv_record)
+    ImageView iv_record;
     private HomePrenster prenster;
     private LoadingDialog loadingDialog;
     private List<Fragment> mFragments;
@@ -86,6 +93,8 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
 
             }
         });
+        iv_record.setOnClickListener(view->startActivity(new Intent(mContext,RecordVideoActivity.class)));
+        et_search.setOnClickListener(view->startActivity(new Intent(mContext,SearchVideoActivity.class)));
     }
 
     @Override

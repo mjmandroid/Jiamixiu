@@ -82,6 +82,8 @@
         <activity android:name=".function.person.activity.BindEmailActivity" />
         <activity android:name=".function.message.activity.ZanMeActivity" />
         <activity android:name=".function.person.activity.SetRegionActivity"></activity>
+        <activity android:name=".function.home.SearchVideoActivity"/>
+        <activity android:name=".function.home.RecordVideoActivity"/>
     </application>
 
 </manifest>

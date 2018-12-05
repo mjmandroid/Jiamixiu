@@ -25,6 +25,7 @@
             android:layout_marginRight="5dp"
             android:scaleType="centerCrop"/>
         <EditText
+            android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -37,6 +38,7 @@
             android:textSize="12sp"
             android:background="@drawable/shape_search"/>
         <ImageView
+            android:id="@+id/iv_record"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginRight="5dp"

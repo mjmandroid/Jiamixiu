@@ -31,7 +31,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@mipmap/icon_weixin_share"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@mipmap/icon_friend_share"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@mipmap/icon_qq_share"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@mipmap/icon_qqkj_share"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@mipmap/icon_wb_share"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
