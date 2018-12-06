@@ -21,5 +21,6 @@ public class AboutUserVideoResponse extends BaseBean {
         public String f_creatortime;
         public int type = 0;
         public UserInfoResponse.UserInfo userInfo;
+        public List<SubscribeUsersResponse.Data> headView;
     }
 }

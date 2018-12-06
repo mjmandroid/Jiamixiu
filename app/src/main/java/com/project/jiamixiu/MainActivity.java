@@ -1,6 +1,12 @@
 package com.project.jiamixiu;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -9,12 +15,16 @@ import com.project.jiamixiu.base.BaseFragment;
 import com.project.jiamixiu.function.home.HomeFragment;
 import com.project.jiamixiu.function.message.MessageFragment;
 import com.project.jiamixiu.function.person.PersonFragment;
+import com.project.jiamixiu.function.subscrite.SubscriteFragment;
+import com.project.jiamixiu.function.upload.CropVideoActivity;
 import com.project.jiamixiu.manger.FragmentChangeManager;
 import com.project.jiamixiu.manger.HttpManager;
 import com.project.jiamixiu.manger.listener.HttpRequestListener;
+import com.project.jiamixiu.utils.FileUtils;
 import com.project.jiamixiu.utils.OssUtils;
 import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.ToastUtil;
+import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.utils.UrlConst;
 
 import org.json.JSONException;
@@ -23,9 +33,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private RadioGroup radioGroup;
     FragmentChangeManager manager;
+    private static final int REQUST_CAMER = 1002;
+    private static final int SELECT_PHOTO = 1003;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radioGroup = findViewById(R.id.rg);
         ArrayList fragmentList = new ArrayList<BaseFragment>();
         fragmentList.add(new HomeFragment());
+        fragmentList.add(new SubscriteFragment());
         fragmentList.add(new MessageFragment());
         fragmentList.add(new PersonFragment());
 
@@ -51,13 +67,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         manager.setFragments(0);
                         break;
                     case R.id.rb_sub:
-
-                        break;
-                    case R.id.rb_msg:
                         manager.setFragments(1);
                         break;
-                    case R.id.rb_mine:
+                    case R.id.rb_msg:
                         manager.setFragments(2);
+                        break;
+                    case R.id.rb_mine:
+                        manager.setFragments(3);
                         break;
                 }
             }
@@ -98,7 +114,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if ((ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE,
+                            WRITE_EXTERNAL_STORAGE},
+                    REQUST_CAMER);
+        } else {
+            selectPic(SELECT_PHOTO);
+        }
+    }
+    public void selectPic(int mark) {
+        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
 
+        if (openAlbumIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(openAlbumIntent, mark);
+        } else {
+            UIUtils.showToast(this,"您的手机暂不支持选择视频，请查看权限是否允许！");
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_PHOTO){
+            Uri uri = data.getData();
+            if (uri == null)
+                return;
+            String videoPath = FileUtils.getPath2uri(this, uri);
+            Intent intent = new Intent(this, CropVideoActivity.class);
+            intent.putExtra("path",videoPath);
+            startActivity(intent);
+        }
     }
     private long mExitTime;
     @Override
