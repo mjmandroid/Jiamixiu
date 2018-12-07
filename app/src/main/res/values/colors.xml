@@ -38,6 +38,8 @@
     <color name="label_yellow">#FFCC00</color>
     <color name="label_green">#50BC60</color>
     <color name="fb_yellow">#ffb015</color>
+    <color name="sf_header_theme">#EAEAEA</color>
+    <color name="sf_header_tv">#666666</color>
     <!--选择时间控件相关-->
     <color name="pickerview_timebtn_nor">#FB797B</color>
     <color name="pickerview_timebtn_pre">#FB797B</color>

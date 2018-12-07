@@ -1,6 +1,8 @@
 package com.project.jiamixiu.function.message.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,12 @@ import com.project.jiamixiu.function.message.inter.ICommentView;
 import com.project.jiamixiu.function.message.presenter.CommentPresenter;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.project.jiamixiu.widget.LoadingDialog;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,6 +39,8 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
     ListView lvAt;
     @BindView(R.id.tv_nothing)
     TextView tvNothing;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private ArrayList<MyCommentBean.MyCommentData> list = new ArrayList<>();
     private AtCommentAdapter adapter;
     private CommentPresenter presenter;
@@ -49,7 +59,7 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
                 finish();
             }
         });
-
+        initPtrFrame();
         adapter = new AtCommentAdapter();
         lvAt.setAdapter(adapter);
         presenter = new CommentPresenter(this);
@@ -59,8 +69,10 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
 
     @Override
     public void onLoadCommentData(MyCommentBean bean) {
+        smartRefreshLayout.finishRefresh();
         loadingDialog.dismiss();
         if (bean.data != null && bean.data.size() > 0){
+            list.clear();
             list.addAll(bean.data);
             adapter.notifyDataSetChanged();
         }else {
@@ -72,11 +84,13 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
     @Override
     public void onShowToast(String s) {
         loadingDialog.dismiss();
+        smartRefreshLayout.finishRefresh();
     }
 
     @Override
     public void onLoadFail() {
         loadingDialog.dismiss();
+        smartRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -138,5 +152,31 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
                 ButterKnife.bind(this, view);
             }
         }
+    }
+    //下拉刷新
+    private void initPtrFrame() {
+        //设置全局的Header构建器
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+                layout.setDisableContentWhenRefresh(true);
+                ClassicsHeader classicsHeader = new ClassicsHeader(context);
+                classicsHeader.setTextSizeTitle(14);
+                layout.setPrimaryColorsId(R.color.sf_header_theme, R.color.sf_header_tv);//全局设置主题颜色
+                classicsHeader.setDrawableArrowSize(15);
+//                FalsifyHeader falsifyHeader = new FalsifyHeader(context);
+                return classicsHeader;//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+            }
+        });
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page = 0;
+                presenter.getData(page);
+            }
+        });
+        smartRefreshLayout.setDisableContentWhenRefresh(true);
     }
 }

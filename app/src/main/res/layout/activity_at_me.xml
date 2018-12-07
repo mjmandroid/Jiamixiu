@@ -9,12 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/white"/>
-    <ListView
-        android:id="@+id/lv_at"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
-    </ListView>
+        <ListView
+            android:id="@+id/lv_at"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <TextView
         android:id="@+id/tv_nothing"
         android:layout_width="wrap_content"
