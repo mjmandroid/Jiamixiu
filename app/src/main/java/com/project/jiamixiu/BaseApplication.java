@@ -8,11 +8,17 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+
+import iknow.android.utils.BaseUtils;
 
 import static android.os.Build.MANUFACTURER;
 
@@ -40,10 +46,21 @@ public class BaseApplication extends Application {
         mMainThreadId = android.os.Process.myTid();
         config = getSharedPreferences("config", Context.MODE_PRIVATE);
         mInstance = this;
-
+        BaseUtils.init(this);
+        initFFmpegBinary(this);
     }
 
+    private void initFFmpegBinary(Context context) {
 
+        try {
+            FFmpeg.getInstance(context).loadBinary(new LoadBinaryResponseHandler() {
+                @Override public void onFailure() {
+                }
+            });
+        } catch (FFmpegNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 获取进程号对应的进程名

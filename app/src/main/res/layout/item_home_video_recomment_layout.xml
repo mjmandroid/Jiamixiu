@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/rl_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/iv_rec"
+            android:layout_width="120dp"
+            android:layout_height="70dp" />
+        <TextView
+            android:id="@+id/tv_rec_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_alignTop="@id/iv_rec"
+            android:layout_toRightOf="@id/iv_rec"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_rec_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_alignBottom="@id/iv_rec"
+            android:layout_toRightOf="@id/iv_rec"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="25dp"/>
+        <TextView
+            android:id="@+id/tv_rec_playnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_alignBottom="@id/iv_rec"
+            android:layout_toRightOf="@id/iv_rec"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+</LinearLayout>

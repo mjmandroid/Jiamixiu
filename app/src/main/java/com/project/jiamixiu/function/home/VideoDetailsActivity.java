@@ -1,6 +1,7 @@
 package com.project.jiamixiu.function.home;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
@@ -110,7 +111,6 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
 
     private void setListener() {
         refresh.setOnLoadMoreListener(refreshLayout-> {
-            System.out.println("refreshLayout");
             prenster.getCommentList(id,page+"","20",null);
         });
     }
@@ -292,7 +292,7 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(et_content.getText().toString().trim())){
-                    btn_commit.changeColor(-1,0xff524E4E);
+                    btn_commit.changeColor(-1,0xFFB3B3B3);
                 } else {
                     btn_commit.changeColor(-1,0xff00bbac);
                 }
@@ -310,7 +310,13 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
     }
     //查看更多
     private void checkMore() {
-
+        Intent intent = new Intent(this, MoreUsersActivity.class);
+        intent.putExtra("id",id);
+        if (responseDetail != null){
+            intent.putExtra("avator",responseDetail.avator);
+            intent.putExtra("nick",responseDetail.nick);
+        }
+        startActivity(intent);
     }
 
     @Override
@@ -335,7 +341,9 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
      */
     @Override
     public void getMoreVideos() {
-        ToastUtil.showTosat(this,"getMoreVideos");
+        Intent intent = new Intent(this, RecommentVideoActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 
     /**
@@ -343,8 +351,11 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
      * @param f_id
      */
     @Override
-    public void headviewClick(String f_id) {
-
+    public void headviewClick(String f_id,String coverimg) {
+        Intent intent = new Intent(this, VideoDetailsActivity.class);
+        intent.putExtra("id",f_id);
+        intent.putExtra("videoThumbUrl",coverimg);
+        startActivity(intent);
     }
 
     @Override//回复

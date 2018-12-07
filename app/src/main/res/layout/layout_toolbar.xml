@@ -23,6 +23,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:src="@mipmap/icon_back"/>
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

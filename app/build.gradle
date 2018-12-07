@@ -65,4 +65,6 @@ dependencies {
     implementation files('libs/wheelview_1.3.3.jar')
     implementation files('libs/org.apache.http.legacy.jar')
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+    implementation 'com.github.iknow4:android-utils-sdk:1.1.2'
 }
