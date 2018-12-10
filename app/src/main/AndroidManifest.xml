@@ -91,6 +91,8 @@
         <activity android:name=".function.home.RecordVideoActivity"/>
         <activity android:name=".function.upload.CropVideoActivity"/>
         <activity android:name=".function.upload.SelectTitlePageActivity"/>
+        <activity android:name=".function.upload.PublishVideoActivity"/>
+        <activity android:name=".function.upload.SelectTagTypeActivity"/>
     </application>
 
 </manifest>

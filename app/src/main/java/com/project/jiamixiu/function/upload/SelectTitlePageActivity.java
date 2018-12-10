@@ -1,11 +1,14 @@
 package com.project.jiamixiu.function.upload;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +22,7 @@ import com.project.jiamixiu.widget.ZVideoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import iknow.android.utils.callback.SingleCallback;
 import iknow.android.utils.thread.UiThreadExecutor;
 
@@ -33,6 +37,7 @@ public class SelectTitlePageActivity extends BaseActivity {
     private VideoSelectAdapter mVideoThumbAdapter;
     private boolean isFirst = false;
     private Uri uriPath;
+    private Bitmap toBitmap;
 
     @Override
     protected void initData() {
@@ -42,10 +47,10 @@ public class SelectTitlePageActivity extends BaseActivity {
             finish();
             return;
         }
-        ZVideoView videoView = new ZVideoView(this);
         uriPath = Uri.parse(videoPath);
-        videoView.setVideoURI(uriPath);
-        duration = videoView.getDuration();
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(videoPath);
+        duration = Integer.parseInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
     }
 
     @Override
@@ -60,9 +65,25 @@ public class SelectTitlePageActivity extends BaseActivity {
         startShootVideoThumbs(this, uriPath, 10, 0,duration);
         mVideoThumbAdapter.setListener((viewHolder, item, position) -> {
             iv_title.setImageBitmap(item);
-            ToastUtil.showTosat(this,position+"");
+            toBitmap = item;
         });
     }
+
+    @OnClick({R.id.iv_back,R.id.tv_next})
+    public void btnClick(View view){
+        switch (view.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_next:
+                Intent intent = new Intent(this, PublishVideoActivity.class);
+                intent.putExtra("videoPath",videoPath);
+                intent.putExtra("bitmap",toBitmap);
+                startActivity(intent);
+                break;
+        }
+    }
+
 
     private void startShootVideoThumbs(final Context context, final Uri videoUri, int totalThumbsCount, long startPosition, long endPosition) {
         VideoTrimmerUtil.shootVideoThumbInBackground(context, videoUri, totalThumbsCount, startPosition, endPosition,
@@ -74,6 +95,7 @@ public class SelectTitlePageActivity extends BaseActivity {
                                     if (!isFirst){
                                         isFirst = true;
                                         iv_title.setImageBitmap(bitmap);
+                                        toBitmap = bitmap;
                                     }
                                     mVideoThumbAdapter.addBitmaps(bitmap);
                                 }

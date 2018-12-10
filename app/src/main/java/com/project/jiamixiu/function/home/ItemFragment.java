@@ -170,7 +170,7 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
             return;
         }
         this.fid = fid;
-        presenter.loadTags(fid);
+        presenter.loadTags("");
         presenter.loadBannerList(fid);
     }
 }

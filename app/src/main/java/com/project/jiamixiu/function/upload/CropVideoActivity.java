@@ -100,6 +100,7 @@ public class CropVideoActivity extends BaseActivity implements VideoTrimListener
                 if (loadingDialog.isShowing()) loadingDialog.dismiss();
             }
         });*/
+        if (loadingDialog.isShowing()) loadingDialog.dismiss();
         Intent intent = new Intent(CropVideoActivity.this, SelectTitlePageActivity.class);
         intent.putExtra("videoPath",outputFile);
         startActivity(intent);
