@@ -50,4 +50,5 @@ public interface UrlConst {
     String video_record_list = "api/video/history";
     String video_subscrite_users = "api/video/SubscribeUsers";
     String video_publish = "api/video/Create";
+    String object_uuid = "api/video/GeneratorUUID";
 }

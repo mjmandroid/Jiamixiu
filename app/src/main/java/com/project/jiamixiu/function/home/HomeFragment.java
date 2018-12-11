@@ -121,6 +121,7 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
     @Override
     public void getTabsFail(String mess) {
         ToastUtil.showTosat(mContext,mess);
+        loadingDialog.dismiss();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.alibaba.sdk.android.oss.callback.OSSRetryCallback;
 import com.alibaba.sdk.android.oss.common.utils.BinaryUtil;
 import com.alibaba.sdk.android.oss.common.utils.OSSUtils;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.OSSRequest;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
@@ -65,29 +66,15 @@ public class PublishPrenster {
         });
     }
 
-    public void uploadVideo2Oss(String videoPath){
+    public void uploadVideo2Oss(String videoPath,String objectID){
         OSS oss = OssUtils.getInstance().getOss();
-        String fileName = videoPath.substring(videoPath.lastIndexOf("/")+1);
-        String key ="myvideo/"+ fileName ;
-        int len = 0;
-        try {
-            FileInputStream inputStream = new FileInputStream(videoPath);
-           len =  inputStream.available();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        PutObjectRequest request = new PutObjectRequest("jiamixiu",key,videoPath);
+        PutObjectRequest request = new PutObjectRequest("jiamixiu",objectID+".mp4",videoPath);
         ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength((long)len);
-        metadata.setCacheControl("no-cache");
-        metadata.setHeader("Pragma", "no-cache");
-        metadata.setContentEncoding("utf-8");
         metadata.setContentType("application/octet-stream");
-        metadata.setContentDisposition("filename/filesize=" + fileName + "/" + len + "Byte.");
         try {
             // 设置Md5以便校验
-            //metadata.setContentMD5(BinaryUtil.calculateBase64Md5(videoPath)); // 如果是从文件上传
-            // metadata.setContentMD5(BinaryUtil.calculateBase64Md5(byte[])); // 如果是上传二进制数据
+            metadata.setContentMD5(BinaryUtil.calculateBase64Md5(videoPath)); // 如果是从文件上传
+            // metadata.setContentMD5(BinaryUtil.calculateBase64Md5(buff)); // 如果是上传二进制数据
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,9 +91,11 @@ public class PublishPrenster {
                         + "\nCallback: " + result.getServerCallbackReturnBody()
                         +"\ncode："+result.getStatusCode()
                         +"\nresultString:"+result.toString());
-                view.uploadVideoSuccess(result.getETag());
-
-
+                String objectKey = request.getObjectKey();
+                if (objectKey.contains(".mp4")){
+                    objectKey = objectKey.substring(0,objectKey.indexOf(".mp4"));
+                }
+                view.uploadVideoSuccess(objectKey);
             }
 
             @Override
@@ -116,6 +105,32 @@ public class PublishPrenster {
             }
         });
 
+    }
+
+    public void getObjectId(){
+        HttpManager.sendRequest(UrlConst.object_uuid, new HashMap<>(), new HttpRequestListener() {
+            @Override
+            public void onRequestSuccess(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    String objectId = object.optString("data");
+                    view.generateUUid(objectId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    view.onError("获取uuid失败");
+                }
+            }
+
+            @Override
+            public void onRequestFail(String result, String code) {
+                view.onError("获取uuid失败");
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
     }
 
     public void uploadPicture(String imag){

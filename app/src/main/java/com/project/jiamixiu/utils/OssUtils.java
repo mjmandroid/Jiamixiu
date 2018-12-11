@@ -52,7 +52,7 @@ public class OssUtils {
         );
 
         oss = new OSSClient(BaseApplication.getContext(),ENDPOINT,credentialProvider,conf);
-
+        
     }
 
     public static String md5Password(String password) {

@@ -86,8 +86,8 @@ public class PublishVideoActivity extends BaseActivity implements IpublishView {
             return;
         }
         loadingDialog.show();
-        //上传视频
-        prenster.uploadVideo2Oss(videoPath);
+        prenster.getObjectId();
+
     }
 
     @Override
@@ -132,5 +132,11 @@ public class PublishVideoActivity extends BaseActivity implements IpublishView {
     public void uploadPictureSuccess(String imgUrl) {
         prenster.commit(et_title.getText().toString().trim(),imgUrl,tagName,"",
                 ossid,"",fid);
+    }
+
+    @Override
+    public void generateUUid(String objectID) {
+        //上传视频
+        prenster.uploadVideo2Oss(videoPath,objectID);
     }
 }

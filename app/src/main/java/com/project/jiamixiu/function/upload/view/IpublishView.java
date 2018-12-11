@@ -7,4 +7,5 @@ public interface IpublishView {
 
     void uploadVideoSuccess(String ossid);
     void uploadPictureSuccess(String imgUrl);
+    void generateUUid(String objectID);
 }
