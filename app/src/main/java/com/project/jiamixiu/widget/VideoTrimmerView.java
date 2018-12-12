@@ -144,7 +144,6 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     mSourceUri = videoURI;
     mVideoView.setVideoURI(videoURI);
     mVideoView.requestFocus();
-    mVideoShootTipTv.setText(String.format(mContext.getResources().getString(R.string.video_shoot_tip), VideoTrimmerUtil.VIDEO_MAX_TIME));
   }
 
   private void startShootVideoThumbs(final Context context, final Uri videoUri, int totalThumbsCount, long startPosition, long endPosition) {
@@ -340,7 +339,9 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         default:
           break;
       }
-
+      long m = (mRightProgressPos - mLeftProgressPos) / 1000;
+      long dm = (mRightProgressPos - mLeftProgressPos) % 1000 / 100;
+      mVideoShootTipTv.setText("已选取"+m+"."+dm+"s");
       mRangeSeekBarView.setStartEndTime(mLeftProgressPos, mRightProgressPos);
     }
   };

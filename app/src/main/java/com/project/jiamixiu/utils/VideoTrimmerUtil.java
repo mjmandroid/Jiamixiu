@@ -122,8 +122,6 @@ public class VideoTrimmerUtil {
       FFmpeg.getInstance(context).execute(command, new ExecuteBinaryResponseHandler() {
 
         @Override public void onSuccess(String s) {
-            String delFile = inputFile.substring(inputFile.lastIndexOf("/")+1);
-            context.deleteFile(delFile);
             callback.onFinishTrim(tempOutFile);
         }
 

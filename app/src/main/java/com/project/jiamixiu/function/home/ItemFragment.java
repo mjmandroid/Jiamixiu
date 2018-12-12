@@ -1,5 +1,6 @@
 package com.project.jiamixiu.function.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -54,6 +55,11 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
     private ItemFragmentPresenter presenter;
     private String fid;//分类id
     private int page = 0;
+    private String categoryid = "";
+
+    public void setTag(String tag) {
+        this.categoryid = tag;
+    }
 
     @Override
     public View initView() {
@@ -66,7 +72,7 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         adapter = new ItemFragmentAdapter(mContext);
         recyclerView.setAdapter(adapter);
         presenter = new ItemFragmentPresenter(this);
-        presenter.preloadData("","",page+"","20");
+        presenter.preloadData("","",categoryid,page+"","20");
         initEvent();
         return view;
     }
@@ -89,14 +95,14 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 0;
                 LoadState = STATE_REFRESH;
-                presenter.preloadData("","",page+"","20");
+                presenter.preloadData("","",categoryid,page+"","20");
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 LoadState = STATE_LOADMORE;
-                presenter.preloadData("","",page+"","20");
+                presenter.preloadData("","",categoryid,page+"","20");
             }
         });
 
@@ -170,7 +176,7 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
             return;
         }
         this.fid = fid;
-        presenter.loadTags(fid);
+        presenter.loadTags("");
         presenter.loadBannerList(fid);
     }
 }

@@ -26,10 +26,10 @@
             android:layout_marginTop="60dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            tl:tl_bar_color="#000000"
+            tl:tl_bar_color="#FF343235"
             tl:tl_textUnselectColor="#ffffff"
             tl:tl_textSelectColor="#ffffff"
-            tl:tl_indicator_color="#2C97DE"
+            tl:tl_indicator_color="#FF00B5FB"
             tl:tl_tab_width="65dp"
             tl:tl_divider_color="#000"
             tl:tl_bar_stroke_color="#000"
@@ -50,10 +50,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
             android:textColor="@android:color/white"
             android:textSize="12dp"
-            tools:text="拖动选择你要发表的10秒以内片段" />
+            tools:text="已选取0s" />
 
         <FrameLayout
             android:id="@+id/video_frames_layout"

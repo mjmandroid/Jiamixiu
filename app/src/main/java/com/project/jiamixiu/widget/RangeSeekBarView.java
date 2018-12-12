@@ -170,8 +170,9 @@ public class RangeSeekBarView extends View {
   private void drawVideoTrimTimeText(Canvas canvas) {
     String leftThumbsTime = DateUtil.convertSecondsToTime(mStartPosition);
     String rightThumbsTime = DateUtil.convertSecondsToTime(mEndPosition);
-    canvas.drawText(leftThumbsTime, normalizedToScreen(normalizedMinValue), TextPositionY, mVideoTrimTimePaintL);
-    canvas.drawText(rightThumbsTime, normalizedToScreen(normalizedMaxValue), TextPositionY, mVideoTrimTimePaintR);
+    //不显示时间了  和ios一致
+    //canvas.drawText(leftThumbsTime, normalizedToScreen(normalizedMinValue), TextPositionY, mVideoTrimTimePaintL);
+    //canvas.drawText(rightThumbsTime, normalizedToScreen(normalizedMaxValue), TextPositionY, mVideoTrimTimePaintR);
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {

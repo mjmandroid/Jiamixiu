@@ -88,6 +88,7 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
     @Override
     public void loadFail(String errmsg) {
         ToastUtil.showTosat(mContext,errmsg);
+        loadingDialog.dismiss();
     }
 
     @Override

@@ -361,7 +361,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         path = picfile.getPath();
         Uri imageUri = Uri.fromFile(picfile);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        startActivityForResult(Intent.createChooser(openCameraIntent, "标题"),TAKE_PICTURE);
     }
     //判断是否有SD卡
     public static boolean hasSDcard() {

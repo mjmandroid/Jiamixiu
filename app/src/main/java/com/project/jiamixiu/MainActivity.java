@@ -3,6 +3,7 @@ package com.project.jiamixiu;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -127,15 +128,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void selectPic(int mark) {
-        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-
-        if (openAlbumIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(openAlbumIntent, mark);
+//        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK,
+//                MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+//
+//        if (openAlbumIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivityForResult(openAlbumIntent, mark);
+//        } else {
+//            UIUtils.showToast(this,"您的手机暂不支持选择视频，请查看权限是否允许！");
+//        }
+        Intent intent = null;
+        if (FileUtils.isMIUI()){
+            intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"video/*");
         } else {
-            UIUtils.showToast(this,"您的手机暂不支持选择视频，请查看权限是否允许！");
+            intent = new Intent();
+            if (Build.VERSION.SDK_INT < 19) {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("video/*");
+            } else {
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("video/*");
+            }
         }
-
+        startActivityForResult(Intent.createChooser(intent, "视频选择"), mark);
     }
 
     @Override
@@ -146,6 +162,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (uri == null)
                 return;
             String videoPath = FileUtils.getPath2uri(this, uri);
+            if (!videoPath.contains(".mp4")){
+                ToastUtil.showTosat(this,"不支持的格式！");
+                return;
+            }
             Intent intent = new Intent(this, CropVideoActivity.class);
             intent.putExtra("path",videoPath);
             startActivity(intent);
