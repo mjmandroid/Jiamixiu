@@ -9,11 +9,14 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -225,7 +228,8 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                                     WRITE_EXTERNAL_STORAGE, CAMERA},
                             REQUST_CAMER);
                 } else {
-                    photo();
+//                    photo();
+                    takePhoto();
                 }
                 photoDialog.dismiss();
                 break;
@@ -274,7 +278,16 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         } else {
             UIUtils.showToast(this,"您的手机暂不支持选择图片，请查看权限是否允许！");
         }
+
+        //取消严格模式  FileProvider
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy( builder.build() );
+            builder.detectFileUriExposure();
+        }
+
     }
+
     private String getPath(){
         StringBuffer sDir = new StringBuffer();
         if (hasSDcard()) {
@@ -295,6 +308,38 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
 
     private File picfile;
     private String path;
+
+    private void takePhoto(){
+        StringBuffer sDir = new StringBuffer();
+        if (hasSDcard()) {
+            sDir.append(Environment.getExternalStorageDirectory() + "/MyPicture/");
+        } else {
+            String dataPath = Environment.getRootDirectory().getPath();
+            sDir.append(dataPath + "/MyPicture/");
+        }
+        File fileDir = new File(sDir.toString());
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        picfile = new File(fileDir, String.valueOf(System.currentTimeMillis()) + ".jpg");
+        path = picfile.getPath();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断是否是AndroidN以及更高的版本
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(),"com.project.jiamixiu.fileProvider",picfile);
+           /* intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(contentUri,"application/vnd.android.package-archive");*/
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+        }else{
+//           /* intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.setDataAndType(Uri.fromFile(picfile),"application/vnd.android.package-archive");*/
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picfile));
+        }
+        startActivityForResult(intent, TAKE_PICTURE);
+    }
+
     //拍照
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -314,13 +359,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         }
         picfile = new File(fileDir, String.valueOf(System.currentTimeMillis()) + ".jpg");
         path = picfile.getPath();
-        Uri imageUri;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            imageUri = FileProvider.getUriForFile(this, getString(R.string.less_provider_file_authorities), picfile);
-//            openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-//        } else {
-        imageUri = Uri.fromFile(picfile);
-//        }
+        Uri imageUri = Uri.fromFile(picfile);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
