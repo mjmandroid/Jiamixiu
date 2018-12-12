@@ -162,6 +162,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (uri == null)
                 return;
             String videoPath = FileUtils.getPath2uri(this, uri);
+            if (!videoPath.contains(".mp4")){
+                ToastUtil.showTosat(this,"不支持的格式！");
+                return;
+            }
             Intent intent = new Intent(this, CropVideoActivity.class);
             intent.putExtra("path",videoPath);
             startActivity(intent);

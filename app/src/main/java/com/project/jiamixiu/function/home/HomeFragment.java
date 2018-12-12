@@ -105,7 +105,13 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
     @Override
     public void getTabsSuccess(List<TabBeanResponse.TabBean> listTab) {
         for (int i = 0; i < listTab.size() + 1; i++) {
-            mFragments.add(new ItemFragment());
+            ItemFragment itemFragment = new ItemFragment();
+            if (i == 0){
+                itemFragment.setTag("");
+            } else {
+                itemFragment.setTag(listTab.get(i-1).sortid);
+            }
+            mFragments.add(itemFragment);
         }
         pagerAdapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);

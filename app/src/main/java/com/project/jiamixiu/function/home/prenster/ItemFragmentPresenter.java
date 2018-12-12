@@ -22,11 +22,12 @@ public class ItemFragmentPresenter {
     }
 
 
-    public void preloadData(String keyword,String tag,String pageIndex,String pageSize){
+    public void preloadData(String keyword,String tag,String categoryid,String pageIndex,String pageSize){
 
         Map<String, String> sMap = new HashMap<>();
         sMap.put("keyword",keyword);
         sMap.put("tag",tag);
+        sMap.put("categoryid",categoryid);
         sMap.put("pageIndex",pageIndex);
         sMap.put("pageSize",pageSize);
         HttpManager.sendRequest(UrlConst.get_vidoes, sMap, new HttpRequestListener() {

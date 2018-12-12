@@ -145,7 +145,7 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
             //tv_all_comment.setVisibility(View.VISIBLE);
         }
         RequestOptions options = new RequestOptions()
-                .placeholder(R.mipmap.ic_launcher);
+                .placeholder(R.mipmap.icon_default_head);
         Glide.with(this).load(data.avator).apply(options).into(iv_nick);
         video.setUp(data.url,data.name , Jzvd.SCREEN_WINDOW_NORMAL);
         Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
