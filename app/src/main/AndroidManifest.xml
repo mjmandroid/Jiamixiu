@@ -44,7 +44,7 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -55,7 +55,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:theme="@style/noActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -63,6 +63,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/noActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".function.login.RegisterActivity" />
         <activity android:name=".function.login.LoginActivity" />
