@@ -59,4 +59,5 @@
     <color name="black_translucent">#50000000</color>
     <color name="top_bottom">#42BAF8</color>
     <color name="red">#aacc0000</color>
+    <color name="background_logo">#02B6FB</color>
 </resources>

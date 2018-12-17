@@ -149,6 +149,16 @@ public class FileUtils {
         return file.getAbsolutePath();
     }
 
+    public static void delVideoFile(){
+        File file = new File(Environment.getExternalStorageDirectory(), "MyVideo");
+        if (file.exists()){
+            File[] files = file.listFiles();
+            for (File myFile : files) {
+                myFile.delete();
+            }
+        }
+    }
+
     public static boolean isMIUI() {
         String manufacturer = Build.MANUFACTURER;
         //这个字符串可以自己定义,例如判断华为就填写huawei,魅族就填写meizu

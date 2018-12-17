@@ -11,6 +11,7 @@ import android.util.Log;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.project.jiamixiu.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,6 +49,7 @@ public class BaseApplication extends Application {
         mInstance = this;
         BaseUtils.init(this);
         initFFmpegBinary(this);
+        FileUtils.delVideoFile();
     }
 
     private void initFFmpegBinary(Context context) {
