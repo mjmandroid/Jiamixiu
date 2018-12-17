@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.base.BaseActivity;
+import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.function.upload.prenster.PublishPrenster;
 import com.project.jiamixiu.function.upload.view.IpublishView;
 import com.project.jiamixiu.utils.FileUtils;
@@ -114,6 +115,11 @@ public class PublishVideoActivity extends BaseActivity implements IpublishView {
     @Override
     public void onError(String errmsg) {
         loadingDialog.dismiss();
+        if (errmsg.contains("用户未")){
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            ToastUtil.showTosat(this,errmsg);
+        }
     }
 
     @Override
