@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.project.jiamixiu.function.person.PersonFragment;
+
 import java.util.ArrayList;
 
 public class FragmentChangeManager {
@@ -39,6 +41,9 @@ public class FragmentChangeManager {
                 ft.show(fragment);
             } else {
                 ft.hide(fragment);
+            }
+            if (i == 3 && fragment instanceof PersonFragment){
+                ((PersonFragment)fragment).onRefresh();
             }
             ft.commit();
         }

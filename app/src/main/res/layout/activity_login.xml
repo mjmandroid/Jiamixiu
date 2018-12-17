@@ -119,33 +119,33 @@
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_fans"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_weixin_share"/>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_fans"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_qq_share"/>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_fans"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_wb_share"/>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_fans"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/pay_selected_zhifubao"/>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="1"

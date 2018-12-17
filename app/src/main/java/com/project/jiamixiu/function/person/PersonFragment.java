@@ -70,6 +70,13 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             view = inflater.inflate(R.layout.fragment_person, null);
         }
         unbinder = ButterKnife.bind(this, view);
+        onRefresh();
+        return view;
+    }
+    public void onRefresh(){
+        if ( unbinder == null){
+            return;
+        }
         if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
             llNoLogin.setVisibility(View.VISIBLE);
             llLogin.setVisibility(View.GONE);
@@ -78,7 +85,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             llLogin.setVisibility(View.VISIBLE);
             personPresenter.loadPersonInfo();
         }
-        return view;
     }
 
     @Override
