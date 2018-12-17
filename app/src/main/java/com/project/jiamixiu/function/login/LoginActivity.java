@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onSuccess(LoginBean bean) {
         loadingDialog.dismiss();
         SharedPreferencesUtil.saveToken(bean.data.token);
+        SharedPreferencesUtil.saveExpireon(bean.data.expireon);
         setResult(RESULT_OK);
         finish();
 

@@ -11,6 +11,7 @@ import com.project.jiamixiu.bean.VideoRecommendResponse;
 import com.project.jiamixiu.function.home.adapter.RecommentAdapter;
 import com.project.jiamixiu.function.home.prenster.RecommentPrenster;
 import com.project.jiamixiu.function.home.view.IRecommentView;
+import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.interfaces.RvOncliclListener;
 import com.project.jiamixiu.utils.ToastUtil;
 import com.project.jiamixiu.widget.CustomerToolbar;
@@ -92,7 +93,11 @@ public class RecommentVideoActivity extends BaseActivity implements IRecommentVi
 
     @Override
     public void loadRecommentFail(String errorMsg) {
-        ToastUtil.showTosat(this,errorMsg);
+        if (errorMsg.contains("用户未登")){
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            ToastUtil.showTosat(this,errorMsg);
+        }
     }
 
     @Override
