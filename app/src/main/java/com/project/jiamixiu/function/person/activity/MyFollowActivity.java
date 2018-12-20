@@ -61,6 +61,13 @@ public class MyFollowActivity extends AppCompatActivity implements IFanView {
         });
         initPtrFrame();
         fanAdapter = new FanAdapter(this,fanData);
+        fanAdapter.setCallBack(new FanAdapter.FollowCallBack() {
+            @Override
+            public void onFollow(String id) {
+                loadingDialog.show();
+//                presenter.follow(id);
+            }
+        });
         fanAdapter.setType("1");
         lvFollow.setAdapter(fanAdapter);
         lvFollow.setVisibility(View.GONE);

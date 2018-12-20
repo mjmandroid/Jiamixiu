@@ -5,6 +5,7 @@ import com.project.jiamixiu.bean.LoginBean;
 import com.project.jiamixiu.function.person.inter.IBindEmailView;
 import com.project.jiamixiu.manger.HttpManager;
 import com.project.jiamixiu.manger.listener.HttpRequestListener;
+import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.UrlConst;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class BindEmailPrenter {
         HashMap<String ,String> map = new HashMap<>();
         map.put("email",email);
         map.put("code",code);
+        map.put("pwd", SharedPreferencesUtil.getPwd());
         HttpManager.sendRequest(UrlConst.update_email, map, new HttpRequestListener() {
             @Override
             public void onRequestSuccess(String response) {

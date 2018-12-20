@@ -1,6 +1,7 @@
 package com.project.jiamixiu.function.person.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.CollectVideoBean;
 import com.project.jiamixiu.bean.MyWorkBean;
+import com.project.jiamixiu.function.message.activity.AtMeActivity;
+import com.project.jiamixiu.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -57,7 +60,10 @@ public class VideoAdapter extends BaseAdapter {
         holder.tvMsgNum.setText(list.get(position).commentnum);
         holder.tvZanNum.setText(list.get(position).likenum);
         holder.tvShareNum.setText(list.get(position).sharenum);
-        Picasso.with(context).load(list.get(position).coverimg).into(holder.ivVideo);
+        if (!TextUtils.isEmpty(list.get(position).coverimg)){
+            Picasso.with(context).load(UIUtils.getImageUrl(list.get(position).coverimg)).into(holder.ivVideo);
+        }
+
         return convertView;
     }
 

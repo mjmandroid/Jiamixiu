@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white_f5">
-    <com.project.jiamixiu.widget.CustomerToolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/white"/>
+        android:layout_height="wrap_content">
+        <com.project.jiamixiu.widget.CustomerToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_99"
+            android:text="保存"/>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_sign"
         android:layout_width="match_parent"
@@ -52,15 +66,4 @@
         android:text="最多可设置三个常出没地"
         android:padding="10dp"
         android:gravity="left"/>
-    <Button
-        android:id="@+id/btn_ok"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/shape_btn_ok"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:text="完成"/>
 </LinearLayout>

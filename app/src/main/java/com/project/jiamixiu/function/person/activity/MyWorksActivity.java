@@ -1,5 +1,6 @@
 package com.project.jiamixiu.function.person.activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.MyInfoBean;
 import com.project.jiamixiu.function.person.VideoFragment;
+import com.project.jiamixiu.utils.DialogUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.project.jiamixiu.widget.LoadingDialog;
 import com.squareup.picasso.Picasso;
@@ -91,7 +94,7 @@ public class MyWorksActivity extends AppCompatActivity implements View.OnClickLi
         pageAdapter = new VideoPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pageAdapter);
     }
-    @OnClick({R.id.tv_publish,R.id.tv_no_publish,R.id.tv_video})
+    @OnClick({R.id.tv_publish,R.id.tv_no_publish,R.id.tv_video,R.id.iv_share})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -107,6 +110,9 @@ public class MyWorksActivity extends AppCompatActivity implements View.OnClickLi
                 viewPager.setCurrentItem(0);
                 tvNoPublish.setTextColor(ContextCompat.getColor(this, R.color.text_color_33));
                 tvVideo.setTextColor(ContextCompat.getColor(this, R.color.theme_color));
+                break;
+            case R.id.iv_share:
+                showShareDialog();
                 break;
 
         }
@@ -126,5 +132,18 @@ public class MyWorksActivity extends AppCompatActivity implements View.OnClickLi
         public int getCount() {
             return fragments.size();
         }
+    }
+
+    private void showShareDialog(){
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_home_video_share_layout,null);
+        final Dialog dialog = DialogUtils.BottonDialog(this,view);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

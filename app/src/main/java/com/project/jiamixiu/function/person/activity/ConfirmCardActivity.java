@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,11 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.function.person.inter.IConfirmCardView;
 import com.project.jiamixiu.function.person.presenter.ConfirmCardPresenter;
 import com.project.jiamixiu.utils.DialogUtils;
+import com.project.jiamixiu.utils.SharedPreferencesUtil;
 import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.project.jiamixiu.widget.LoadingDialog;
@@ -56,6 +59,10 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
     ImageView iv_pic1;
     @BindView(R.id.btn_ok)
     Button btnOk;
+    @BindView(R.id.tv_agree)
+    TextView tv_agree;
+    @BindView(R.id.tv_confirm_rule)
+    TextView tv_confirm_rule;
     String cardImg1,cardImg2;
     int select = 0;
     ConfirmCardPresenter cardPresenter;
@@ -65,7 +72,11 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_card);
         ButterKnife.bind(this);
-        toolbar.setTitle("实名认证");
+        tv_agree.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tv_agree.getPaint().setAntiAlias(true);//抗锯齿
+        tv_confirm_rule.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tv_confirm_rule.getPaint().setAntiAlias(true);//抗锯齿
+        toolbar.setTitle("个人身份信息");
         toolbar.setToolbarLisenter(new CustomerToolbar.ToolbarListener() {
             @Override
             public void onBack() {
@@ -102,7 +113,7 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 loadingDialog.show();
-                cardPresenter.confirm(name,card,cardImg1,cardImg2,"");
+                cardPresenter.confirm(name,card,cardImg1,cardImg2, SharedPreferencesUtil.getPwd());
                 break;
             case R.id.rl_pic1:
                 select = 0;
@@ -324,6 +335,8 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onConfirmSuccess() {
         loadingDialog.dismiss();
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.project.jiamixiu.function.login;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView tv_register;
     @BindView(R.id.tv_pwd)
     TextView tv_pwd;
+    @BindView(R.id.tv_no)
+    TextView tv_no;
     @BindView(R.id.edt_phone)
     EditText edtPhone;
     @BindView(R.id.edt_pwd)
@@ -44,6 +47,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        tv_register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tv_register.getPaint().setAntiAlias(true);//抗锯齿
+        tv_no.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tv_no.getPaint().setAntiAlias(true);//抗锯齿
+        tv_pwd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tv_pwd.getPaint().setAntiAlias(true);//抗锯齿
+
         presenter = new RegisterPresenter(this);
         loadingDialog = new LoadingDialog(this);
     }
@@ -83,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onSuccess(LoginBean bean) {
         loadingDialog.dismiss();
         SharedPreferencesUtil.saveToken(bean.data.token);
+        SharedPreferencesUtil.savePwd(edtPwd.getText().toString());
         setResult(RESULT_OK);
         finish();
 

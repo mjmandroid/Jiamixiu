@@ -13,141 +13,186 @@
         android:background="@color/white"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:textColor="@color/theme_color"
-        android:layout_marginTop="10dp"
         android:textSize="13sp"
         android:text="*请您如实填入本人信息，否则驳回认证*"
         android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/padding_left"
-        android:paddingRight="@dimen/padding_left"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_color_33"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:text="*姓名"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/edt_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:gravity="center|right"
-            android:textSize="14sp"
-            android:textColor="@color/text_color_33"
-            android:hint="请输入身份证上的姓名"
-            android:textColorHint="@color/text_color_99"
-            android:background="@null"
-            />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/padding_left"
-        android:paddingRight="@dimen/padding_left"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_color_33"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:text="*身份证号码"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/edt_number"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:gravity="center|right"
-            android:textSize="14sp"
-            android:textColor="@color/text_color_33"
-            android:hint="请输入身份证号码"
-            android:textColorHint="@color/text_color_99"
-            android:background="@null"
-            />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/padding_left"
-        android:paddingRight="@dimen/padding_left"
         android:background="@color/white"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_left"
+            android:paddingRight="@dimen/padding_left"
+            android:background="@color/white">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color_33"
-                android:layout_gravity="top"
-                android:textSize="16sp"
-                android:text="*上传身份" />
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:text="●"
+                android:gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/theme_color"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
-                android:text="*照片清晰可见，信息完整无缺失" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/theme_color"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
-                android:text="*身份照片真实，严禁进过PS处理" />
-        </LinearLayout>
-        <RelativeLayout
-            android:id="@+id/rl_pic1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_pic_card">
-            <ImageView
-                android:id="@+id/iv_pic1"
+                android:textColor="@color/text_color_33"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:text="姓名"
+                android:gravity="center"/>
+            <EditText
+                android:id="@+id/edt_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/icon_zheng"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:gravity="center|right"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:hint="请输入身份证上的姓名"
+                android:textColorHint="@color/text_color_99"
+                android:background="@null"
                 />
-        </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_pic2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/shape_pic_card">
-            <ImageView
-                android:id="@+id/iv_pic2"
-                android:layout_width="match_parent"
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white_f5"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_left"
+            android:paddingRight="@dimen/padding_left"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/icon_fu"/>
-        </RelativeLayout>
+                android:textColor="@color/text_color_33"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:text="●"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_33"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:text="身份证号码"
+                android:gravity="center"/>
+            <EditText
+                android:id="@+id/edt_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:gravity="center|right"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:hint="请输入身份证号码"
+                android:textColorHint="@color/text_color_99"
+                android:background="@null"
+                />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white_f5"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_left"
+            android:paddingRight="@dimen/padding_left"
+            android:background="@color/white"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_33"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:text="●"
+                        android:gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_33"
+                        android:textSize="14sp"
+                        android:text="上传身份" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/theme_color"
+                    android:layout_marginTop="15dp"
+                    android:textSize="11sp"
+                    android:text="*照片清晰可见，信息完整无缺失" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/theme_color"
+                    android:textSize="11sp"
+                    android:text="*身份照片真实，严禁进过PS处理" />
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_pic1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_pic_card"
+                android:padding="3dp">
+                <ImageView
+                    android:id="@+id/iv_pic1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/icon_zheng"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_pic2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_pic_card"
+                android:padding="3dp">
+                <ImageView
+                    android:id="@+id/iv_pic2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/icon_fu"/>
+            </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -161,6 +206,7 @@
             android:layout_gravity="center"
             android:src="@mipmap/icon_ok"/>
         <TextView
+            android:id="@+id/tv_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_66"
@@ -169,6 +215,7 @@
             android:text="我已阅读并同意"
             android:gravity="center"/>
         <TextView
+            android:id="@+id/tv_confirm_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_33"

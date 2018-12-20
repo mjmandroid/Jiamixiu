@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.MyCommentBean;
 import com.project.jiamixiu.function.message.inter.ICommentView;
 import com.project.jiamixiu.function.message.presenter.CommentPresenter;
+import com.project.jiamixiu.utils.UIUtils;
 import com.project.jiamixiu.widget.CustomerToolbar;
 import com.project.jiamixiu.widget.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -129,8 +131,12 @@ public class AtMeActivity extends AppCompatActivity implements ICommentView {
             holder.tvContent.setText(commentData.message);
             holder.tvMe.setText(commentData.nick + "在作品中提到了你");
             holder.tvTime.setText(commentData.f_creatortime);
-            Picasso.with(AtMeActivity.this).load(commentData.avator).into(holder.ivUserImg);
-            Picasso.with(AtMeActivity.this).load(commentData.coverimg).into(holder.tvCover);
+            if (!TextUtils.isEmpty(commentData.avator)){
+                Picasso.with(AtMeActivity.this).load(UIUtils.getImageUrl(commentData.avator)).into(holder.ivUserImg);
+            }
+            if (!TextUtils.isEmpty(commentData.coverimg)){
+                Picasso.with(AtMeActivity.this).load(UIUtils.getImageUrl(commentData.coverimg)).into(holder.tvCover);
+            }
             return convertView;
         }
 

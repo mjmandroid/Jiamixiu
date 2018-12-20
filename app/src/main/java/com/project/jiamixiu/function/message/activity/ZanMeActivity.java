@@ -58,10 +58,9 @@ public class ZanMeActivity extends AppCompatActivity implements IFanView {
         initPtrFrame();
         fanAdapter = new FanAdapter(this,fanData);
         fanAdapter.setType("2");
-        fanAdapter.setClickListener(new View.OnClickListener() {
+        fanAdapter.setCallBack(new FanAdapter.FollowCallBack() {
             @Override
-            public void onClick(View v) {
-                String id = v.getTag().toString();
+            public void onFollow(String id) {
                 loadingDialog.show();
                 presenter.follow(id);
             }
@@ -76,6 +75,7 @@ public class ZanMeActivity extends AppCompatActivity implements IFanView {
 
     @Override
     public void loadData(FanBean bean) {
+        loadingDialog.dismiss();
         smartRefreshLayout.finishRefresh();
         if (bean.data != null && bean.data.size() > 0){
             lvZan.setVisibility(View.VISIBLE);

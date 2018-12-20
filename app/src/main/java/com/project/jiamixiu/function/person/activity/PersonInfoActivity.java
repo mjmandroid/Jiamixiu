@@ -263,6 +263,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
             view.findViewById(R.id.selectPic).setOnClickListener(this);
             view.findViewById(R.id.cancel).setOnClickListener(this);
             photoDialog = DialogUtils.BottonDialog(this, view);
+//            photoDialog.getWindow().setDimAmount(0f);
         }
         photoDialog.show();
     }
@@ -421,7 +422,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         loadingDialog.dismiss();
         if (bean.data != null){
             if (!TextUtils.isEmpty(bean.data.avator)){
-                Picasso.with(this).load(bean.data.avator).into(ivUserImg);
+                Picasso.with(this).load(UIUtils.getImageUrl(bean.data.avator)).into(ivUserImg);
             }
             if (!TextUtils.isEmpty(bean.data.nick)){
                 tvNickname.setText(bean.data.nick);
@@ -459,12 +460,12 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 tvPhone.setText(UIUtils.getHidePhoneNumber(bean.data.mobile));
             }
             if (!TextUtils.isEmpty(bean.data.email)){
-                tvEmail.setText(UIUtils.getHideEmail(bean.data.mobile));
+                tvEmail.setText(UIUtils.getHideEmail(bean.data.email));
             }else {
                 tvEmail.setText("立即绑定");
                 tvEmail.setTextColor(Color.parseColor("#F40000"));
             }
-            if (!TextUtils.isEmpty(bean.data.f_creatoruserid)){
+            if (!TextUtils.isEmpty(bean.data.cardno)){
                 tvConfirmName.setText("已认证");
             }else {
                 tvConfirmName.setText("未认证");
@@ -558,9 +559,9 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
         if (genderDialog == null){
             View dialog = UIUtils.inflate(this,R.layout.dialog_choose_gender);
             genderDialog = DialogUtils.BottonDialog(PersonInfoActivity.this, dialog);
-            Button btn_cancel = (Button) dialog.findViewById(R.id.bt_cancel);
-            final Button btn_man = (Button) dialog.findViewById(R.id.btn_man);
-            final Button btn_women = (Button) dialog.findViewById(R.id.btn_women);
+            TextView btn_cancel = (TextView) dialog.findViewById(R.id.bt_cancel);
+            final TextView btn_man = (TextView) dialog.findViewById(R.id.btn_man);
+            final TextView btn_women = (TextView) dialog.findViewById(R.id.btn_women);
             btn_man.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

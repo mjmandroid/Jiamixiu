@@ -7,11 +7,26 @@
     tools:context=".function.person.activity.SetInfoValueActivity"
     android:orientation="vertical"
     android:background="@color/white_f5">
-    <com.project.jiamixiu.widget.CustomerToolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/white"/>
+        android:layout_height="wrap_content">
+        <com.project.jiamixiu.widget.CustomerToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_99"
+            android:text="保存"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_sign"
         android:layout_width="match_parent"
@@ -47,30 +62,35 @@
             android:padding="10dp"
             android:gravity="left"/>
     </LinearLayout>
-    <EditText
-        android:id="@+id/edt_value"
+    <LinearLayout
+        android:id="@+id/ll_nick"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="@dimen/padding_right"
-        android:layout_marginRight="@dimen/padding_right"
+        android:orientation="horizontal"
         android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:textSize="14sp"
-        android:textColor="@color/text_color_33"
-        android:hint="请输入-~20个的字符"
-        android:textColorHint="@color/text_color_99"
-        android:visibility="gone"
-        />
-    <Button
-        android:id="@+id/btn_ok"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/shape_btn_ok"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:text="完成"/>
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_33"
+            android:text="昵称"
+            android:padding="10dp"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/edt_value"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/padding_right"
+            android:layout_marginRight="@dimen/padding_right"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:gravity="center|right"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_33"
+            android:hint="请输入昵称"
+            android:textColorHint="@color/text_color_99"
+            />
+    </LinearLayout>
 </LinearLayout>

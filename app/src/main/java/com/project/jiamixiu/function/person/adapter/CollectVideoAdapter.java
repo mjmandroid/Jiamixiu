@@ -1,6 +1,7 @@
 package com.project.jiamixiu.function.person.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.project.jiamixiu.R;
 import com.project.jiamixiu.bean.CollectVideoBean;
+import com.project.jiamixiu.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -56,7 +58,9 @@ public class CollectVideoAdapter extends BaseAdapter {
         holder.tvVideo.setText(list.get(position).name);
         holder.tvTime.setText(list.get(position).f_creatortime);
         holder.tvName.setText(list.get(position).nick);
-        Picasso.with(context).load(list.get(position).coverimg).into(holder.ivVideo);
+        if (!TextUtils.isEmpty(list.get(position).coverimg)){
+            Picasso.with(context).load(UIUtils.getImageUrl(list.get(position).coverimg)).into(holder.ivVideo);
+        }
         final String id = list.get(position).f_id;
         holder.tvDel.setOnClickListener(new View.OnClickListener() {
             @Override

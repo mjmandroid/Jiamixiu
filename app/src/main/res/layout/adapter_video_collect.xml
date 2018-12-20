@@ -19,11 +19,22 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:paddingLeft="15dp">
-        <ImageView
-            android:id="@+id/iv_video"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_video"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_play_video"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"/>
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
