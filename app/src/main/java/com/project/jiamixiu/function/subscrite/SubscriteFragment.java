@@ -11,6 +11,7 @@ import com.project.jiamixiu.base.BaseFragment;
 import com.project.jiamixiu.bean.AboutUserVideoResponse;
 import com.project.jiamixiu.bean.SubscribeUsersResponse;
 import com.project.jiamixiu.function.home.VideoDetailsActivity;
+import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.function.subscrite.adapter.HeadViewAdapter;
 import com.project.jiamixiu.function.subscrite.adapter.MySubAdapter;
 import com.project.jiamixiu.function.subscrite.prenster.SubscritePrenster;
@@ -40,6 +41,7 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
     private int loadState = STATE_REFRESH;
     private MySubAdapter adapter;
     public static String headUrl="",headName="";
+    private boolean isUpdate;
 
     @Override
     public View initView() {
@@ -56,14 +58,23 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
             loadState = STATE_LOADMORO;
             prenster.loadVideosDatas(fid,page+"","20",false,null);
         });
-        loadingDialog.show();
-        prenster.loadHeadData();
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+
+    @Override
+    public void updateList(String fid) {
+        if (!isUpdate){
+            isUpdate = true;
+            loadingDialog.show();
+            prenster.loadHeadData();
+        }
     }
 
     @Override
@@ -87,7 +98,12 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
 
     @Override
     public void loadFail(String errmsg) {
-        ToastUtil.showTosat(mContext,errmsg);
+        if (errmsg.contains("用户未登")){
+            isUpdate = false;
+            startActivity(new Intent(mContext, LoginActivity.class));
+        } else {
+            ToastUtil.showTosat(mContext,errmsg);
+        }
         loadingDialog.dismiss();
     }
 

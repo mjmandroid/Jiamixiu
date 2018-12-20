@@ -29,6 +29,7 @@ import com.project.jiamixiu.bean.VideoRecommendResponse;
 import com.project.jiamixiu.function.home.adapter.VideoCommentAdapter;
 import com.project.jiamixiu.function.home.prenster.VideoDetailPrenster;
 import com.project.jiamixiu.function.home.view.IvideoDetailView;
+import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.utils.DialogUtils;
 import com.project.jiamixiu.utils.ToastUtil;
 import com.project.jiamixiu.widget.RoundButton;
@@ -156,7 +157,11 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
 
     @Override
     public void laodDetailFail(String errmsg) {
-        ToastUtil.showTosat(this,errmsg);
+        if (errmsg.contains("用户未登")){
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            ToastUtil.showTosat(this,errmsg);
+        }
     }
 
     @Override

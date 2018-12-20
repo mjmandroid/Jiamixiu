@@ -64,10 +64,10 @@ public class SetInfoValueActivity extends AppCompatActivity implements View.OnCl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s.toString())){
                     tvSave.setOnClickListener(SetInfoValueActivity.this);
-                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.text_color_33));
+                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.theme_color));
                 }else {
                     tvSave.setOnClickListener(null);
-                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.theme_color));
+                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.text_color_66));
                 }
             }
 
@@ -86,7 +86,7 @@ public class SetInfoValueActivity extends AppCompatActivity implements View.OnCl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s.toString())){
                     tvSave.setOnClickListener(SetInfoValueActivity.this);
-                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.text_color_33));
+                    tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.theme_color));
                 }else {
                     tvSave.setOnClickListener(null);
                     tvSave.setTextColor(ContextCompat.getColor(SetInfoValueActivity.this,R.color.text_color_66));

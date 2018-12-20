@@ -33,8 +33,36 @@ public class SharedPreferencesUtil {
     private static final String OS_TOKEN = "os_token";
     private static final String OS_SECRET = "os_secret";
     private static final String OS_KEY = "os_key";
+    private static final String KEY_EXPIREON = "expireon";
+    /*
+    * 插入
+    * mContext　上下文
+    * field sharePreference 文件名
+    * */
+    public static String getLatitude() {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        String s = sp.getString(LAT_KEY, "0");
+        return s;
+    }
+    public static void saveExpireon(String value){
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(KEY_EXPIREON, value);
+        editor.commit();
+    }
 
+    public static String getExpireon(){
+        SharedPreferences sp = BaseApplication.getPreferences();
+        String s = sp.getString(KEY_EXPIREON, "");
+        return s;
+    }
 
+    public static void saveLatitude(String value) {
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(LAT_KEY, value);
+        editor.commit();
+    }
 
 
     public static void saveToken(String value) {

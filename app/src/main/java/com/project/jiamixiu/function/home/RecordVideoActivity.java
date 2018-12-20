@@ -12,6 +12,7 @@ import com.project.jiamixiu.bean.VidoeRecordResponse;
 import com.project.jiamixiu.function.home.adapter.RecordVideoAdapter;
 import com.project.jiamixiu.function.home.prenster.RecordVideoPrenster;
 import com.project.jiamixiu.function.home.view.IRecordVideoView;
+import com.project.jiamixiu.function.login.LoginActivity;
 import com.project.jiamixiu.interfaces.RvOncliclListener;
 import com.project.jiamixiu.utils.ToastUtil;
 import com.project.jiamixiu.widget.LoadingDialog;
@@ -89,7 +90,11 @@ public class RecordVideoActivity extends BaseActivity implements IRecordVideoVie
 
     @Override
     public void loadFail(String errmsg) {
-        ToastUtil.showTosat(this,errmsg);
+        if (errmsg.contains("用户未登")){
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            ToastUtil.showTosat(this,errmsg);
+        }
     }
 
     @Override

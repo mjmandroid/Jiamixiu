@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.rb_sub:
                         manager.setFragments(1);
+                        ((BaseFragment)manager.getCurrentFragment()).updateList(null);
                         break;
                     case R.id.rb_msg:
                         manager.setFragments(2);
@@ -158,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_PHOTO){
+            if (data == null)
+                return;
             Uri uri = data.getData();
             if (uri == null)
                 return;

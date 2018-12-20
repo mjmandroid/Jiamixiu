@@ -95,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loadingDialog.dismiss();
         SharedPreferencesUtil.saveToken(bean.data.token);
         SharedPreferencesUtil.savePwd(edtPwd.getText().toString());
+        SharedPreferencesUtil.saveExpireon(bean.data.expireon);
         setResult(RESULT_OK);
         finish();
 
