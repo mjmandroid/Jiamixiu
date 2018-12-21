@@ -136,6 +136,11 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
     @Override
     public void loadFail(String error_msg) {
         ToastUtil.showTosat(mContext,error_msg);
+        if (LoadState == STATE_REFRESH){
+            refreshLayout.finishRefresh();
+        } else if (LoadState == STATE_LOADMORE){
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.project.jiamixiu.widget;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -42,6 +43,9 @@ public class CustomerToolbar extends LinearLayout {
     public void setTitle(String s){
         tv_title.setText(s);
     }
+    public void setTitleColor( int color){
+        tv_title.setTextColor(color);
+    }
 
     private void initView(Context context){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_toolbar,null);
@@ -62,6 +66,10 @@ public class CustomerToolbar extends LinearLayout {
 
     public void setToolbarLisenter(ToolbarListener toolbarListener) {
         this.toolbarListener = toolbarListener;
+    }
+
+    public TextView getTv_title() {
+        return tv_title;
     }
 
     public interface ToolbarListener{

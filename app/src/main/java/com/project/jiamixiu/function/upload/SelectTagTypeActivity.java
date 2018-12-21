@@ -2,6 +2,7 @@ package com.project.jiamixiu.function.upload;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,6 +48,9 @@ public class SelectTagTypeActivity extends BaseActivity implements ITagView {
         setContentView(R.layout.activity_upload_select_tag_type);
         ButterKnife.bind(this);
         toolbar.setTitle(title);
+        toolbar.getTv_title().setTextSize(15);
+        toolbar.setTitleColor(Color.parseColor("#04b7f9"));
+        toolbar.getTv_title().getPaint().setFakeBoldText(false);
         toolbar.setToolbarLisenter(()->finish());
         loadingDialog.show();
         if ("游戏类型".equals(title)){
@@ -65,6 +69,7 @@ public class SelectTagTypeActivity extends BaseActivity implements ITagView {
                 button.setText(tagInfo.name);
                 button.setTextColor(Color.WHITE);
                 button.setTextSize(14);
+                button.setClickable(true);
                 button.setGravity(Gravity.CENTER);
                 button.setBackgroundResource(R.drawable.selector_upload_tag);
                 FlowLayout.MarginLayoutParams lp = new FlowLayout.MarginLayoutParams(FlowLayout.MarginLayoutParams.WRAP_CONTENT,
@@ -93,6 +98,7 @@ public class SelectTagTypeActivity extends BaseActivity implements ITagView {
                 button.setText(tagInfo.name);
                 button.setTextColor(Color.WHITE);
                 button.setTextSize(14);
+                button.setClickable(true);
                 button.setGravity(Gravity.CENTER);
                 button.setBackgroundResource(R.drawable.selector_upload_tag);
                 FlowLayout.MarginLayoutParams lp = new FlowLayout.MarginLayoutParams(FlowLayout.MarginLayoutParams.WRAP_CONTENT,

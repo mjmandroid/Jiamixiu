@@ -2,6 +2,8 @@ package com.project.jiamixiu.function.upload;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -49,6 +51,9 @@ public class PublishVideoActivity extends BaseActivity implements IpublishView {
         ButterKnife.bind(this);
         toolbar.setTitle("发布");
         toolbar.setToolbarLisenter(() -> finish());
+        toolbar.getTv_title().setTextSize(15);
+        toolbar.setTitleColor(Color.parseColor("#04b7f9"));
+        toolbar.getTv_title().getPaint().setFakeBoldText(false);
         Intent intent = getIntent();
         videoPath = intent.getStringExtra("videoPath");
         Bitmap bitmap = intent.getParcelableExtra("bitmap");
