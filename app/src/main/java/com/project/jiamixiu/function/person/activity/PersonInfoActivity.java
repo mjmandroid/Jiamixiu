@@ -190,7 +190,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.ll_confirm_name:
                 Intent scci = new Intent(this,ConfirmCardActivity.class);
-                startActivityForResult(scci,22);
+                startActivityForResult(scci,122);
                 break;
             case R.id.ll_pwd:
                 Intent pi = new Intent(this, RegisterActivity.class);
@@ -547,6 +547,9 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                     }else {
                         personInfoPresenter.updateInfo(v,4);
                     }
+                    break;
+                case 122:
+                    personInfoPresenter.getPersonInfo();
                     break;
             }
         }

@@ -7,10 +7,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -202,6 +204,38 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
 
     private File picfile;
     private String path;
+
+    private void takePhoto(){
+        StringBuffer sDir = new StringBuffer();
+        if (hasSDcard()) {
+            sDir.append(Environment.getExternalStorageDirectory() + "/MyPicture/");
+        } else {
+            String dataPath = Environment.getRootDirectory().getPath();
+            sDir.append(dataPath + "/MyPicture/");
+        }
+        File fileDir = new File(sDir.toString());
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        picfile = new File(fileDir, String.valueOf(System.currentTimeMillis()) + ".jpg");
+        path = picfile.getPath();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断是否是AndroidN以及更高的版本
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(),"com.project.jiamixiu.fileProvider",picfile);
+           /* intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(contentUri,"application/vnd.android.package-archive");*/
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+        }else{
+//           /* intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.setDataAndType(Uri.fromFile(picfile),"application/vnd.android.package-archive");*/
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picfile));
+        }
+        startActivityForResult(intent, TAKE_PICTURE);
+    }
+
     //拍照
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
