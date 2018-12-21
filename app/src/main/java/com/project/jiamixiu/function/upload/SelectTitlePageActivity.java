@@ -64,8 +64,10 @@ public class SelectTitlePageActivity extends BaseActivity {
 
         startShootVideoThumbs(this, uriPath, 10, 0,duration);
         mVideoThumbAdapter.setListener((viewHolder, item, position) -> {
+            mVideoThumbAdapter.setSelectIdx(position);
             iv_title.setImageBitmap(item);
             toBitmap = item;
+            mVideoThumbAdapter.notifyDataSetChanged();
         });
     }
 

@@ -82,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FileUtils.delVideoFile();
+    }
+
     private void getOsToken(){
         HttpManager.sendRequest(UrlConst.os_token, new HashMap<>(), new HttpRequestListener() {
             @Override

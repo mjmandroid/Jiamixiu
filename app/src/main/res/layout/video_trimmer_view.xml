@@ -26,13 +26,13 @@
             android:layout_marginTop="60dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            tl:tl_bar_color="#FF343235"
+            tl:tl_bar_color="#FF434343"
             tl:tl_textUnselectColor="#ffffff"
             tl:tl_textSelectColor="#ffffff"
             tl:tl_indicator_color="#FF00B5FB"
             tl:tl_tab_width="65dp"
-            tl:tl_divider_color="#000"
-            tl:tl_bar_stroke_color="#000"
+            tl:tl_divider_color="#FF434343"
+            tl:tl_bar_stroke_color="#FF434343"
             tl:tl_indicator_corner_radius="2dp"/>
     </RelativeLayout>
 
@@ -40,6 +40,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/black">
 
@@ -74,9 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="30dp"
                 android:contentDescription="@null"
-                android:src="@mipmap/icon_seek_bar" />
+                android:background="@drawable/shape_seek_bar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="35dp"
+                    android:layout_width="30dp"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom"
                     android:background="@color/shadow_color" />
@@ -100,7 +101,7 @@
                     android:orientation="vertical" />
 
                 <View
-                    android:layout_width="35dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
                     android:background="@color/shadow_color" />

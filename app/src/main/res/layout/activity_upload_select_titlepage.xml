@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="#333333">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="44dp">
@@ -38,6 +38,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_weight="1">
         <ImageView
             android:id="@+id/iv_title"
@@ -46,8 +48,29 @@
             android:scaleType="centerCrop"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_selector"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:background="#434343"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已选封面"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_selector"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="80dp"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 </LinearLayout>

@@ -63,7 +63,7 @@ public class RangeSeekBarView extends View {
   private double min_width = 1;//最小裁剪距离
   private boolean notifyWhileDragging = false;
   private OnRangeSeekBarChangeListener mRangeSeekBarChangeListener;
-  private int whiteColorRes = getContext().getResources().getColor(R.color.white);
+  private int whiteColorRes = getContext().getResources().getColor(R.color.theme_color);
 
   public enum Thumb {
     MIN, MAX
