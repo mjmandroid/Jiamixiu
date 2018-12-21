@@ -44,7 +44,11 @@ public class MoreUsersAdapter extends AbsBaseAdapter<AboutUserVideoResponse.Vide
                 TextView tv_videos = holder.getView(R.id.tv_videos);
                 TextView tv_abouts = holder.getView(R.id.tv_abouts);
                 if (TextUtils.isEmpty(item.userInfo.avator)){
-                   Glide.with(mContext).load(imgUrlDefault).into(iv_head);
+                    if (TextUtils.isEmpty(imgUrlDefault)){
+                        Glide.with(mContext).load(R.mipmap.icon_default_head).into(iv_head);
+                    } else {
+                        Glide.with(mContext).load(imgUrlDefault).into(iv_head);
+                    }
                 } else {
                     Glide.with(mContext).load(item.userInfo.avator).into(iv_head);
                 }
