@@ -125,10 +125,10 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.takePhoto:
                 if ((ContextCompat.checkSelfPermission(ConfirmCardActivity.this, READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) &&
+                        != PackageManager.PERMISSION_GRANTED) ||
                         (ContextCompat.checkSelfPermission(ConfirmCardActivity.this, WRITE_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED)
-                        && (ContextCompat.checkSelfPermission(ConfirmCardActivity.this, CAMERA)
+                        || (ContextCompat.checkSelfPermission(ConfirmCardActivity.this, CAMERA)
                         != PackageManager.PERMISSION_GRANTED)) {
                     //申请WRITE_EXTERNAL_STORAGE权限
                     ActivityCompat.requestPermissions(ConfirmCardActivity.this, new String[]{READ_EXTERNAL_STORAGE,
@@ -141,7 +141,7 @@ public class ConfirmCardActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.selectPic:
                 if ((ContextCompat.checkSelfPermission(ConfirmCardActivity.this, READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) &&
+                        != PackageManager.PERMISSION_GRANTED) ||
                         (ContextCompat.checkSelfPermission(ConfirmCardActivity.this, WRITE_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED)) {
                     //申请WRITE_EXTERNAL_STORAGE权限

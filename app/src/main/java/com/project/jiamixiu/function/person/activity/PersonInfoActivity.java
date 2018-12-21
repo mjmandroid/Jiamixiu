@@ -235,7 +235,7 @@ public class PersonInfoActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.selectPic:
                 if ((ContextCompat.checkSelfPermission(PersonInfoActivity.this, READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) &&
+                        != PackageManager.PERMISSION_GRANTED) ||
                         (ContextCompat.checkSelfPermission(PersonInfoActivity.this, WRITE_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED)) {
                     //申请WRITE_EXTERNAL_STORAGE权限
