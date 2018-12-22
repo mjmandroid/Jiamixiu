@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -69,7 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.rb_sub:
                         manager.setFragments(1);
-                        ((BaseFragment)manager.getCurrentFragment()).updateList(null);
+                        SubscriteFragment fragment = (SubscriteFragment) manager.getCurrentFragment();
+                        if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
+                            fragment.setUpdate(false);
+                        }
+                        fragment.updateList(null);
                         break;
                     case R.id.rb_msg:
                         manager.setFragments(2);

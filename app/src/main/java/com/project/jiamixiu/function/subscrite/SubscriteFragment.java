@@ -43,6 +43,10 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
     public static String headUrl="",headName="";
     private boolean isUpdate;
 
+    public void setUpdate(boolean update) {
+        isUpdate = update;
+    }
+
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_subscrite_layout,null);
@@ -68,10 +72,13 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
     }
 
 
+
+
     @Override
     public void updateList(String fid) {
         if (!isUpdate){
             isUpdate = true;
+            adapter.clearData();
             loadingDialog.show();
             prenster.loadHeadData();
         }

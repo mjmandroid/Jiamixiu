@@ -82,17 +82,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingTop="8dp">
-        <com.project.jiamixiu.widget.RoundButton
+        <Button
             android:layout_width="72dp"
-            android:layout_height="34dp"
+            android:layout_height="32dp"
             android:layout_marginLeft="15dp"
             android:text="最新"
             android:gravity="center"
+            android:textColor="#00bbac"
             android:textSize="12sp"
-            app:btnCornerRadius="stadium"
-            app:btn_normalStrokeWidth="1dp"
-            app:btn_normalStrokeColor="#00bbac"
-            app:btn_normalSolidColor="@color/white"
-            app:btn_normalTextcolor="#00bbac"/>
+            android:background="@drawable/shape_green1"/>
     </LinearLayout>
 </LinearLayout>

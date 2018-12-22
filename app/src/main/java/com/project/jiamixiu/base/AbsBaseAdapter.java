@@ -42,6 +42,11 @@ public abstract class AbsBaseAdapter<T> extends RecyclerView.Adapter<AbsBaseAdap
         notifyDataSetChanged();
     }
 
+    public void clearData(){
+        this.datas.clear();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
