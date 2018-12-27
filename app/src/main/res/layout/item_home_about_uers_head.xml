@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         android:paddingTop="30dp"
         android:paddingBottom="20dp">
-        <com.project.jiamixiu.widget.CircleImageView
+        <com.reafor.jiamixiu.widget.CircleImageView
             android:id="@+id/iv_head"
             android:layout_width="55dp"
             android:layout_height="55dp"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.project.jiamixiu.widget.SwipeListLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.reafor.jiamixiu.widget.SwipeListLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -79,4 +79,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</com.project.jiamixiu.widget.SwipeListLayout>
+</com.reafor.jiamixiu.widget.SwipeListLayout>

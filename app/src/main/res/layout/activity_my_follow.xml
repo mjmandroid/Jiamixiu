@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".function.person.activity.MyFollowActivity">
-    <com.project.jiamixiu.widget.CustomerToolbar
+    <com.reafor.jiamixiu.widget.CustomerToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"

@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="12dp">
-        <com.project.jiamixiu.widget.CircleImageView
+        <com.reafor.jiamixiu.widget.CircleImageView
             android:id="@+id/iv_head"
             android:layout_width="40dp"
             android:layout_height="40dp"

@@ -7,7 +7,7 @@
     tools:context=".function.person.activity.PersonInfoActivity"
     android:background="@color/white_f5"
     android:orientation="vertical">
-    <com.project.jiamixiu.widget.CustomerToolbar
+    <com.reafor.jiamixiu.widget.CustomerToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
