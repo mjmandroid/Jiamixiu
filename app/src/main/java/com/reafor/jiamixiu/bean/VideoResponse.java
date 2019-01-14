@@ -1,10 +1,12 @@
 package com.reafor.jiamixiu.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class VideoResponse extends BaseBean {
-    public List<VideoInfo> data;
-    public class VideoInfo{
+public class VideoResponse extends BaseBean implements Serializable{
+    public ArrayList<VideoInfo> data;
+    public class VideoInfo implements Serializable{
         public String f_id;//视频id
         public String viewnum;//播放次数
         public String commentnum;//评论数

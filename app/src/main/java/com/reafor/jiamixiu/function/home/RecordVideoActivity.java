@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseActivity;
+import com.reafor.jiamixiu.bean.CollectVideoBean;
+import com.reafor.jiamixiu.bean.VideoResponse;
 import com.reafor.jiamixiu.bean.VidoeRecordResponse;
 import com.reafor.jiamixiu.function.home.adapter.RecordVideoAdapter;
 import com.reafor.jiamixiu.function.home.prenster.RecordVideoPrenster;
@@ -18,6 +20,7 @@ import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.widget.LoadingDialog;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +40,7 @@ public class RecordVideoActivity extends BaseActivity implements IRecordVideoVie
     private int page = 0;
     private int STATE_REFRESH = 0,STATE_LOADMORE = 2;
     private int load_state = 0;
+    private ArrayList<VideoResponse.VideoInfo> original;
 
     @Override
     protected void initData() {
@@ -104,8 +108,37 @@ public class RecordVideoActivity extends BaseActivity implements IRecordVideoVie
 
     @Override
     public void onCick(RecyclerView.ViewHolder viewHolder, VidoeRecordResponse.Data item, int position) {
-        Intent intent = new Intent(this, VideoDetailsActivity.class);
+        Intent intent = new Intent(this, RecordVideoDetailActivity.class);
         intent.putExtra("id",item.f_id);
+        intent.putExtra("page",page);
+        intent.putExtra("list", datasCast());
         startActivity(intent);
+    }
+
+    private ArrayList<VideoResponse.VideoInfo> datasCast(){
+        if (original == null){
+            original = new ArrayList<>();
+            VideoResponse res = new VideoResponse();
+            for (VidoeRecordResponse.Data sruct : adapter.getDatas()) {
+                VideoResponse.VideoInfo info = res.new VideoInfo();
+                info.f_id = sruct.f_id;
+                info.viewnum = sruct.viewnum;
+                info.commentnum = sruct.commentnum;
+                info.sharenum = sruct.sharenum;
+                info.favoritenum = sruct.favoritenum;
+                info.likenum = sruct.likenum;
+                info.name = sruct.name;
+                info.description = sruct.description;
+                info.thumbnail = sruct.thumbnail;
+                info.coverimg = sruct.coverimg;
+                info.f_creatoruserid = sruct.f_creatoruserid;
+                info.nick = sruct.nick;
+                info.avator = sruct.avator;
+                info.ossid = sruct.ossid;
+                info.f_creatortime = sruct.f_creatortime;
+                original.add(info);
+            }
+        }
+        return original;
     }
 }

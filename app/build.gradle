@@ -62,6 +62,7 @@ dependencies {
     implementation files('libs/picasso-2.5.2.jar')
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
+    implementation 'com.danikula:videocache:2.7.0'
     implementation files('libs/wheelview_1.3.3.jar')
     implementation files('libs/org.apache.http.legacy.jar')
     implementation 'com.aliyun.dpa:oss-android-sdk:+'

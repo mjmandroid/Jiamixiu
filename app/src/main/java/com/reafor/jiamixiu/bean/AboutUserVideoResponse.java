@@ -18,6 +18,7 @@ public class AboutUserVideoResponse extends BaseBean {
         public String f_creatoruserid;
         public String nick;
         public String avator;
+        public String ossid;
         public String f_creatortime;
         public int type = 0;
         public UserInfoResponse.UserInfo userInfo;

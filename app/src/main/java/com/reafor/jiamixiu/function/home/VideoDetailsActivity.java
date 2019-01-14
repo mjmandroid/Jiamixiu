@@ -92,6 +92,7 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
         loadDetail();
     }
 
+
     @Override
     protected void initView() {
         super.initView();
@@ -108,6 +109,7 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
         Glide.with(this)
                 .load(videoThumbUrl)
                 .into(video.thumbImageView);
+        //video.findViewById(R.id.bottom_seek_progress).setVisibility(View.GONE);
     }
 
     private void setListener() {
@@ -153,6 +155,7 @@ public class VideoDetailsActivity extends BaseActivity implements IvideoDetailVi
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         Jzvd.SAVE_PROGRESS = false;
         video.startVideo();//开始播放
+
     }
 
     @Override

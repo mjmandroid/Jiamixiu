@@ -42,6 +42,10 @@ public class ItemFragmentAdapter extends RecyclerView.Adapter<ItemFragmentAdapte
 
     private List<VideoResponse.VideoInfo> datas;
 
+    public List<VideoResponse.VideoInfo> getDatas() {
+        return datas;
+    }
+
     public void setDatas(List<VideoResponse.VideoInfo> datas) {
         this.datas = datas;
         notifyDataSetChanged();

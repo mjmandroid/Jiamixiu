@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.health.ServiceHealthStats;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UIUtils {
     public static Context getContext() {
@@ -84,5 +89,28 @@ public class UIUtils {
             url = "http://jiamixiu.uniondevice.com" + url;
         }
         return url;
+    }
+
+    /**
+     * 是否登录过期
+     * @return
+     */
+    public static boolean isExpireon(){
+        if (TextUtils.isEmpty(SharedPreferencesUtil.getToken()) || TextUtils.isEmpty(SharedPreferencesUtil.getExpireon())){
+            return true;
+        }
+        String expireonDate = SharedPreferencesUtil.getExpireon();
+        long currentMillis = System.currentTimeMillis();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(expireonDate);
+            long time = date.getTime();
+            if (currentMillis > time){
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

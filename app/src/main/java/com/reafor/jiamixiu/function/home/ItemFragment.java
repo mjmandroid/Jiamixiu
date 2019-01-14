@@ -3,6 +3,7 @@ package com.reafor.jiamixiu.function.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -81,9 +82,12 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         adapter.setListener(new RvOncliclListener<VideoResponse.VideoInfo>() {
             @Override
             public void onCick(RecyclerView.ViewHolder viewHolder, VideoResponse.VideoInfo item, int position) {
-                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                Intent intent = new Intent(mContext, VideoDetailsActivity_v2.class);
                 intent.putExtra("id",item.f_id);
                 intent.putExtra("videoThumbUrl",item.coverimg);
+                intent.putExtra("page",page);
+                intent.putExtra("categoryid",categoryid);
+                intent.putExtra("list", (ArrayList) adapter.getDatas());
                 startActivity(intent);
             }
         });
@@ -122,10 +126,10 @@ public class ItemFragment extends BaseFragment implements IitemFragmentView {
         if (LoadState == STATE_REFRESH){
             adapter.setDatas(infos);
             refreshLayout.finishRefresh();
-            if (infos.size() > 0)
+            if (infos != null && infos.size() > 0)
                 page++;
         } else {
-            if (infos.size() > 0){
+            if (infos != null && infos.size() > 0){
                 adapter.addDatas(infos);
                 page ++;
             }

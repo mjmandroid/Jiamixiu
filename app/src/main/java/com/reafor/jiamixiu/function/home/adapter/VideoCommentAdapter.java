@@ -36,8 +36,14 @@ public class VideoCommentAdapter extends AbsBaseAdapter<VideoCommentResponse.Dat
             Glide.with(mContext).load(item.avator).apply(options).into((ImageView) holder.getView(R.id.iv_head));
             TextView tv_mess = holder.getView(R.id.tv_comment);
             TextView tv_time = holder.getView(R.id.tv_time);
+            TextView tv_name = holder.getView(R.id.tv_name);
+            tv_name.setText(item.nick);
             tv_mess.setText(item.message);
             tv_time.setText(item.f_creatortime);
+            holder.getView(R.id.tv_report).setOnClickListener(v -> {
+                if (listener != null)
+                    listener.getMoreVideos();
+            });
             holder.getView(R.id.tv_reply).setOnClickListener(view ->{
                 if (listener != null)
                     listener.reply(item.sourthid);

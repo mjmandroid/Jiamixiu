@@ -34,6 +34,7 @@ public class SharedPreferencesUtil {
     private static final String OS_SECRET = "os_secret";
     private static final String OS_KEY = "os_key";
     private static final String KEY_EXPIREON = "expireon";
+    private static final String KEY_DRAWLAYOUT = "drawlayout";
     /*
     * 插入
     * mContext　上下文
@@ -44,13 +45,24 @@ public class SharedPreferencesUtil {
         String s = sp.getString(LAT_KEY, "0");
         return s;
     }
+    public static void saveDrawLyoutState(boolean value){
+        SharedPreferences sp = BaseApplication.getPreferences();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(KEY_DRAWLAYOUT,value);
+        editor.commit();
+    }
+
     public static void saveExpireon(String value){
         SharedPreferences sp = BaseApplication.getPreferences();
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(KEY_EXPIREON, value);
         editor.commit();
     }
-
+    public static boolean getDrawLyoutState(){
+        SharedPreferences sp = BaseApplication.getPreferences();
+        boolean s = sp.getBoolean(KEY_DRAWLAYOUT, true);
+        return s;
+    }
     public static String getExpireon(){
         SharedPreferences sp = BaseApplication.getPreferences();
         String s = sp.getString(KEY_EXPIREON, "");

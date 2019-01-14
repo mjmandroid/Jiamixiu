@@ -13,7 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.reafor.jiamixiu.R;
+import com.reafor.jiamixiu.bean.AboutUserVideoResponse;
 import com.reafor.jiamixiu.bean.CollectVideoBean;
+import com.reafor.jiamixiu.bean.VideoResponse;
 import com.reafor.jiamixiu.function.home.VideoDetailsActivity;
 import com.reafor.jiamixiu.function.person.adapter.CollectVideoAdapter;
 import com.reafor.jiamixiu.function.person.inter.ICollectVideoView;
@@ -47,6 +49,8 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
     ArrayList<CollectVideoBean.VideoData> list = new ArrayList<>();
     LoadingDialog loadingDialog;
     int page = 0;
+    private ArrayList<VideoResponse.VideoInfo> original;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +69,11 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
         videoAdapter.setVideoListener(new CollectVideoAdapter.VideoListener() {
             @Override
             public void onClick(int position) {
-                Intent intent = new Intent(VideoCollectActivity.this,VideoDetailsActivity.class);
+                Intent intent = new Intent(VideoCollectActivity.this,VideoCollectDetailActivity.class);
                 intent.putExtra("id",list.get(position).f_id);
                 intent.putExtra("videoThumbUrl",list.get(position).coverimg);
+                intent.putExtra("page",page);
+                intent.putExtra("list", datasCast());
                 startActivity(intent);
             }
 
@@ -175,5 +181,32 @@ public class VideoCollectActivity extends AppCompatActivity implements ICollectV
             }
         });
         smartRefreshLayout.setDisableContentWhenRefresh(true);
+    }
+
+    private ArrayList<VideoResponse.VideoInfo> datasCast(){
+        if (original == null){
+            original = new ArrayList<>();
+            VideoResponse res = new VideoResponse();
+            for (CollectVideoBean.VideoData sruct : list) {
+                VideoResponse.VideoInfo info = res.new VideoInfo();
+                info.f_id = sruct.f_id;
+                info.viewnum = sruct.viewnum;
+                info.commentnum = sruct.commentnum;
+                info.sharenum = sruct.sharenum;
+                info.favoritenum = sruct.favoritenum;
+                info.likenum = sruct.likenum;
+                info.name = sruct.name;
+                info.description = sruct.description;
+                info.thumbnail = sruct.thumbnail;
+                info.coverimg = sruct.coverimg;
+                info.f_creatoruserid = sruct.f_creatoruserid;
+                info.nick = sruct.nick;
+                info.avator = sruct.avator;
+                info.ossid = sruct.ossid;
+                info.f_creatortime = sruct.f_creatortime;
+                original.add(info);
+            }
+        }
+        return original;
     }
 }

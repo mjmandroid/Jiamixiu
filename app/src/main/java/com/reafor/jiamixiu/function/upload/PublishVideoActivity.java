@@ -82,7 +82,6 @@ public class PublishVideoActivity extends BaseActivity implements IpublishView {
     }
 
     private void commit() {
-
         if (TextUtils.isEmpty(et_title.getText().toString())){
             ToastUtil.showTosat(this,"请输入标题");
             return;

@@ -39,6 +39,7 @@ public class CollectVideoBean extends BaseBean implements Serializable{
     public String nick;
     public String avator;
     public String f_creatortime;
+    public String ossid;
 
     }
 

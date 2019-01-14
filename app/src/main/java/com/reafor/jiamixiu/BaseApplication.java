@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
@@ -91,6 +92,17 @@ public class BaseApplication extends Application {
             }
         }
         return null;
+    }
+
+    private HttpProxyCacheServer proxy;
+
+    public static HttpProxyCacheServer getProxy(Context context) {
+        BaseApplication app = (BaseApplication) context.getApplicationContext();
+        return app.proxy == null ? (app.proxy = app.newProxy()) : app.proxy;
+    }
+
+    private HttpProxyCacheServer newProxy() {
+        return new HttpProxyCacheServer(this);
     }
 
     /**

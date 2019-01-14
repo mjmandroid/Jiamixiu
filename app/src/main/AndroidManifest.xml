@@ -107,5 +107,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+        <activity android:name=".function.home.VideoDetailsActivity_v2"/>
+        <activity android:name=".function.subscrite.SubscriteDetailsActivity"/>
+        <activity android:name=".function.person.activity.VideoCollectDetailActivity"/>
+        <activity android:name=".function.home.RecordVideoDetailActivity"/>
     </application>
 </manifest>

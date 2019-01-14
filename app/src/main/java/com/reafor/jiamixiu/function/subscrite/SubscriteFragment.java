@@ -11,6 +11,7 @@ import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.bean.AboutUserVideoResponse;
 import com.reafor.jiamixiu.bean.SubscribeUsersResponse;
+import com.reafor.jiamixiu.bean.VideoResponse;
 import com.reafor.jiamixiu.function.home.VideoDetailsActivity;
 import com.reafor.jiamixiu.function.login.LoginActivity;
 import com.reafor.jiamixiu.function.subscrite.adapter.HeadViewAdapter;
@@ -22,6 +23,7 @@ import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.widget.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,6 +45,7 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
     private MySubAdapter adapter;
     public static String headUrl="",headName="";
     private boolean isUpdate;
+    private ArrayList<VideoResponse.VideoInfo> original;
 
     public void setUpdate(boolean update) {
         isUpdate = update;
@@ -138,8 +141,41 @@ public class SubscriteFragment extends BaseFragment implements ISubscriteView, R
 
     @Override
     public void onCick(RecyclerView.ViewHolder viewHolder, AboutUserVideoResponse.VideoSruct item, int position) {
-        Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+        Intent intent = new Intent(mContext, SubscriteDetailsActivity.class);
         intent.putExtra("id",item.f_id);
+        intent.putExtra("page",page);
+        intent.putExtra("list", datasCast());
         startActivity(intent);
+    }
+
+    private ArrayList<VideoResponse.VideoInfo> datasCast(){
+        if (original == null){
+            original = new ArrayList<>();
+            VideoResponse res = new VideoResponse();
+            int i = 0;
+            for (AboutUserVideoResponse.VideoSruct sruct : adapter.getDatas()) {
+                if (adapter.getItemViewType(i)== 0){
+                    VideoResponse.VideoInfo info = res.new VideoInfo();
+                    info.f_id = sruct.f_id;
+                    info.viewnum = sruct.viewnum;
+                    info.commentnum = sruct.commentnum;
+                    info.sharenum = sruct.sharenum;
+                    info.favoritenum = sruct.favoritenum;
+                    info.likenum = sruct.likenum;
+                    info.name = sruct.name;
+                    info.description = sruct.description;
+                    info.thumbnail = sruct.thumbnail;
+                    info.coverimg = sruct.coverimg;
+                    info.f_creatoruserid = sruct.f_creatoruserid;
+                    info.nick = sruct.nick;
+                    info.avator = sruct.avator;
+                    info.ossid = sruct.ossid;
+                    info.f_creatortime = sruct.f_creatortime;
+                    original.add(info);
+                }
+                i++;
+            }
+        }
+        return original;
     }
 }
