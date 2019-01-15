@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dd.plist.NSArray;
+import com.dd.plist.NSDictionary;
+import com.dd.plist.PropertyListFormatException;
+import com.dd.plist.PropertyListParser;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
@@ -25,6 +29,14 @@ import com.reafor.jiamixiu.function.person.inter.IPersonView;
 import com.reafor.jiamixiu.function.person.presenter.PersonPresenter;
 import com.reafor.jiamixiu.utils.SharedPreferencesUtil;
 import com.squareup.picasso.Picasso;
+
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +84,28 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         }
         unbinder = ButterKnife.bind(this, view);
         onRefresh();
+
+        try {
+            NSArray ary = (NSArray) PropertyListParser.parse(getActivity().getAssets().open("emoji.plist"));
+            for (int i = 0; i < ary.count(); i++){
+                if (i == 0){
+                    NSDictionary dic = (NSDictionary) ary.objectAtIndex(i);
+                    String code = (dic.objectForKey("code")).toJavaObject().toString();
+                    tvLogin.setText(code);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PropertyListFormatException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
         return view;
     }
     public void onRefresh(){
