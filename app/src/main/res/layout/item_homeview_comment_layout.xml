@@ -7,21 +7,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="12dp">
-        <com.project.jiamixiu.widget.CircleImageView
-            android:id="@+id/iv_head"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"/>
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textColor="#666666"
-            android:textSize="12sp"
-            android:text="hhah"
-            android:layout_marginLeft="60dp"/>
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+            <com.reafor.jiamixiu.widget.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"/>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:textSize="14sp"
+                android:text="hhah"/>
+        </LinearLayout>
+
+        <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="hhah"
+        android:layout_marginLeft="70dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,11 +51,20 @@
                 android:textColor="#666666"
                 android:textSize="12sp"
                 android:text="hhah"
-                android:layout_marginLeft="60dp"/>
+                android:layout_marginLeft="70dp"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="举报"
+                android:textSize="12sp"
+                android:textColor="#ff00"
+                android:drawablePadding="10dp"
+                android:layout_marginRight="15dp"/>
             <TextView
                 android:id="@+id/tv_reply"
                 android:layout_width="wrap_content"

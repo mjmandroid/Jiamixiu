@@ -24,15 +24,16 @@
             android:src="@mipmap/icon_back"/>
         <TextView
             android:id="@+id/iv_menu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
             android:layout_centerVertical="true"
             android:text="清空"
             android:textSize="15sp"
             android:textColor="#00bbac"
             android:gravity="center"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
+            android:paddingRight="15dp"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

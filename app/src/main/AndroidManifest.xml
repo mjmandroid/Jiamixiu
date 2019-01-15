@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.jiamixiu">
+    package="com.reafor.jiamixiu">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -100,12 +100,16 @@
         <activity android:name=".function.upload.SelectTagTypeActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.project.jiamixiu.fileProvider"
+            android:authorities="com.reafor.jiamixiu.fileProvider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+        <activity android:name=".function.home.VideoDetailsActivity_v2"/>
+        <activity android:name=".function.subscrite.SubscriteDetailsActivity"/>
+        <activity android:name=".function.person.activity.VideoCollectDetailActivity"/>
+        <activity android:name=".function.home.RecordVideoDetailActivity"/>
     </application>
 </manifest>

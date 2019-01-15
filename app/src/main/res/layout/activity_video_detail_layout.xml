@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll">
-                <com.project.jiamixiu.widget.CircleImageView
+                <com.reafor.jiamixiu.widget.CircleImageView
                     android:id="@+id/iv_nick"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -109,8 +109,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/icon_comment"/>
                 </FrameLayout>
@@ -120,8 +120,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/icon_praise"/>
                 </FrameLayout>
@@ -131,8 +131,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/icon_favorite"/>
                 </FrameLayout>
@@ -142,8 +142,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/icon_share_black"/>
                 </FrameLayout>
@@ -207,7 +207,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

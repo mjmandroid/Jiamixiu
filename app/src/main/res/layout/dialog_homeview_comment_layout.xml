@@ -20,7 +20,7 @@
             android:background="@drawable/shape_comment_bg"
             android:layout_marginLeft="15sp"
             android:layout_marginRight="15sp"/>
-        <com.project.jiamixiu.widget.RoundButton
+        <com.reafor.jiamixiu.widget.RoundButton
             android:id="@+id/btn_commit"
             android:layout_width="65dp"
             android:layout_height="36dp"

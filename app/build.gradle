@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.project.jiamixiu"
+        applicationId "com.reafor.jiamixiu"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -62,9 +62,11 @@ dependencies {
     implementation files('libs/picasso-2.5.2.jar')
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
+    implementation 'com.danikula:videocache:2.7.0'
     implementation files('libs/wheelview_1.3.3.jar')
     implementation files('libs/org.apache.http.legacy.jar')
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
     implementation 'com.github.iknow4:android-utils-sdk:1.1.2'
+    implementation'com.googlecode.plist:dd-plist:1.16'
 }

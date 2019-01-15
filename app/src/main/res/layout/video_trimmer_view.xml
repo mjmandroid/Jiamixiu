@@ -12,7 +12,7 @@
         android:layout_above="@+id/layout"
         android:background="@android:color/black">
 
-        <com.project.jiamixiu.widget.ZVideoView
+        <com.reafor.jiamixiu.widget.ZVideoView
             android:id="@+id/video_loader"
             android:layout_width="match_parent"
             android:layout_height="200dp"

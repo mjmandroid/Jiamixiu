@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"/>
-        <com.project.jiamixiu.widget.CircleImageView
+        <com.reafor.jiamixiu.widget.CircleImageView
             android:id="@+id/iv_nick"
             android:layout_width="50dp"
             android:layout_height="50dp"
