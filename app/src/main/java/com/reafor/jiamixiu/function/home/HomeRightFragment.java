@@ -7,10 +7,12 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.reafor.jiamixiu.MainActivity;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.function.message.MessageFragment;
@@ -35,7 +37,7 @@ public class HomeRightFragment extends BaseFragment {
     private static final int SELECT_PHOTO = 1003;
     private FragmentChangeManager manager;
     private boolean isVideoResume = true;
-
+    private MainActivity parentActivity;
 
     @Override
     public View initView() {
@@ -47,7 +49,8 @@ public class HomeRightFragment extends BaseFragment {
         fragmentList.add(new SubscriteFragment());
         fragmentList.add(new MessageFragment());
         fragmentList.add(new PersonFragment());
-
+        parentActivity = (MainActivity) getActivity();
+        parentActivity.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         manager = new FragmentChangeManager(getChildFragmentManager(),R.id.fl_home,fragmentList);
         return view;
     }
@@ -60,6 +63,7 @@ public class HomeRightFragment extends BaseFragment {
                     case R.id.rb_home:
                         JzvdStd.goOnPlayOnResume();
                         isVideoResume = true;
+                        parentActivity.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         manager.setFragments(0);
                         break;
                     case R.id.rb_sub:
@@ -67,6 +71,7 @@ public class HomeRightFragment extends BaseFragment {
                             JzvdStd.goOnPlayOnPause();
                             isVideoResume = false;
                         }
+                        parentActivity.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
                         manager.setFragments(1);
                         SubscriteFragment fragment = (SubscriteFragment) manager.getCurrentFragment();
                         if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
@@ -79,6 +84,7 @@ public class HomeRightFragment extends BaseFragment {
                             JzvdStd.goOnPlayOnPause();
                             isVideoResume = false;
                         }
+                        parentActivity.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
                         manager.setFragments(2);
                         break;
                     case R.id.rb_mine:
@@ -86,6 +92,7 @@ public class HomeRightFragment extends BaseFragment {
                             JzvdStd.goOnPlayOnPause();
                             isVideoResume = false;
                         }
+                        parentActivity.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
                         manager.setFragments(3);
                         break;
                 }

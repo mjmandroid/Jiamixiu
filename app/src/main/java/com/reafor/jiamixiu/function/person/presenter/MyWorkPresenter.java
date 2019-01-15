@@ -33,7 +33,7 @@ public class MyWorkPresenter {
 
             @Override
             public void onRequestFail(String result, String code) {
-
+                workView.onLoadFail();
             }
 
             @Override

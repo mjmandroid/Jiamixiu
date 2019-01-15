@@ -111,5 +111,7 @@
         <activity android:name=".function.subscrite.SubscriteDetailsActivity"/>
         <activity android:name=".function.person.activity.VideoCollectDetailActivity"/>
         <activity android:name=".function.home.RecordVideoDetailActivity"/>
+        <activity android:name=".function.home.SearchVideoDetailActivity"/>
+        <activity android:name=".function.person.MyVideoDetailsActivity"/>
     </application>
 </manifest>

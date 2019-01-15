@@ -49,7 +49,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity  {
-    private DrawerLayout drawerLayout;
+    public DrawerLayout drawerLayout;
     public boolean drawlayout_state;
 
     @Override
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity  {
 
             }
         });
+        //drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
 

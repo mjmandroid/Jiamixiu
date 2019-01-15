@@ -6,11 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.reafor.jiamixiu.MainActivity;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.bean.TabBeanResponse;
@@ -32,13 +35,14 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
     ViewPager viewPager;
     @BindView(R.id.et_search)
     EditText et_search;
-    @BindView(R.id.iv_record)
-    ImageView iv_record;
+    @BindView(R.id.tv_cancel)
+    TextView tv_cancel;
     private HomePrenster prenster;
     private LoadingDialog loadingDialog;
     private List<Fragment> mFragments;
     private List<TabBeanResponse.TabBean> tabList;
     private MyPagerAdapter pagerAdapter;
+    private MainActivity parentActivity;
 
     @Override
     public View initView() {
@@ -48,6 +52,7 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
         prenster = new HomePrenster(this);
         loadingDialog.show();
         prenster.acquireTabs();
+        parentActivity = (MainActivity) getActivity();
         initEvent();
         return view;
     }
@@ -93,7 +98,7 @@ public class HomeFragment  extends BaseFragment implements IhomeView{
 
             }
         });
-        iv_record.setOnClickListener(view->startActivity(new Intent(mContext,RecordVideoActivity.class)));
+        tv_cancel.setOnClickListener(view-> parentActivity.drawerLayout.openDrawer(Gravity.RIGHT));
         et_search.setOnClickListener(view->startActivity(new Intent(mContext,SearchVideoActivity.class)));
     }
 

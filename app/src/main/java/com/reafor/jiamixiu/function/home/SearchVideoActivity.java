@@ -17,6 +17,7 @@ import com.reafor.jiamixiu.interfaces.RvOncliclListener;
 import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.utils.UIUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,8 +78,10 @@ public class SearchVideoActivity extends BaseActivity implements ISearchView, Rv
 
     @Override
     public void onCick(RecyclerView.ViewHolder viewHolder, VideoResponse.VideoInfo item, int position) {
-        Intent intent = new Intent(this, VideoDetailsActivity.class);
+        Intent intent = new Intent(this, SearchVideoDetailActivity.class);
         intent.putExtra("id",item.f_id);
+        intent.putExtra("page","0");
+        intent.putExtra("list", (ArrayList)adapter.getDatas());
         startActivity(intent);
     }
 }

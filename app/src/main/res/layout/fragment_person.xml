@@ -252,6 +252,37 @@
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/ic_go" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_video_record"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/padding_left"
+                android:paddingRight="@dimen/padding_right">
+
+                <ImageView
+                    android:layout_width="22.5dp"
+                    android:layout_height="22.5dp"
+                    android:src="@mipmap/icon_video" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="观看历史"
+                    android:textColor="@color/text_color_33"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="9dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ic_go" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_my_work"
