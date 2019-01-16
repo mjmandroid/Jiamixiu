@@ -17,7 +17,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.bean.MyInfoBean;
-import com.reafor.jiamixiu.function.home.RecordVideoActivity;
 import com.reafor.jiamixiu.function.login.LoginActivity;
 import com.reafor.jiamixiu.function.login.RegisterActivity;
 import com.reafor.jiamixiu.function.person.activity.MyFanActivity;
@@ -139,7 +138,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     }
 
     @OnClick({R.id.ll_login,R.id.ll_no_login,R.id.tv_login,R.id.tv_register,R.id.ll_qianbao_my,R.id.ll_qianbao_jiami,R.id.ll_my_income,
-            R.id.ll_video_collect,R.id.ll_my_work,R.id.ll_my_fan,R.id.ll_my_concern,R.id.ll_video_record})
+            R.id.ll_video_collect,R.id.ll_my_work,R.id.ll_my_fan,R.id.ll_my_concern})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -206,13 +205,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     return;
                 }
                 startActivity(new Intent(getContext(),MyFollowActivity.class));
-                break;
-            case R.id.ll_video_record:
-                if (TextUtils.isEmpty(SharedPreferencesUtil.getToken())){
-                    startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
-                    return;
-                }
-                startActivity(new Intent(getContext(),RecordVideoActivity.class));
                 break;
         }
     }

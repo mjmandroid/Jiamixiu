@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
-    </style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light"></style>
+
     <style name="AppTheme" parent="noActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/theme_color</item>
@@ -19,9 +19,11 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
     </style>
+
     <style name="noActionBar" parent="Theme.AppCompat.Light.NoActionBar">
 
     </style>
+
     <style name="loadingDialog" parent="Base.AlertDialog.AppCompat">
         <!--背景颜色及透明程度-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -32,11 +34,13 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
     <style name="Widget.EditText.White" parent="@android:style/Widget.EditText">
 
         <item name="android:textColor">@android:color/white</item>
 
     </style>
+
     <style name="BottomCenterDialogTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -52,16 +56,19 @@
         <item name="android:backgroundDimEnabled">false</item>
         <!-- 背景是否模糊 -->
     </style>
+
     <style name="DialogAnimation">
         <item name="android:windowExitAnimation">@anim/window_exit_bottom</item>
         <item name="android:windowEnterAnimation">@anim/window_entry_bottom</item>
     </style>
+
     <style name="ActivityAnimation">
         <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
         <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>
         <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
     </style>
+
     <style name="CenterDialogTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -82,5 +89,11 @@
         <item name="android:topBright">@color/transparent</item>
         <item name="android:topDark">@color/transparent</item>
         <item name="android:borderlessButtonStyle">@color/transparent</item>
+    </style>
+    　　
+
+    <style name="translucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/translucent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

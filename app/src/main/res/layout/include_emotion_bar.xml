@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_f5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="6dp">
+
+
+        <ImageView
+            android:id="@+id/bar_emotion_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:clickable="true"
+            android:src="@drawable/ic_emotion"
+            android:visibility="visible" />
+
+       <!-- <ImageView
+            android:id="@+id/bar_image_add_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_plus"
+            android:visibility="visible" />-->
+
+        <EditText
+            android:id="@+id/bar_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape_bg_reply_edittext"
+            android:hint="回复"
+            android:gravity="left|center"
+            android:textColorHint="@color/text_color_99"
+            android:maxLines="3"
+            android:minHeight="36dp"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/bar_btn_send"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_btn_send"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,42 +1,38 @@
 package com.reafor.jiamixiu.function.home;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.reafor.jiamixiu.BaseApplication;
-import com.reafor.jiamixiu.MainActivity;
 import com.reafor.jiamixiu.R;
-import com.reafor.jiamixiu.base.BaseApi;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.bean.VideoCommentResponse;
 import com.reafor.jiamixiu.bean.VideoResponse;
+import com.reafor.jiamixiu.function.emoji.EditTextActivity;
 import com.reafor.jiamixiu.function.home.adapter.VideoCommentAdapter;
 import com.reafor.jiamixiu.function.home.prenster.VideoPrenster;
 import com.reafor.jiamixiu.function.home.view.IvideoView;
 import com.reafor.jiamixiu.function.login.LoginActivity;
 import com.reafor.jiamixiu.utils.DialogUtils;
 import com.reafor.jiamixiu.utils.OssUtils;
-import com.reafor.jiamixiu.utils.SharedPreferencesUtil;
 import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.utils.UIUtils;
 import com.reafor.jiamixiu.utils.UrlConst;
@@ -49,7 +45,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
@@ -193,7 +188,7 @@ public class VideoFragment extends BaseFragment implements IvideoView {
 
     private void showCommentDialog(List<VideoCommentResponse.Data> dataList) {
         if (commentDialog == null){
-            View view = View.inflate(mContext,R.layout.dialog_comment_layout,null);
+            final View view = View.inflate(mContext,R.layout.dialog_comment_layout,null);
             view.findViewById(R.id.tv_cancel).setOnClickListener(v->{
                 commentDialog.dismiss();
             });
@@ -214,7 +209,9 @@ public class VideoFragment extends BaseFragment implements IvideoView {
 
                 @Override
                 public void reply(String sourthId) {
-                    toComment(sourthId);
+//                    toComment(sourthId);
+//                    initEmotionMainFragment(view);
+                    startActivityForResult(new Intent(getContext(), EditTextActivity.class),111);
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -352,5 +349,15 @@ public class VideoFragment extends BaseFragment implements IvideoView {
     public void praiseSuccess() {
         iv_praise.setBackgroundResource(R.mipmap.icon_praise_red);
         tv_praise_num.setText("1");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111 && resultCode == getActivity().RESULT_OK){
+            String comment = data.getStringExtra("value");
+            Log.i("respondComment","comment == "+comment);
+        }
+
     }
 }

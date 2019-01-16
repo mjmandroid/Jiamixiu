@@ -113,5 +113,9 @@
         <activity android:name=".function.home.RecordVideoDetailActivity"/>
         <activity android:name=".function.home.SearchVideoDetailActivity"/>
         <activity android:name=".function.person.MyVideoDetailsActivity"/>
+        <activity android:name=".function.emoji.ListViewBarEditActivity"/>
+        <activity android:name=".function.emoji.EditTextActivity"
+            android:theme="@style/translucent"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 </manifest>
