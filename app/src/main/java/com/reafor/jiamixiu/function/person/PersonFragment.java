@@ -84,7 +84,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         unbinder = ButterKnife.bind(this, view);
         onRefresh();
 
-        try {
+        /*try {
             NSArray ary = (NSArray) PropertyListParser.parse(getActivity().getAssets().open("emoji.plist"));
             for (int i = 0; i < ary.count(); i++){
                 if (i == 0){
@@ -92,7 +92,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     String code = (dic.objectForKey("code")).toJavaObject().toString();
                     tvLogin.setText(code);
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,7 +103,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
-        }
+        }*/
         return view;
     }
     public void onRefresh(){

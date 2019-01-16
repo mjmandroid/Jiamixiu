@@ -15,6 +15,8 @@ import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.AbsBaseAdapter;
 import com.reafor.jiamixiu.bean.VideoCommentResponse;
 import com.reafor.jiamixiu.bean.VideoRecommendResponse;
+import com.reafor.jiamixiu.function.emoji.util.EmotionUtils;
+import com.reafor.jiamixiu.function.emoji.util.SpanStringUtils;
 
 public class VideoCommentAdapter extends AbsBaseAdapter<VideoCommentResponse.Data> {
 
@@ -38,7 +40,9 @@ public class VideoCommentAdapter extends AbsBaseAdapter<VideoCommentResponse.Dat
             TextView tv_time = holder.getView(R.id.tv_time);
             TextView tv_name = holder.getView(R.id.tv_name);
             tv_name.setText(item.nick);
-            tv_mess.setText(item.message);
+            tv_mess.setText(SpanStringUtils.getEmotionContent(EmotionUtils.EMOTION_CLASSIC_TYPE,
+                    mContext, tv_mess, item.message));
+            //tv_mess.setText(item.message);
             tv_time.setText(item.f_creatortime);
             holder.getView(R.id.tv_report).setOnClickListener(v -> {
                 if (listener != null)

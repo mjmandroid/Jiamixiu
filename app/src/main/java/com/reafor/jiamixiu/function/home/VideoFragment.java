@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -79,6 +80,7 @@ public class VideoFragment extends BaseFragment implements IvideoView {
     private int load_state = STATE_REFRESH;
     private VideoCommentAdapter commentAdapter;
     private SmartRefreshLayout refreshLayout;
+    private String mSourthId;
 
     @Override
     public View initView() {
@@ -192,6 +194,10 @@ public class VideoFragment extends BaseFragment implements IvideoView {
             view.findViewById(R.id.tv_cancel).setOnClickListener(v->{
                 commentDialog.dismiss();
             });
+            view.findViewById(R.id.btn_comment).setOnClickListener(v -> {
+                mSourthId = videoInfo.f_creatoruserid;
+                startActivityForResult(new Intent(getContext(), EditTextActivity.class),111);
+            });
             refreshLayout = view.findViewById(R.id.refresh);
             RecyclerView recyclerView = view.findViewById(R.id.rv);
             commentAdapter = new VideoCommentAdapter(mContext);
@@ -209,6 +215,7 @@ public class VideoFragment extends BaseFragment implements IvideoView {
 
                 @Override
                 public void reply(String sourthId) {
+                    mSourthId = sourthId;
 //                    toComment(sourthId);
 //                    initEmotionMainFragment(view);
                     startActivityForResult(new Intent(getContext(), EditTextActivity.class),111);
@@ -356,6 +363,9 @@ public class VideoFragment extends BaseFragment implements IvideoView {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == getActivity().RESULT_OK){
             String comment = data.getStringExtra("value");
+            if (!TextUtils.isEmpty(comment)){
+                prenster.commit(videoInfo.f_id,comment.toString(),mSourthId);
+            }
             Log.i("respondComment","comment == "+comment);
         }
 
