@@ -17,6 +17,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.bean.MyInfoBean;
+import com.reafor.jiamixiu.function.emoji.ListViewBarEditActivity;
 import com.reafor.jiamixiu.function.login.LoginActivity;
 import com.reafor.jiamixiu.function.login.RegisterActivity;
 import com.reafor.jiamixiu.function.person.activity.MyFanActivity;
@@ -84,7 +85,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         unbinder = ButterKnife.bind(this, view);
         onRefresh();
 
-        try {
+        /*try {
             NSArray ary = (NSArray) PropertyListParser.parse(getActivity().getAssets().open("emoji.plist"));
             for (int i = 0; i < ary.count(); i++){
                 if (i == 0){
@@ -104,7 +105,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
-        }
+        }*/
         return view;
     }
     public void onRefresh(){
@@ -149,6 +150,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tv_login:
                 startActivityForResult(new Intent(getContext(),LoginActivity.class),LOGIN_SUCCESS_CODE);
+//                startActivityForResult(new Intent(getContext(),ListViewBarEditActivity.class),LOGIN_SUCCESS_CODE);
                 break;
             case R.id.tv_register:
                 Intent intent = new Intent(getContext(),RegisterActivity.class);
