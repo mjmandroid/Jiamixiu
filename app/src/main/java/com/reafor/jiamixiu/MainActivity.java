@@ -1,56 +1,35 @@
 package com.reafor.jiamixiu;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RadioGroup;
 
-import com.reafor.jiamixiu.base.BaseFragment;
 import com.reafor.jiamixiu.function.home.HomeFragment;
 import com.reafor.jiamixiu.function.home.HomeRightFragment;
-import com.reafor.jiamixiu.function.message.MessageFragment;
-import com.reafor.jiamixiu.function.person.PersonFragment;
-import com.reafor.jiamixiu.function.subscrite.SubscriteFragment;
-import com.reafor.jiamixiu.function.upload.CropVideoActivity;
-import com.reafor.jiamixiu.manger.FragmentChangeManager;
 import com.reafor.jiamixiu.manger.HttpManager;
 import com.reafor.jiamixiu.manger.listener.HttpRequestListener;
 import com.reafor.jiamixiu.utils.FileUtils;
 import com.reafor.jiamixiu.utils.OssUtils;
 import com.reafor.jiamixiu.utils.SharedPreferencesUtil;
 import com.reafor.jiamixiu.utils.ToastUtil;
-import com.reafor.jiamixiu.utils.UIUtils;
 import com.reafor.jiamixiu.utils.UrlConst;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdMgr;
 import cn.jzvd.JzvdStd;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 public class MainActivity extends AppCompatActivity  {
     public DrawerLayout drawerLayout;
-    public boolean drawlayout_state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

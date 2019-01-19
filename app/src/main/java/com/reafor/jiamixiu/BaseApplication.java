@@ -12,6 +12,7 @@ import com.danikula.videocache.HttpProxyCacheServer;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.reafor.jiamixiu.utils.CrashHandlerUtil;
 import com.reafor.jiamixiu.utils.FileUtils;
 
 import java.io.BufferedReader;
@@ -50,6 +51,7 @@ public class BaseApplication extends Application {
         mInstance = this;
         BaseUtils.init(this);
         initFFmpegBinary(this);
+        CrashHandlerUtil.getInstance().init(this);
         FileUtils.delVideoFile();
     }
 

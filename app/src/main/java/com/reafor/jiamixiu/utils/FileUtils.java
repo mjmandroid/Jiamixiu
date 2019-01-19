@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileUtils {
+    private static final long deleteTime = 10 * 24 * 60 * 60 * 1000;//10 day
 
     public static String getPath2uri(Activity context, Uri fileUri) {
         if (context == null || fileUri == null)
@@ -155,6 +156,25 @@ public class FileUtils {
             File[] files = file.listFiles();
             for (File myFile : files) {
                 myFile.delete();
+            }
+        }
+        File logs = new File(Environment.getExternalStorageDirectory(), "infos");
+        if (logs.exists()){
+            File[] files = logs.listFiles();
+            for (File log : files) {
+                String name = log.getName();
+                if (name.contains(".txt")){
+                    String filePrefix = name.substring(0,name.indexOf(".txt"));
+                    try {
+                        long pre = Long.parseLong(filePrefix);
+                        long cur = System.currentTimeMillis();
+                        if (cur - pre > deleteTime){
+                            log.delete();
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
