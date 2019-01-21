@@ -155,7 +155,7 @@ public class VideoFragment extends BaseFragment implements IvideoView {
 
     }
 
-    @OnClick({R.id.iv_praise,R.id.iv_comment,R.id.iv_share})
+    @OnClick({R.id.iv_praise,R.id.iv_comment,R.id.iv_share,R.id.iv_nick})
     public void btnOnClick(View view){
         switch (view.getId()){
             case R.id.iv_praise:
@@ -177,6 +177,19 @@ public class VideoFragment extends BaseFragment implements IvideoView {
             case R.id.iv_share:
                 showShareDialog();
                 break;
+            case R.id.iv_nick:
+                if (UIUtils.isExpireon()){
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                } else {
+                    Intent intent = new Intent(mContext, MoreUsersActivity.class);
+                    if (videoInfo != null){
+                        intent.putExtra("id",videoInfo.f_id);
+                        intent.putExtra("avator",videoInfo.avator);
+                        intent.putExtra("nick",videoInfo.nick);
+                    }
+                    startActivity(intent);
+                }
+                break;
         }
     }
 
@@ -191,7 +204,7 @@ public class VideoFragment extends BaseFragment implements IvideoView {
     private void showCommentDialog(List<VideoCommentResponse.Data> dataList) {
         if (commentDialog == null){
             final View view = View.inflate(mContext,R.layout.dialog_comment_layout,null);
-            view.findViewById(R.id.tv_cancel).setOnClickListener(v->{
+            view.findViewById(R.id.fl_cancel).setOnClickListener(v->{
                 commentDialog.dismiss();
             });
             view.findViewById(R.id.btn_comment).setOnClickListener(v -> {

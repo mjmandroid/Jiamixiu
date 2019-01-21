@@ -117,5 +117,6 @@
         <activity android:name=".function.emoji.EditTextActivity"
             android:theme="@style/translucent"
             android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".function.home.MoreUserDetailsActivity"/>
     </application>
 </manifest>

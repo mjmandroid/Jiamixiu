@@ -19,16 +19,22 @@
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:layout_centerInParent="true"/>
-            <TextView
-                android:id="@+id/tv_cancel"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@mipmap/icon_close_dialog"
-                android:textColor="#333333"
-                android:textSize="18sp"
-                android:layout_marginRight="20dp"
+            <FrameLayout
+                android:id="@+id/fl_cancel"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true">
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@mipmap/icon_close_dialog"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
