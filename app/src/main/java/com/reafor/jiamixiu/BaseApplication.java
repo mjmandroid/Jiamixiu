@@ -3,6 +3,7 @@ package com.reafor.jiamixiu;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import com.danikula.videocache.HttpProxyCacheServer;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.lansosdk.videoeditor.LanSoEditor;
 import com.reafor.jiamixiu.utils.CrashHandlerUtil;
 import com.reafor.jiamixiu.utils.FileUtils;
 
@@ -53,6 +55,8 @@ public class BaseApplication extends Application {
         initFFmpegBinary(this);
         CrashHandlerUtil.getInstance().init(this);
         FileUtils.delVideoFile();
+        FileUtils.saveImage(BitmapFactory.decodeResource(getResources(),R.drawable.icon_water_marsk));
+        LanSoEditor.initSDK(getApplicationContext(),null);
     }
 
     private void initFFmpegBinary(Context context) {

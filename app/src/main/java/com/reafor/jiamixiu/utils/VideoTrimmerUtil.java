@@ -11,6 +11,7 @@ import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.reafor.jiamixiu.interfaces.VideoTrimListener;
+import com.reafor.jiamixiu.interfaces.WaterMarskListener;
 
 
 import java.text.SimpleDateFormat;
@@ -140,6 +141,81 @@ public class VideoTrimmerUtil {
         public void onProgress(String message) {
           super.onProgress("FFmpeg=="+message);
           System.out.println(message);
+        }
+      });
+    } catch (FFmpegCommandAlreadyRunningException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 使用ffmpeg命令行给视频添加水印
+   * @param srcFile 源文件
+   * @param waterMark 水印文件路径
+   * @param targetFile 目标文件
+   * @return 添加水印后的文件
+   *
+   * StringBuilder sb1 = new StringBuilder();
+    sb1.append("ffmpeg");
+    sb1.append(" -i");
+    sb1.append(" " + vediooutput);
+    sb1.append(" -i");
+    sb1.append(" " + imagePath);
+    sb1.append(" -filter_complex");
+    sb1.append(" overlay=20:35");
+    sb1.append(" -vcodec libx264 -profile:v baseline -preset ultrafast -b:v 3000k -g 25");
+    sb1.append(" -y");
+    sb1.append(" " + mergeVideo);
+   */
+  public static  void addWaterMark(final Context context, String srcFile, String waterMark, String targetFile,
+                                   final WaterMarskListener listener){
+//    StringBuilder sb = new StringBuilder();
+//    sb.append(" -i");
+//    sb.append(" " + srcFile);
+//    sb.append(" -codec");
+//    sb.append(" copy");
+//    sb.append(" -bsf");
+//    sb.append(" h264_mp4toannexb ");
+//    sb.append("-r 25  ");
+//    sb.append("-s 720x1280 ");
+//    sb.append("-pix_fmt nv21  ");
+//    sb.append("-ar 44100  ");
+//    sb.append("-ac 1  ");
+//    sb.append("-analyzeduration 500  ");
+//    sb.append("-vcodec libx264  ");
+//    sb.append("-profile:v baseline  ");
+//    sb.append("-preset ultrafast  ");
+//    sb.append("-b:v 4m -g 30  ");
+//    sb.append("-acodec libfdk_aac  ");
+//    sb.append("-b:a 512k  ");
+//    sb.append(" -f");
+//    sb.append(" mpegts");
+//    sb.append(" " + targetFile);
+
+    String waterMarkCmd = "-i %s -i %s -filter_complex overlay=0:0 %s";
+    waterMarkCmd = String.format(waterMarkCmd, srcFile, waterMark, targetFile);
+    try {
+      FFmpeg.getInstance(context).execute(waterMarkCmd.split(" "), new ExecuteBinaryResponseHandler(){
+        @Override
+        public void onSuccess(String message) {
+          super.onSuccess(message);
+          if (listener != null)
+          listener.addWaterMarskSuccess(message);
+          //ToastUtil.showTosat(context,"添加成功");
+        }
+          @Override
+          public void onProgress(String message) {
+              super.onProgress(message);
+              Log.e("onProgress",message);
+          }
+
+          @Override
+        public void onFailure(String message) {
+          super.onFailure(message);
+          System.out.println("message="+message);
+          //ToastUtil.showTosat(context,"添加失败");
+          if (listener != null)
+          listener.addWaterMarskFailed(message);
         }
       });
     } catch (FFmpegCommandAlreadyRunningException e) {

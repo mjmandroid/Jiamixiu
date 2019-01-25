@@ -69,4 +69,5 @@ dependencies {
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
     implementation 'com.github.iknow4:android-utils-sdk:1.1.2'
     implementation'com.googlecode.plist:dd-plist:1.16'
+    implementation project(':lansongsdk')
 }

@@ -1,6 +1,7 @@
 package com.reafor.jiamixiu;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,14 @@ import com.reafor.jiamixiu.utils.FileUtils;
 import com.reafor.jiamixiu.utils.OssUtils;
 import com.reafor.jiamixiu.utils.SharedPreferencesUtil;
 import com.reafor.jiamixiu.utils.ToastUtil;
+import com.reafor.jiamixiu.utils.UIUtils;
 import com.reafor.jiamixiu.utils.UrlConst;
+import com.reafor.jiamixiu.utils.VideoTrimmerUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 
 import cn.jzvd.Jzvd;
@@ -76,6 +80,13 @@ public class MainActivity extends AppCompatActivity  {
         //drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
+    private void testAddWaterVideos() {
+        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String srcPath = rootPath + File.separator+"Download/mask_start.mp4";
+        String waterPath = rootPath + File.separator + "Download/Water.jpg";
+        String targetPath = rootPath + File.separator+"Download/target.mp4";
+        VideoTrimmerUtil.addWaterMark(this,srcPath,waterPath,targetPath,null);
+    }
 
 
     @Override

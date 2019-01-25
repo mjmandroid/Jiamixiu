@@ -1,7 +1,9 @@
 package com.reafor.jiamixiu.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +20,8 @@ import java.io.IOException;
 
 public class FileUtils {
     private static final long deleteTime = 10 * 24 * 60 * 60 * 1000;//10 day
+    public static final String water_vodeo_path = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+
+            "DCIM/Camera";
 
     public static String getPath2uri(Activity context, Uri fileUri) {
         if (context == null || fileUri == null)
@@ -150,6 +154,31 @@ public class FileUtils {
         return file.getAbsolutePath();
     }
 
+    public static String saveImage(Bitmap bmp) {
+        File f = new File(water_vodeo_path);
+        if (!f.exists()){
+            f.mkdirs();
+        }
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), "pict");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = "water.jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
+    }
+
     public static void delVideoFile(){
         File file = new File(Environment.getExternalStorageDirectory(), "MyVideo");
         if (file.exists()){
@@ -177,6 +206,40 @@ public class FileUtils {
                 }
             }
         }
+    }
+
+    public static void insertIntoMediaStore(Context context, boolean isVideo, File saveFile, long createTime) {
+        ContentResolver mContentResolver = context.getContentResolver();
+        if (createTime == 0)
+            createTime = System.currentTimeMillis();
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.MediaColumns.TITLE, saveFile.getName());
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, saveFile.getName());
+        //值一样，但是还是用常量区分对待
+        values.put(isVideo ? MediaStore.Video.VideoColumns.DATE_TAKEN
+                : MediaStore.Images.ImageColumns.DATE_TAKEN, createTime);
+        values.put(MediaStore.MediaColumns.DATE_MODIFIED, System.currentTimeMillis());
+        values.put(MediaStore.MediaColumns.DATE_ADDED, System.currentTimeMillis());
+        if (!isVideo)
+            values.put(MediaStore.Images.ImageColumns.ORIENTATION, 0);
+        values.put(MediaStore.MediaColumns.DATA, saveFile.getAbsolutePath());
+        values.put(MediaStore.MediaColumns.SIZE, saveFile.length());
+        values.put(MediaStore.MediaColumns.MIME_TYPE, isVideo ? getVideoMimeType(saveFile.getAbsolutePath())/*"video/3gp"*/ : "image/jpeg");
+        //插入
+        mContentResolver.insert(isVideo
+                ? MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                : MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
+    // 获取video的mine_type,暂时只支持mp4,3gp
+    private static String getVideoMimeType(String path) {
+        String lowerPath = path.toLowerCase();
+        if (lowerPath.endsWith("mp4") || lowerPath.endsWith("mpeg4")) {
+            return "video/mp4";
+        } else if (lowerPath.endsWith("3gp")) {
+            return "video/3gp";
+        }
+        return "video/mp4";
     }
 
     public static boolean isMIUI() {

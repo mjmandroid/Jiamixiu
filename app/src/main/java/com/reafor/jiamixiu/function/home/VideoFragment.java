@@ -3,7 +3,11 @@ package com.reafor.jiamixiu.function.home;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +26,8 @@ import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lansosdk.videoeditor.VideoEditor;
+import com.lansosdk.videoeditor.onVideoEditorProgressListener;
 import com.reafor.jiamixiu.BaseApplication;
 import com.reafor.jiamixiu.R;
 import com.reafor.jiamixiu.base.BaseFragment;
@@ -32,14 +38,21 @@ import com.reafor.jiamixiu.function.home.adapter.VideoCommentAdapter;
 import com.reafor.jiamixiu.function.home.prenster.VideoPrenster;
 import com.reafor.jiamixiu.function.home.view.IvideoView;
 import com.reafor.jiamixiu.function.login.LoginActivity;
+import com.reafor.jiamixiu.interfaces.WaterMarskListener;
+import com.reafor.jiamixiu.utils.AlbumNotifyHelper;
 import com.reafor.jiamixiu.utils.DialogUtils;
+import com.reafor.jiamixiu.utils.DownloadUtil;
+import com.reafor.jiamixiu.utils.FileUtils;
 import com.reafor.jiamixiu.utils.OssUtils;
 import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.utils.UIUtils;
 import com.reafor.jiamixiu.utils.UrlConst;
+import com.reafor.jiamixiu.utils.VideoTrimmerUtil;
+import com.reafor.jiamixiu.widget.LoadingDialog;
 import com.reafor.jiamixiu.widget.RoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,6 +94,8 @@ public class VideoFragment extends BaseFragment implements IvideoView {
     private VideoCommentAdapter commentAdapter;
     private SmartRefreshLayout refreshLayout;
     private String mSourthId;
+    private LoadingDialog downloadDialog;
+    private Handler mHandler = new Handler();
 
     @Override
     public View initView() {
@@ -312,10 +327,106 @@ public class VideoFragment extends BaseFragment implements IvideoView {
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> dialog.dismiss());
         LinearLayout parent = view.findViewById(R.id.ll_share);
         for (int i = 0; i < parent.getChildCount(); i++) {
-            parent.getChildAt(i).setOnClickListener(v -> dialog.dismiss());
+            parent.getChildAt(i).setOnClickListener(v -> {
+                dialog.dismiss();
+                if (!TextUtils.isEmpty(url) && videoInfo != null){
+                    String targetPath = FileUtils.water_vodeo_path + File.separator + videoInfo.ossid+".mp4";
+                    File file = new File(targetPath);
+                    if (file.exists()){
+                        ToastUtil.showTosat(mContext,"视频已保存，请到相册查看！");
+                        return;
+                    }
+                    File tempDir = new File(Environment.getExternalStorageDirectory(), "MyVideo");
+                    if (!tempDir.exists()){
+                        tempDir.mkdirs();
+                    }
+                    if (downloadDialog == null)
+                        downloadDialog = new LoadingDialog(mContext);
+                        downloadDialog.setCancelable(false);
+                        downloadDialog.setCanceledOnTouchOutside(false);
+                    if (!downloadDialog.isShowing()){
+                        downloadDialog.show();
+                    }
+                    DownloadUtil.getInstance().download(url,tempDir.getAbsolutePath(),videoInfo.ossid+".mp4",
+                    new DownloadUtil.OnDownloadListener(){
+
+                        @Override
+                        public void onDownloadSuccess(File file) {
+                            addWaterMarsk(file);
+                        }
+
+                        @Override
+                        public void onDownloading(int progress) {
+
+                        }
+
+                        @Override
+                        public void onDownloadFailed(Exception e) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    downloadDialog.dismiss();
+                                    ToastUtil.showTosat(mContext,"下载失败，请检查网络！");
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
         }
         dialog = DialogUtils.BottonDialog(mContext, view);
         dialog.show();
+    }
+
+    /**
+     * 添加水印
+     * @param file
+     */
+    private void addWaterMarsk(File file) {
+        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String waterPath = rootPath + File.separator + "pict/water.jpg";
+        final String targetPath = FileUtils.water_vodeo_path + File.separator + videoInfo.ossid+".mp4";
+        VideoEditor mEditor= new VideoEditor();
+        mEditor.setOnProgessListener(new onVideoEditorProgressListener() {
+            @Override
+            public void onProgress(VideoEditor v, int percent) {
+                Log.e("onProgress=",percent+"");
+                if (percent >= 100){
+                    if (downloadDialog != null && downloadDialog.isShowing()){
+                        downloadDialog.dismiss();
+                    }
+                    MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                    mediaMetadataRetriever.setDataSource(targetPath);
+                    long duration = Integer.parseInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                    AlbumNotifyHelper.insertVideoToMediaStore(mContext,targetPath,0,duration);
+                    AlbumNotifyHelper.notifyScanDcim(mContext,targetPath);
+                    mHandler.post(()->ToastUtil.showTosat(mContext,"已保存到相册！"));
+                }
+            }
+        });
+        mEditor.testVideoAddText(file.getAbsolutePath(),targetPath);
+        /*VideoTrimmerUtil.addWaterMark(mContext, file.getAbsolutePath(), waterPath, targetPath, new WaterMarskListener() {
+            @Override
+            public void addWaterMarskSuccess(String message) {
+                if (downloadDialog != null && downloadDialog.isShowing()){
+                    downloadDialog.dismiss();
+                }
+                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(targetPath);
+                long duration = Integer.parseInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                AlbumNotifyHelper.insertVideoToMediaStore(mContext,targetPath,0,duration);
+                AlbumNotifyHelper.notifyScanDcim(mContext,targetPath);
+                //FileUtils.insertIntoMediaStore(mContext,true,new File(targetPath),System.currentTimeMillis());
+            }
+
+            @Override
+            public void addWaterMarskFailed(String e) {
+                if (downloadDialog != null && downloadDialog.isShowing()){
+                    downloadDialog.dismiss();
+                }
+            }
+        });*/
     }
 
     @Override
