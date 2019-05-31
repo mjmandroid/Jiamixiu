@@ -48,6 +48,7 @@ import com.reafor.jiamixiu.utils.ToastUtil;
 import com.reafor.jiamixiu.utils.UIUtils;
 import com.reafor.jiamixiu.utils.UrlConst;
 import com.reafor.jiamixiu.utils.VideoTrimmerUtil;
+import com.reafor.jiamixiu.widget.DownloadDialog;
 import com.reafor.jiamixiu.widget.LoadingDialog;
 import com.reafor.jiamixiu.widget.RoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -352,7 +353,10 @@ public class VideoFragment extends BaseFragment implements IvideoView {
 
                         @Override
                         public void onDownloadSuccess(File file) {
-                            addWaterMarsk(file);
+                            mHandler.post(()->{
+//                                downloadDialog.dismiss();
+                                addWaterMarsk(file);
+                            });
                         }
 
                         @Override
@@ -388,14 +392,19 @@ public class VideoFragment extends BaseFragment implements IvideoView {
         String waterPath = rootPath + File.separator + "pict/water.jpg";
         final String targetPath = FileUtils.water_vodeo_path + File.separator + videoInfo.ossid+".mp4";
         VideoEditor mEditor= new VideoEditor();
+//        final DownloadDialog dialog = new DownloadDialog(mContext);
+//        dialog.show();
         mEditor.setOnProgessListener(new onVideoEditorProgressListener() {
             @Override
             public void onProgress(VideoEditor v, int percent) {
                 Log.e("onProgress=",percent+"");
+
+                //dialog.setText(percent+"%");
                 if (percent >= 100){
                     if (downloadDialog != null && downloadDialog.isShowing()){
                         downloadDialog.dismiss();
                     }
+                    dialog.dismiss();
                     MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                     mediaMetadataRetriever.setDataSource(targetPath);
                     long duration = Integer.parseInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
